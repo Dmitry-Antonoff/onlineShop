@@ -13,6 +13,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick-theme.css" />
         <script defer src="/js/burger.js" />
+        <script defer src="/js/auth.js" />
 
         <title>Project</title>
       </head>
@@ -44,7 +45,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
                         </a>
                       </li>
                       <li>
-                        <a href="/auth/login">Выйти</a>
+                        <a href="/auth/logout">Выйти</a>
                       </li>
                     </ul>
                   ) : (

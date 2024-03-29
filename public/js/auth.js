@@ -48,7 +48,7 @@ login?.addEventListener('submit', async (e) => {
   if (isValidEmail(e.target.email.value)) {
     const response = await submit(e.target, '/auth/login');
     if (response.status === 200) {
-      window.location.href = '/skills';
+      window.location.href = '/';
     } else {
       displayErrorMessage('Incorrect email address or password', login);
     }

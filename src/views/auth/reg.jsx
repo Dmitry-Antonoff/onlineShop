@@ -11,11 +11,9 @@ module.exports = function Registration(props) {
           <input className="form-input" type="text" placeholder="email" name="email" />
           <input className="form-input" type="password" placeholder="password" name="password" />
           <div>
-            <a href="/auth/login">
-              <button className="button form-submit-btn" type="submit">
-                Register
-              </button>
-            </a>
+            <button className="button form-submit-btn" type="submit">
+              Register
+            </button>
           </div>
           <a className="link-reg" href="/auth/login">
             Войти
