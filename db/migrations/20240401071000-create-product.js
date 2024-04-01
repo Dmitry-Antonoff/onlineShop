@@ -26,7 +26,7 @@ module.exports = {
       },
       manufacturerId: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',onDelete: 'CASCADE',
+        onDelete: 'CASCADE',
         references: {
           model: {
             tableName: 'Manufacturers',
