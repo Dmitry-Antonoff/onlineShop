@@ -22,6 +22,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
         <link rel="stylesheet" href="/stylesheets/slick.../normalize.css" />
         <link rel="stylesheet" href="/stylesheets/style.css" />
         <link rel="stylesheet" href="/stylesheets/header.css" />
+        <link rel="stylesheet" href="/stylesheets/slick/slide.css" />
         <link rel="stylesheet" href="/stylesheets/home.css" />
         <link rel="stylesheet" href="/stylesheets/auth.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick/slick.css" />
@@ -29,6 +30,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
         <link rel="stylesheet" type="text/css" href="/stylesheets/admin.css" />
         <script defer src="/js/burger.js" />
         <script defer src="/js/auth.js" />
+        <script defer src="/js/slider.js" />
 
         <title>Project</title>
       </head>
@@ -130,10 +132,10 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
             </ul>
           </div>
         </footer>
-        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js" />
+        {/* <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js" />
         <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js" />
         <script type="text/javascript" src="/js/slick.min.js" />
-        <script type="text/javascript" src="/js/slider.js" />
+        <script type="text/javascript" src="/js/slider.js" /> */}
       </body>
     </html>
   );

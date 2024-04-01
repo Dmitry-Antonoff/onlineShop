@@ -6,34 +6,64 @@ module.exports = function Home(props) {
   return (
     <Layout {...props}>
       <main className="home-main">
-        <div className="parent-slider">
+        <div className="slider-container">
           <h2>Категории</h2>
-          <div className="categories children-slider">
-            <a className="category-link" href="/catalog">
+          <button type="button" class="prev" onclick="prevSlide()">
+            Назад
+          </button>
+          <div className="categories slider">
+            <a className="category-link slide" href="/catalog">
               <div className="category">
                 <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
                 <p>Lorem ipsum</p>
               </div>
             </a>
-            <a className="category-link" href="/catalog">
+            <a className="category-link slide" href="/catalog">
               <div className="category">
                 <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
                 <p>Lorem, ipsum.</p>
               </div>
             </a>
-            <a className="category-link" href="/catalog">
+            <a className="category-link slide" href="/catalog">
               <div className="category">
                 <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
                 <p>Lorem, ipsum.</p>
               </div>
             </a>
-            <a className="category-link" href="/catalog">
+            <a className="category-link slide" href="/catalog">
+              <div className="category">
+                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
+                <p>Lorem, ipsum.</p>
+              </div>
+            </a>
+            <a className="category-link slide" href="/catalog">
+              <div className="category">
+                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
+                <p>Lorem, ipsum.</p>
+              </div>
+            </a>
+            <a className="category-link slide" href="/catalog">
+              <div className="category">
+                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
+                <p>Lorem, ipsum.</p>
+              </div>
+            </a>
+            <a className="category-link slide" href="/catalog">
+              <div className="category">
+                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
+                <p>Lorem, ipsum.</p>
+              </div>
+            </a>
+            <a className="category-link slide" href="/catalog">
               <div className="category">
                 <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
                 <p>Lorem, ipsum.</p>
               </div>
             </a>
           </div>
+          <button type="button" class="next" onclick="nextSlide()">
+            Вперед
+          </button>
           <h2>Хиты продаж</h2>
           <div className="hits children-slider">
             <div className="left">
@@ -46,80 +76,102 @@ module.exports = function Home(props) {
             </div>
             <div className="hit">
               <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
-              <a href="/s">
+              <a className="hit-info" href="/s">
                 Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
               </a>
               <div className="buy">
                 <div className="price">
-                  <p>цена</p>
-                  <p>прошлая цена</p>
+                  <p className="first-price">цена</p>
+                  <p className="past-price">прошлая цена</p>
                 </div>
                 <div className="add-cart">
                   <input type="number" name="" id="" />
+                  <p>шт</p>
                   <button type="button">В корзину</button>
                 </div>
               </div>
             </div>
             <div className="hit">
               <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
-              <a href="/s">
+              <a className="hit-info" href="/s">
                 Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
               </a>
               <div className="buy">
                 <div className="price">
-                  <p>цена</p>
-                  <p>прошлая цена</p>
+                  <p className="first-price">цена</p>
+                  <p className="past-price">прошлая цена</p>
                 </div>
                 <div className="add-cart">
                   <input type="number" name="" id="" />
+                  <p>шт</p>
                   <button type="button">В корзину</button>
                 </div>
               </div>
             </div>
             <div className="hit">
               <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
-              <a href="/s">
+              <a className="hit-info" href="/s">
                 Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
               </a>
               <div className="buy">
                 <div className="price">
-                  <p>цена</p>
-                  <p>прошлая цена</p>
+                  <p className="first-price">цена</p>
+                  <p className="past-price">прошлая цена</p>
                 </div>
                 <div className="add-cart">
                   <input type="number" name="" id="" />
+                  <p>шт</p>
                   <button type="button">В корзину</button>
                 </div>
               </div>
             </div>
             <div className="hit">
               <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
-              <a href="/s">
+              <a className="hit-info" href="/s">
                 Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
               </a>
               <div className="buy">
                 <div className="price">
-                  <p>цена</p>
-                  <p>прошлая цена</p>
+                  <p className="first-price">цена</p>
+                  <p className="past-price">прошлая цена</p>
                 </div>
                 <div className="add-cart">
                   <input type="number" name="" id="" />
+                  <p>шт</p>
                   <button type="button">В корзину</button>
                 </div>
               </div>
             </div>
             <div className="hit">
               <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
-              <a href="/s">
+              <a className="hit-info" href="/s">
                 Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
               </a>
               <div className="buy">
                 <div className="price">
-                  <p>цена</p>
-                  <p>прошлая цена</p>
+                  <p className="first-price">цена</p>
+                  <p className="past-price">прошлая цена</p>
                 </div>
                 <div className="add-cart">
                   <input type="number" name="" id="" />
+                  <p>шт</p>
+                  <button type="button">В корзину</button>
+                </div>
+              </div>
+            </div>
+            <div className="hit">
+              <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
+              <a className="hit-info" href="/s">
+                Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
+              </a>
+              <div className="buy">
+                <div className="price">
+                  <p className="first-price">цена</p>
+                  <p className="past-price">прошлая цена</p>
+                </div>
+                <div className="add-cart">
+                  <input type="number" name="" id="" />
+                  <p>шт</p>
                   <button type="button">В корзину</button>
                 </div>
               </div>
