@@ -1,0 +1,89 @@
+.admin-main {
+}
+.search-div {
+  margin: 40px 60px;
+  width: 400px;
+  background-color: white;
+  height: 50px;
+  display: flex;
+}
+.search-user {
+  width: 400px;
+  padding-left: 10px;
+}
+
+.search-div * {
+  display: flex;
+  align-items: center;
+}
+
+.search-user input {
+  border: none;
+  outline: none;
+  width: 290px;
+  padding: 0px 10px;
+}
+
+.search-user button {
+  min-width: 80px;
+  height: 48px;
+  font-size: 14px;
+  background-color: #1d76cc;
+  border: none;
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.all-users {
+  padding-inline-start: 70px;
+}
+.all-users li {
+  margin: 35px 0px;
+  width: 800px;
+  background-color: white;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.all-users li > button {
+  height: 35px;
+  font-size: 14px;
+  background-color: #4eba4e;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.back-next {
+  display: flex;
+  justify-content: center;
+}
+
+.back-next a {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  box-shadow: 0px 0px 10px #0003;
+  margin-right: 10px;
+  background-color: #1e76cc;
+}
+
+.back-next span {
+  display: flex;
+  align-items: end;
+  font-size: 30px;
+  margin-left: -5px;
+  margin-right: 10px;
+}
+
