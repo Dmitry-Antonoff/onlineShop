@@ -19,7 +19,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/stylesheets/slick.../normalize.css" />
+        <link rel="stylesheet" href="/stylesheets/slick/normalize.css" />
         <link rel="stylesheet" href="/stylesheets/style.css" />
         <link rel="stylesheet" href="/stylesheets/header.css" />
         <link rel="stylesheet" href="/stylesheets/slick/slide.css" />
@@ -57,6 +57,21 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
                   </a>
                   {user?.name ? (
                     <ul className="menu" id="menu">
+                      {user?.role === 'ADMINISTRATOR' && (
+                        <>
+                          <li>
+                            <a href="/categories/new">Добавить Категорию</a>
+                          </li>
+                          <li>
+                            <a href="/admin">Пользователи</a>
+                          </li>
+                        </>
+                      )}
+                      {user?.role === 'ADMIN' && (
+                        <li>
+                          <a href="/categories/new">Добавить Категорию</a>
+                        </li>
+                      )}
                       <li>
                         <a href="/basket">
                           <img src="/svg/cart.svg" alt="cart" style={{ height: '30px' }} />

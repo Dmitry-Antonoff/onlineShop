@@ -2,11 +2,12 @@ const router = require('express').Router();
 const Home = require('../views/Home');
 const Login = require('../views/auth/login');
 const Reg = require('../views/auth/reg');
-const AdminPage = require('../views/AdminPage');
+const AdminPage = require('../views/admin/AdminPage');
 const Error = require('../views/Error');
 const isLogin = require('../middleware/isLogin');
 const isMainAdmin = require('../middleware/isMainAdmin');
 const { User } = require('../../db/models');
+const AddCategories = require('../views/admin/AddCategories');
 
 router.get('/', (req, res) => {
   try {
@@ -42,6 +43,14 @@ router.get('/admin', isMainAdmin, async (req, res) => {
       order: [['name', 'ASC']],
     });
     res.render(AdminPage, { allUsers, page: page || 1, limit });
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/categories/new', async (req, res) => {
+  try {
+    res.render(AddCategories);
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
