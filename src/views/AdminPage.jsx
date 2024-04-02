@@ -15,14 +15,26 @@ module.exports = function AdminPage(props) {
         </div>
         <ul className="all-users">
           {allUsers.map((user) => (
-            <li>
+            <li id={user.id}>
               <p>{user.name}</p> <p>{user.email}</p>
               {user.role === 'ADMIN' ? (
-                <button style={{ backgroundColor: 'red' }} type="button">
+                <button
+                  className="btnUndoAdmin"
+                  data-id={user.id}
+                  id={`${user.id}-undo`}
+                  type="button"
+                >
                   Убрать Админа
                 </button>
               ) : user.role !== 'ADMINISTRATOR' ? (
-                <button type="button">Сделать Админом</button>
+                <button
+                  type="button"
+                  className="btnAddAdmin"
+                  data-id={user.id}
+                  id={`${user.id}-add`}
+                >
+                  Сделать Админом
+                </button>
               ) : (
                 <span>Вы</span>
               )}

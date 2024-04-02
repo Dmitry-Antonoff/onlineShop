@@ -16,15 +16,14 @@ router.get('/', (req, res) => {
   }
 });
 
-
-router.get('/auth/login', (req, res) => {
+router.get('/auth/login', isLogin, (req, res) => {
   try {
     res.render(Login);
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
-router.get('/auth/reg', (req, res) => {
+router.get('/auth/reg', isLogin, (req, res) => {
   try {
     res.render(Reg);
   } catch (error) {
@@ -44,7 +43,7 @@ router.get('/admin', isMainAdmin, async (req, res) => {
     });
     res.render(AdminPage, { allUsers, page: page || 1, limit });
   } catch (error) {
-    console.error(error);
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
 
