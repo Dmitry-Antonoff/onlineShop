@@ -31,6 +31,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
         <script defer src="/js/burger.js" />
         <script defer src="/js/auth.js" />
         <script defer src="/js/slider.js" />
+        <script defer src="/js/admin.js" />
 
         <title>Project</title>
       </head>
@@ -100,7 +101,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
             <p>Социальные сети</p>
             <ul>
               <li className="msg">
-                <a href="/" target="_blank" rel="noreferrer">
+                <a href="https://t.me/IGOR_5775" target="_blank" rel="noreferrer">
                   <img src="/svg/telegram.svg" alt="telegram" />
                 </a>
               </li>

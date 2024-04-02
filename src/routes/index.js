@@ -3,20 +3,37 @@ const Home = require('../views/Home');
 const Login = require('../views/auth/login');
 const Reg = require('../views/auth/reg');
 const AdminPage = require('../views/AdminPage');
+const Error = require('../views/Error');
 
 router.get('/', (req, res) => {
-  res.render(Home);
+  try {
+    res.render(Home);
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
 });
 
 router.get('/auth/login', (req, res) => {
-  res.render(Login);
+  try {
+    res.render(Login);
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
 });
 router.get('/auth/reg', (req, res) => {
-  res.render(Reg);
+  try {
+    res.render(Reg);
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
 });
 
 router.get('/admin', (req, res) => {
-  res.render(AdminPage);
+  try {
+    res.render(AdminPage);
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
 });
 
 module.exports = router;
