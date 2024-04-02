@@ -49,10 +49,22 @@
   padding: 0px 30px;
 }
 
-.all-users li > button {
+.btnAddAdmin {
   height: 35px;
   font-size: 14px;
   background-color: #4eba4e;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.btnUndoAdmin {
+  height: 35px;
+  font-size: 14px;
+  background-color: red;
   border: none;
   display: flex;
   justify-content: center;
