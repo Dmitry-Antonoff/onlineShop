@@ -19,6 +19,7 @@
     "import/no-dynamic-require": "off",
     "global-require": "off",
     "import/no-extraneous-dependencies": "off",
-    "no-undef": "off"
+    "no-undef": "off",
+    "no-nested-ternary": "off"
   }
 }
