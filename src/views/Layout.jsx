@@ -19,7 +19,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/stylesheets/slick/normalize.css" />
+        <link rel="stylesheet" href="/stylesheets/normalize.css" />
         <link rel="stylesheet" href="/stylesheets/style.css" />
         <link rel="stylesheet" href="/stylesheets/header.css" />
         <link rel="stylesheet" href="/stylesheets/slick/slide.css" />
@@ -27,6 +27,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
         <link rel="stylesheet" href="/stylesheets/auth.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick/slick-theme.css" />
+        <link rel="stylesheet" type="text/css" href="/stylesheets/catalog.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/admin.css" />
         <script defer src="/js/burger.js" />
         <script defer src="/js/auth.js" />
