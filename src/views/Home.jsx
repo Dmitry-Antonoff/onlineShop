@@ -2,66 +2,26 @@ const React = require('react');
 const Layout = require('./Layout');
 
 module.exports = function Home(props) {
-  // const {} = props;
+  const { categories } = props;
   return (
     <Layout {...props}>
       <main className="home-main">
         <div className="slider-container">
           <h2>Категории</h2>
-          <button type="button" class="prev" onclick="prevSlide()">
+          <button type="button" className="prev" onClick="prevSlide()">
             Назад
           </button>
           <div className="categories slider">
-            <a className="category-link slide" href="/catalog">
-              <div className="category">
-                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
-                <p>Lorem ipsum</p>
-              </div>
-            </a>
-            <a className="category-link slide" href="/catalog">
-              <div className="category">
-                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
-                <p>Lorem, ipsum.</p>
-              </div>
-            </a>
-            <a className="category-link slide" href="/catalog">
-              <div className="category">
-                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
-                <p>Lorem, ipsum.</p>
-              </div>
-            </a>
-            <a className="category-link slide" href="/catalog">
-              <div className="category">
-                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
-                <p>Lorem, ipsum.</p>
-              </div>
-            </a>
-            <a className="category-link slide" href="/catalog">
-              <div className="category">
-                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
-                <p>Lorem, ipsum.</p>
-              </div>
-            </a>
-            <a className="category-link slide" href="/catalog">
-              <div className="category">
-                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
-                <p>Lorem, ipsum.</p>
-              </div>
-            </a>
-            <a className="category-link slide" href="/catalog">
-              <div className="category">
-                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
-                <p>Lorem, ipsum.</p>
-              </div>
-            </a>
-            <a className="category-link slide" href="/catalog">
-              <div className="category">
-                <img src="https://cdn.etm.ru/ipro/class/810/010.png" alt="" />
-                <p>Lorem, ipsum.</p>
-              </div>
-            </a>
+            {categories.map((category) => (
+              <a className="category-link slide" href="/catalog">
+                <div className="category">
+                  <img src={`${category.photoPath}`} alt="" />
+                  <p>{category.name}</p>
+                </div>
+              </a>
+            ))}
           </div>
-          <button type="button" class="next" onclick="nextSlide()">
+          <button type="button" className="next" onClick="nextSlide()">
             Вперед
           </button>
           <h2>Хиты продаж</h2>
@@ -188,10 +148,10 @@ module.exports = function Home(props) {
         </div>
         <div>
           <h2>Преимущества работы снами</h2>
-          <div className="benefit"></div>
-          <div className="benefit"></div>
-          <div className="benefit"></div>
-          <div className="benefit"></div>
+          <div className="benefit" />
+          <div className="benefit" />
+          <div className="benefit" />
+          <div className="benefit" />
         </div>
       </main>
     </Layout>
