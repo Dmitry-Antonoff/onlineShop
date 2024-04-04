@@ -11,9 +11,10 @@ const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
 const Products = require('../views/Products');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    res.render(Home);
+    const categories = await Category.findAll({ where: { parentCategoryId: null } });
+    res.render(Home, { categories });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
