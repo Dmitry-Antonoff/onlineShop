@@ -9,13 +9,13 @@ module.exports = function AddCategories(props) {
         <form className="add-categories-form" name="categoriesForm">
           <select name="parentCatgoryName">
             <option>Главная категория</option>
-            {/* {allCategories.map((category) => (
-              <option'>{category.name}</option>
-            ))} */}
+            {allCategories.map((category) => (
+              <option>{category.name}</option>
+            ))}
           </select>
           <input name="name" className="category-name" type="text" placeholder="Название" />
-          <input name="imgPath" className="img-add" type="file" />
-          <button type="button">Добавить</button>
+          <input name="img" className="img-add" type="file" />
+          <button type="submit">Добавить</button>
         </form>
       </main>
     </Layout>
