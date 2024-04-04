@@ -11,6 +11,7 @@ const FileStore = require('session-file-store')(expressSession);
 const indexRouter = require('./src/routes/index');
 const authRouter = require('./src/routes/auth');
 const administratorRouter = require('./src/routes/administrator');
+const categoriesRouter = require('./src/routes/categories');
 
 const addRender = require('./src/middleware/addRender');
 
@@ -39,6 +40,7 @@ app.use(express.json());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/admin', administratorRouter);
+app.use('/categories', categoriesRouter);
 
 app.listen(PORT, () => {
   console.log(`server started PORT: ${PORT}`);

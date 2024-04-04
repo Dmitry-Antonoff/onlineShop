@@ -7,10 +7,10 @@ module.exports = function AdminPage(props) {
     <Layout {...props}>
       <main className="admin-main">
         <div className="search-div">
-          <form className="search-user">
+          <form className="search-user" name="searchUser">
             <img src="/svg/search.svg" alt="search" style={{ height: '25px' }} />
-            <input type="text" placeholder="Поиск Пользователей" />
-            <button type="button">Найти</button>
+            <input type="text" placeholder="Поиск Пользователей" name="userName" />
+            <button type="submit">Найти</button>
           </form>
         </div>
         <ul className="all-users">

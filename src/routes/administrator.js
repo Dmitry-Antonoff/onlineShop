@@ -23,4 +23,9 @@ router.post('/:id/remove', async (req, res) => {
   }
 });
 
+router.get('/:userName', async (req, res) => {
+  const users = await User.findAll({ where: { name: req.params.userName } });
+  res.json(users);
+});
+
 module.exports = router;

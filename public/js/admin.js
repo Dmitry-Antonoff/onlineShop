@@ -1,4 +1,4 @@
-const { categoriesForm } = document.forms;
+const { categoriesForm, searchUser } = document.forms;
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -68,21 +68,63 @@ document.addEventListener('click', async (e) => {
   }
 });
 
-categoriesForm.addEventListener('submit', async (e) => {
+categoriesForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
     const data = new FormData(categoriesForm);
-    console.log(data);
     const res = await fetch('/categories', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: data,
     });
     if (res.status === 200) {
-      showToast('Категория добавлено', { type: 'success' });
+      showToast('Категория добавлена', { type: 'success' });
+      window.location.href = '/';
     }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+searchUser?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const res = await fetch(`/admin/${searchUser.userName.value}`, {
+      method: 'GET',
+    });
+    const response = await res.json();
+    const ul = document.querySelector('.all-users');
+    ul.innerHTML = '';
+    response.forEach((el) => {
+      const li = document.createElement('li');
+      li.id = el.id;
+
+      const nameParagraph = document.createElement('p');
+      nameParagraph.textContent = el.name;
+      li.appendChild(nameParagraph);
+
+      const emailParagraph = document.createElement('p');
+      emailParagraph.textContent = el.email;
+      li.appendChild(emailParagraph);
+
+      const button = document.createElement('button');
+      button.dataset.id = el.id;
+      button.id = `${el.id}-undo`;
+      if (el.role === 'ADMIN') {
+        button.textContent = 'Убрать Админа';
+        button.classList.add('btnUndoAdmin');
+      } else if (el.role !== 'ADMINISTRATOR') {
+        button.textContent = 'Сделать Админом';
+        button.classList.add('btnAddAdmin');
+      } else {
+        const span = document.createElement('span');
+        span.textContent = 'Вы';
+        li.appendChild(span);
+        ul.appendChild(li);
+        return;
+      }
+      li.appendChild(button);
+      ul.appendChild(li);
+    });
   } catch (error) {
     console.log(error);
   }
