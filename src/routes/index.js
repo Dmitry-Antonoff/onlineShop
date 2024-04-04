@@ -8,10 +8,28 @@ const isLogin = require('../middleware/isLogin');
 const isMainAdmin = require('../middleware/isMainAdmin');
 const { User, Category } = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
+const Catalog = require('../views/Catalog');
+const Products = require('../views/Products');
 
 router.get('/', (req, res) => {
   try {
     res.render(Home);
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/category', isLogin, (req, res) => {
+  try {
+    res.render(Catalog);
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/products', isLogin, (req, res) => {
+  try {
+    res.render(Products);
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
