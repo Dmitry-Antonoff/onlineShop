@@ -29,6 +29,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick/slick-theme.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/catalog.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/admin.css" />
+        <link rel="stylesheet" type="text/css" href="/stylesheets/products.css" />
         <script defer src="/js/burger.js" />
         <script defer src="/js/auth.js" />
         <script defer src="/js/slider.js" />

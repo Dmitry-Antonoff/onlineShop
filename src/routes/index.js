@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/category', isLogin, (req, res) => {
+router.get('/category', (req, res) => {
   try {
     res.render(Catalog);
   } catch (error) {
@@ -28,7 +28,7 @@ router.get('/category', isLogin, (req, res) => {
   }
 });
 
-router.get('/products', isLogin, (req, res) => {
+router.get('/products', (req, res) => {
   try {
     res.render(Products);
   } catch (error) {

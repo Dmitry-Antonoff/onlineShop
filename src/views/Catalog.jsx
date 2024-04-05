@@ -1,12 +1,12 @@
 const React = require('react');
 const Layout = require('./Layout');
 
-module.exports = function Home(props) {
+module.exports = function Catalog(props) {
   // const { category } = props;
   return (
     <Layout {...props}>
       <main className="catalog-main">
-        <h2>catalogName</h2>
+        <h2>categoryName</h2>
 
         <ul className="catalogs">
           {category.Categories.map((catalog) => (
