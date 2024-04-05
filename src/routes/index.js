@@ -10,6 +10,7 @@ const { User, Category } = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
 const Products = require('../views/Products');
+const AddProduct = require('../views/admin/AddProduct');
 
 router.get('/', async (req, res) => {
   try {
@@ -71,6 +72,14 @@ router.get('/categories/new', async (req, res) => {
   try {
     const allCategories = await Category.findAll();
     res.render(AddCategories, { allCategories });
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/product/new', async (req, res) => {
+  try {
+    res.render(AddProduct, {});
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
