@@ -20,10 +20,17 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/category', (req, res) => {
+router.get('/category/:categoryName', async (req, res) => {
   try {
-    res.render(Catalog);
+    const category = await Category.findOne({
+      where: { name: req.params.categoryName },
+      include: [
+        { model: Category, as: 'children', include: [{ model: Category, as: 'children' }] },
+      ],
+    });
+    res.render(Catalog, { category });
   } catch (error) {
+    console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });

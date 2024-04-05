@@ -13,7 +13,7 @@ module.exports = function Home(props) {
           </button>
           <div className="categories slider">
             {categories.map((category) => (
-              <a className="category-link slide" href="/category">
+              <a className="category-link slide" href={`/category/${category.name}`}>
                 <div className="category">
                   <img src={`${category.photoPath}`} alt="" />
                   <p>{category.name}</p>
