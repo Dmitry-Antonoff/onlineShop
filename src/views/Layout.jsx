@@ -28,7 +28,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick/slick-theme.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/catalog.css" />
-        <link rel="stylesheet" type="text/css" href="/stylesheets/admin.css" />
+        <link rel="stylesheet" type="text/css" href="/stylesheets/styleAdmin/admin.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/products.css" />
         <script defer src="/js/burger.js" />
         <script defer src="/js/auth.js" />
@@ -59,26 +59,16 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
                   </a>
                   {user?.name ? (
                     <ul className="menu" id="menu">
-                      {user?.role === 'ADMINISTRATOR' && (
-                        <>
-                          <li>
-                            <a href="/categories/new">Добавить Категорию</a>
-                          </li>
-                          <li>
-                            <a href="/admin">Пользователи</a>
-                          </li>
-                        </>
-                      )}
-                      {user?.role === 'ADMIN' && (
-                        <li>
-                          <a href="/categories/new">Добавить Категорию</a>
-                        </li>
-                      )}
                       <li>
                         <a href="/basket">
                           <img src="/svg/cart.svg" alt="cart" style={{ height: '30px' }} />
                         </a>
                       </li>
+                      {user?.role === 'ADMINISTRATOR' || user?.role === 'ADMIN' ? (
+                        <li>
+                          <a href="/admin">Админка</a>
+                        </li>
+                      ) : null}
                       <li>
                         <a href="/auth/logout">Выйти</a>
                       </li>

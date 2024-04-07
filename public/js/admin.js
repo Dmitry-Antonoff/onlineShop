@@ -1,4 +1,4 @@
-const { categoriesForm, searchUser } = document.forms;
+const { categoriesForm, searchUser, productForm } = document.forms;
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -7,8 +7,8 @@ function showToast(message, { type = 'error' } = {}) {
   toast.style.top = '20px';
   toast.style.left = '50%';
   toast.style.transform = 'translateX(-50%)';
-  toast.style.backgroundColor = type === 'error' ? '#ff000091' : '#00800075';
-  toast.style.color = 'white';
+  toast.style.backgroundColor = type === 'error' ? '#ff000091' : '#fff';
+  toast.style.color = 'black';
   toast.style.padding = '10px 20px';
   toast.style.borderRadius = '5px';
   toast.style.zIndex = '1000';
@@ -125,6 +125,40 @@ searchUser?.addEventListener('submit', async (e) => {
       li.appendChild(button);
       ul.appendChild(li);
     });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+productForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const data = new FormData(categoriesForm);
+    const res = await fetch('/product', {
+      method: 'POST',
+      body: data,
+    });
+    if (res.status === 200) {
+      showToast('Товар добавлен', { type: 'success' });
+      window.location.href = '/';
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+productForm?.addEventListener('click', async (e) => {
+  e.preventDefault();
+  try {
+    const data = new FormData(categoriesForm);
+    const res = await fetch('/product', {
+      method: 'POST',
+      body: data,
+    });
+    if (res.status === 200) {
+      showToast('Товар добавлен', { type: 'success' });
+      window.location.href = '/';
+    }
   } catch (error) {
     console.log(error);
   }

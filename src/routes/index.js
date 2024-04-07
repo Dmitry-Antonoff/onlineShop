@@ -25,6 +25,7 @@ router.get('/category', (req, res) => {
   try {
     res.render(Catalog);
   } catch (error) {
+    console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
@@ -64,6 +65,7 @@ router.get('/admin', isMainAdmin, async (req, res) => {
     });
     res.render(AdminPage, { allUsers, page: page || 1, limit });
   } catch (error) {
+    console.error(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
