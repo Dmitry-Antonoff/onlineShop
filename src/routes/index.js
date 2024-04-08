@@ -7,18 +7,28 @@ const Error = require('../views/Error');
 const isLogin = require('../middleware/isLogin');
 const isMainAdmin = require('../middleware/isMainAdmin');
 const isAdmin = require('../middleware/isAdmin');
-const { User, Category } = require('../../db/models');
+const { User, Category, Product } = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
 const Products = require('../views/Products');
 const AddProduct = require('../views/admin/AddProduct');
 const AdminProducts = require('../views/admin/AdminProducts');
 const AdminCategories = require('../views/admin/AdminCategories');
+const EditProduct = require('../views/admin/EditProduct');
+const Basket = require('../views/Basket');
 
 router.get('/', async (req, res) => {
   try {
     const categories = await Category.findAll({ where: { parentCategoryId: null } });
     res.render(Home, { categories });
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/basket', async (req, res) => {
+  try {
+    res.render(Basket, {});
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
@@ -118,6 +128,15 @@ router.get('/categories/new', isAdmin, async (req, res) => {
 router.get('/product/new', isAdmin, async (req, res) => {
   try {
     res.render(AddProduct, {});
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/product/:id/new', isAdmin, async (req, res) => {
+  try {
+    const product = await Product.findOne({ where: { id: req.params.id } });
+    res.render(EditProduct, { product });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
