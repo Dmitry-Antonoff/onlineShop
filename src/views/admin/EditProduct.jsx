@@ -2,7 +2,7 @@ const React = require('react');
 const Layout = require('../Layout');
 const SideBar = require('./SideBar');
 
-module.exports = function AddProduct(props) {
+module.exports = function EditProduct(props) {
   const { allCategories } = props;
   return (
     <Layout {...props}>
@@ -12,8 +12,8 @@ module.exports = function AddProduct(props) {
           <form className="add-product-form" name="productForm">
             <select name="parentproductName">
               {/* {allCategories.map((category) => (
-                <option>{category.name}</option>
-              ))} */}
+              <option>{category.name}</option>
+            ))} */}
             </select>
             <input name="name" className="product-name-form" type="text" placeholder="Название" />
             <input name="img" className="img-add" type="file" />
