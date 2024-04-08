@@ -9,10 +9,10 @@ module.exports = function SideBar(props) {
   return (
     <ul className="side-bar">
       <li>
-        <a href="/categories/new">Категории</a>
+        <a href="/admin/categories">Категории</a>
       </li>
       <li>
-        <a href="/product/new">Товары</a>
+        <a href="/admin/products">Товары</a>
       </li>
       {user?.role === 'ADMINISTRATOR' && (
         <li>
