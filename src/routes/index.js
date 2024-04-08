@@ -6,11 +6,14 @@ const AdminPage = require('../views/admin/AdminPage');
 const Error = require('../views/Error');
 const isLogin = require('../middleware/isLogin');
 const isMainAdmin = require('../middleware/isMainAdmin');
+const isAdmin = require('../middleware/isAdmin');
 const { User, Category } = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
 const Products = require('../views/Products');
 const AddProduct = require('../views/admin/AddProduct');
+const AdminProducts = require('../views/admin/AdminProducts');
+const AdminCategories = require('../views/admin/AdminCategories');
 
 router.get('/', async (req, res) => {
   try {
@@ -25,6 +28,7 @@ router.get('/category', (req, res) => {
   try {
     res.render(Catalog);
   } catch (error) {
+    console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
@@ -64,11 +68,45 @@ router.get('/admin', isMainAdmin, async (req, res) => {
     });
     res.render(AdminPage, { allUsers, page: page || 1, limit });
   } catch (error) {
+    console.error(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
 
-router.get('/categories/new', async (req, res) => {
+router.get('/admin', isMainAdmin, async (req, res) => {
+  try {
+    const { page } = req.query;
+    const allUser = await User.findAll();
+    const limit = Math.ceil(allUser.length / 10);
+    const allUsers = await User.findAll({
+      limit: 10,
+      offset: +page ? (+page - 1) * 10 : 0,
+      order: [['name', 'ASC']],
+    });
+    res.render(AdminPage, { allUsers, page: page || 1, limit });
+  } catch (error) {
+    console.error(error);
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/admin/products', isAdmin, async (req, res) => {
+  try {
+    res.render(AdminProducts, {});
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/admin/categories', isAdmin, async (req, res) => {
+  try {
+    res.render(AdminCategories, {});
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/categories/new', isAdmin, async (req, res) => {
   try {
     const allCategories = await Category.findAll();
     res.render(AddCategories, { allCategories });
@@ -77,7 +115,7 @@ router.get('/categories/new', async (req, res) => {
   }
 });
 
-router.get('/product/new', async (req, res) => {
+router.get('/product/new', isAdmin, async (req, res) => {
   try {
     res.render(AddProduct, {});
   } catch (error) {
