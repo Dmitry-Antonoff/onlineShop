@@ -35,7 +35,7 @@ module.exports = function AdminProducts(props) {
             </thead>
             <tbody>
               {allProducts.map((product) => (
-                <tr className="all-products-li">
+                <tr className="all-products-li" id={product.id}>
                   <td>
                     <img className="product-img" src={product.imgPath} alt={product.name} />
                   </td>
@@ -50,8 +50,13 @@ module.exports = function AdminProducts(props) {
                         <img className="edit" src="/svg/edit.svg" alt="Изменить" />
                       </button>
                     </a>
-                    <button type="button" className="trash-btn">
-                      <img className="trash" src="/svg/trash.svg" alt="Удалить" />
+                    <button type="button" className="trash-btn btn-product-delete" data-id={product.id}>
+                      <img
+                        data-id={product.id}
+                        className="trash"
+                        src="/svg/trash.svg"
+                        alt="Удалить"
+                      />
                     </button>
                   </td>
                 </tr>

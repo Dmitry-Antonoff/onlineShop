@@ -17,6 +17,7 @@ const AdminProducts = require('../views/admin/AdminProducts');
 const AdminCategories = require('../views/admin/AdminCategories');
 const EditProduct = require('../views/admin/EditProduct');
 const Basket = require('../views/Basket');
+const EditCategory = require('../views/admin/EditCategory');
 
 router.get('/', async (req, res) => {
   try {
@@ -137,6 +138,7 @@ router.get('/admin/products', isAdmin, async (req, res) => {
     });
     res.render(AdminProducts, { allProducts, page: page || 1, limit, search });
   } catch (error) {
+    console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
@@ -190,9 +192,12 @@ router.get('/product/new', isAdmin, async (req, res) => {
   }
 });
 
-router.get('/product/:id/new', isAdmin, async (req, res) => {
+router.get('/product/:id/edit', isAdmin, async (req, res) => {
   try {
-    const product = await Product.findOne({ where: { id: req.params.id } });
+    const product = await Product.findOne({
+      where: { id: req.params.id },
+      include: [{ model: Manufacturer }],
+    });
     res.render(EditProduct, { product });
   } catch (error) {
     console.log(error);
@@ -200,10 +205,11 @@ router.get('/product/:id/new', isAdmin, async (req, res) => {
   }
 });
 
-router.get('/product/:id/new', isAdmin, async (req, res) => {
+router.get('/category/:id/edit', isAdmin, async (req, res) => {
   try {
-    const product = await Product.findOne({ where: { id: req.params.id } });
-    res.render(EditProduct, { product });
+    const category = await Category.findOne({ where: { id: req.params.id } });
+    console.log(category);
+    res.render(EditCategory, { category });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }

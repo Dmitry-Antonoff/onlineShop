@@ -30,16 +30,25 @@ module.exports = function AdminCategories(props) {
             </thead>
             <tbody>
               {allCategories.map((category) => (
-                <tr className="all-products-li">
+                <tr className="all-products-li" id={category.id}>
                   <td className="admin-products-name">{category.name}</td>
                   <td className="button-div">
-                    <a href={`/product/edit`}>
+                    <a href={`/category/${category.id}/edit`}>
                       <button type="button" className="edit-btn">
                         <img className="edit" src="/svg/edit.svg" alt="Изменить" />
                       </button>
                     </a>
-                    <button type="button" className="trash-btn">
-                      <img className="trash" src="/svg/trash.svg" alt="Удалить" />
+                    <button
+                      type="button"
+                      className="trash-btn btn-delete-category"
+                      data-id={category.id}
+                    >
+                      <img
+                        data-id={category.id}
+                        className="trash"
+                        src="/svg/trash.svg"
+                        alt="Удалить"
+                      />
                     </button>
                   </td>
                 </tr>
