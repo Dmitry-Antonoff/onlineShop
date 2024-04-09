@@ -20,6 +20,7 @@
     "global-require": "off",
     "import/no-extraneous-dependencies": "off",
     "no-undef": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "no-restricted-globals": "off"
   }
 }

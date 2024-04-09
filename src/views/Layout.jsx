@@ -67,7 +67,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
                       </li>
                       {user?.role === 'ADMINISTRATOR' || user?.role === 'ADMIN' ? (
                         <li>
-                          <a href="/admin">Админка</a>
+                          <a href="/admin/categories">Админка</a>
                         </li>
                       ) : null}
                       <li>

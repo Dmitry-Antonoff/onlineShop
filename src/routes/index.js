@@ -17,6 +17,7 @@ const AdminProducts = require('../views/admin/AdminProducts');
 const AdminCategories = require('../views/admin/AdminCategories');
 const EditProduct = require('../views/admin/EditProduct');
 const Basket = require('../views/Basket');
+const EditCategory = require('../views/admin/EditCategory');
 
 router.get('/', async (req, res) => {
   try {
@@ -35,7 +36,7 @@ router.get('/basket', async (req, res) => {
   }
 });
 
-router.get('/category', async (req, res) => {
+router.get('/category/:categoryName', async (req, res) => {
   try {
     const category = await Category.findOne({
       where: { name: req.params.categoryName },
@@ -93,15 +94,18 @@ router.get('/admin', isMainAdmin, async (req, res) => {
 router.get('/admin/products', isAdmin, async (req, res) => {
   try {
     const { page } = req.query;
-    const products = await Product.findAll({ include: { model: Manufacturer } });
+    const products = await Product.findAll();
     const limit = Math.ceil(products.length / 10);
     const allProducts = await Product.findAll({
       limit: 10,
       offset: +page ? (+page - 1) * 10 : 0,
       order: [['name', 'ASC']],
+      include: [{ model: Manufacturer }],
     });
+    // console.log(allProducts);
     res.render(AdminProducts, { allProducts, page: page || 1, limit });
   } catch (error) {
+    console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
@@ -147,9 +151,12 @@ router.get('/product/new', isAdmin, async (req, res) => {
   }
 });
 
-router.get('/product/:id/new', isAdmin, async (req, res) => {
+router.get('/product/:id/edit', isAdmin, async (req, res) => {
   try {
-    const product = await Product.findOne({ where: { id: req.params.id } });
+    const product = await Product.findOne({
+      where: { id: req.params.id },
+      include: [{ model: Manufacturer }],
+    });
     res.render(EditProduct, { product });
   } catch (error) {
     console.log(error);
@@ -157,10 +164,11 @@ router.get('/product/:id/new', isAdmin, async (req, res) => {
   }
 });
 
-router.get('/product/:id/new', isAdmin, async (req, res) => {
+router.get('/category/:id/edit', isAdmin, async (req, res) => {
   try {
-    const product = await Product.findOne({ where: { id: req.params.id } });
-    res.render(EditProduct, { product });
+    const category = await Category.findOne({ where: { id: req.params.id } });
+    console.log(category);
+    res.render(EditCategory, { category });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
