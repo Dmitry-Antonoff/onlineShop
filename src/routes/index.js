@@ -51,10 +51,58 @@ router.get('/category/:categoryName', async (req, res) => {
   }
 });
 
-router.get('/products', (req, res) => {
+async function getParentCategories(cat, result = []) {
+  if (cat) {
+    result.push(cat);
+    if (cat.parentCategoryId) {
+      const parentCategory = await Category.findOne({ where: { id: cat.parentCategoryId } });
+      await getParentCategories(parentCategory, result);
+    }
+  }
+  return result;
+}
+async function getAllChildCategories(categoryId) {
+  const children = await Category.findAll({
+    where: { parentCategoryId: categoryId },
+  });
+
+  let allChildren = [...children];
+  for (const child of children) {
+    const childChildren = await getAllChildCategories(child.id);
+    allChildren = [...allChildren, ...childChildren];
+  }
+
+  return allChildren;
+}
+router.get('/products/:catId', async (req, res) => {
   try {
-    res.render(Products);
+    const category = await Category.findOne({
+      where: { id: req.params.catId },
+      include: [
+        {
+          model: Category,
+          as: 'parent',
+        },
+        {
+          model: Category,
+          as: 'children',
+        },
+      ],
+    });
+
+    const childCategories = await getAllChildCategories(req.params.catId);
+    const categoryIds = [req.params.catId, ...childCategories.map((cat) => cat.id)];
+
+    const parentCategories = await getParentCategories(category.parent);
+    parentCategories.pop();
+
+    const products = await Product.findAll({
+      where: { categoryId: { [Sequelize.Op.in]: categoryIds } },
+      include: [Category],
+    });
+    res.render(Products, { category, parentCategories, products });
   } catch (error) {
+    console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });

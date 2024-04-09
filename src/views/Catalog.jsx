@@ -11,17 +11,17 @@ module.exports = function Catalog(props) {
         <ul className="catalogs">
           {category.children.map((catalog) => (
             <li className="catalog">
-              <a href="/">
+              <a href={`/products/${catalog.id}`}>
                 <div className="catalog-img">
                   <img src={`${catalog.photoPath}`} alt="" />
                 </div>
-                <a href="/" className="catalog-link">
+                <a href={`/products/${catalog.id}`} className="catalog-link">
                   {catalog.name}
                 </a>
                 <ul className="catalog-ul">
                   {catalog.children.map((categry) => (
                     <li>
-                      <a href="/">{categry.name}</a>
+                      <a href={`/products/${categry.id}`}>{categry.name}</a>
                     </li>
                   ))}
                 </ul>
