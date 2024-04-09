@@ -3,7 +3,7 @@ const Layout = require('../Layout');
 const SideBar = require('./SideBar');
 
 module.exports = function AdminCategories(props) {
-  const { allCategories, page, limit, search } = props;
+  const { allCategories, page, limit, search, all } = props;
   return (
     <Layout {...props}>
       <main className="admin-main">
@@ -55,43 +55,45 @@ module.exports = function AdminCategories(props) {
               ))}
             </tbody>
           </table>
-          <div className="back-next">
-            <a
-              href={`/admin/categories?${search ? `search=${search}&` : ''}page=${
-                +page > 1 ? +page - 1 : +page
-              }`}
-            >
-              <img src="/svg/left.svg" alt="back" />
-            </a>
-            {+page >= 3 && (
-              <a href={`/admin/categories?${search ? `search=${search}&` : ''}page=${+page - 2}`}>
-                {+page - 2}
+          {all.length > 10 && (
+            <div className="back-next">
+              <a
+                href={`/admin/categories?${search ? `search=${search}&` : ''}page=${
+                  +page > 1 ? +page - 1 : +page
+                }`}
+              >
+                <img src="/svg/left.svg" alt="back" />
               </a>
-            )}
-            {+page >= 2 && (
-              <a href={`/admin/categories?${search ? `search=${search}&` : ''}page=${+page - 1}`}>
-                {+page - 1}
+              {+page >= 3 && (
+                <a href={`/admin/categories?${search ? `search=${search}&` : ''}page=${+page - 2}`}>
+                  {+page - 2}
+                </a>
+              )}
+              {+page >= 2 && (
+                <a href={`/admin/categories?${search ? `search=${search}&` : ''}page=${+page - 1}`}>
+                  {+page - 1}
+                </a>
+              )}
+              <span>...</span>
+              {+page === limit || (
+                <a href={`/admin/categories?${search ? `search=${search}&` : ''}page=${+page + 1}`}>
+                  {+page + 1}
+                </a>
+              )}
+              {+page + 1 >= limit || (
+                <a href={`/admin/categories?${search ? `search=${search}&` : ''}page=${+page + 2}`}>
+                  {+page + 2}
+                </a>
+              )}
+              <a
+                href={`/admin/categories?${search ? `search=${search}&` : ''}page=${
+                  +page < limit ? +page + 1 : +page
+                }`}
+              >
+                <img src="/svg/right.svg" alt="next" />
               </a>
-            )}
-            <span>...</span>
-            {+page === limit || (
-              <a href={`/admin/categories?${search ? `search=${search}&` : ''}page=${+page + 1}`}>
-                {+page + 1}
-              </a>
-            )}
-            {+page + 1 >= limit || (
-              <a href={`/admin/categories?${search ? `search=${search}&` : ''}page=${+page + 2}`}>
-                {+page + 2}
-              </a>
-            )}
-            <a
-              href={`/admin/categories?${search ? `search=${search}&` : ''}page=${
-                +page < limit ? +page + 1 : +page
-              }`}
-            >
-              <img src="/svg/right.svg" alt="next" />
-            </a>
-          </div>
+            </div>
+          )}
         </div>
       </main>
     </Layout>
