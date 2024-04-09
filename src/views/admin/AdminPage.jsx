@@ -9,7 +9,7 @@ module.exports = function AdminPage(props) {
       <main className="admin-main">
         <SideBar {...props}/>
         <div className="administrator">
-          <div className="search-div">
+          <div className="search-user-div">
             <form className="search-user" name="searchUser">
               <img src="/svg/search.svg" alt="search" style={{ height: '25px' }} />
               <input type="text" placeholder="Поиск Пользователей" name="userName" />

@@ -18,9 +18,9 @@
   margin-bottom: 7px;
 }
 
-.side-bar li.active  {
-  background-color: #f0f0f0; 
-  font-weight: bold; 
+.side-bar li.active {
+  background-color: #f0f0f0;
+  font-weight: bold;
 }
 
 .side-bar a {
@@ -32,17 +32,38 @@
 .administrator {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding-right: 20px;
 }
-.search-div {
-  margin: 40px 30px;
-  width: 400px;
+
+.search-user-div {
+  margin: 40px 0px;
+  width: 410px;
   background-color: white;
   height: 50px;
   display: flex;
+  justify-content: space-between;
 }
+
+/* .search-user-form {
+  width: 400px;
+  padding-left: 10px;
+} */
+
+.search-div {
+  margin: 40px 0px;
+  /* width: 410px; */
+  background-color: white;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .search-user {
   width: 400px;
   padding-left: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .search-div * {
@@ -65,14 +86,14 @@
   border: none;
   display: flex;
   justify-content: center;
+  align-items: center;
   color: white;
 }
 
 .all-users {
-  padding-inline-start: 60px;
+  padding-inline-start: 0px;
 }
 .all-users li {
-  margin: 35px 0px;
   width: 800px;
   background-color: white;
   height: 50px;
@@ -258,4 +279,90 @@
   background-color: #1d76cc;
   box-shadow: 0px 0px 10px #6f6f6f7d;
   color: white;
+}
+
+.all-products {
+  width: 100%;
+  padding-inline-start: 60px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+.all-products-li-name {
+  border: 1px solid slategrey;
+  background-color: white;
+  height: 50px;
+  /* display: flex;
+  justify-content: space-between;
+  align-items: center; */
+  padding: 0px 30px;
+}
+
+.all-products-li {
+  border: 1px solid #ededed;
+  background-color: white;
+  height: 77px;
+  /* display: flex;
+  justify-content: space-between;
+  align-items: center; */
+  padding: 0px 30px;
+}
+
+.admin-productsName {
+  width: 310px;
+  padding: 10px;
+}
+
+.img-td {
+  width: 150px;
+}
+
+.admin-products-name {
+  width: 150px; 
+}
+
+.admin-products-stock {
+  width: 250px;
+}
+
+.action {
+  width: 115px;
+}
+
+.edit-btn {
+  margin-right: 16px;
+  background-color: #1d76cc;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 6px;
+  transition: all 0.5s;
+}
+
+.trash-btn {
+  border-radius: 5px;
+  padding: 4px 6px;
+  background-color: red;
+  border: none;
+  transition: all 0.5s;
+}
+.edit-btn:hover {
+  background-color: #1b5e9d;
+}
+
+.trash-btn:hover {
+  background-color: rgb(198, 28, 28);
+}
+
+.trash {
+  width: 26px;
+  filter: invert(100%);
+}
+
+.edit {
+  width: 26px;
+  filter: invert(100%);
+}
+
+.product-img {
+  width: 75px;
 }
