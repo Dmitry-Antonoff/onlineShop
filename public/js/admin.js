@@ -1,4 +1,4 @@
-const { categoriesForm, searchUser, productForm, searchProduct } = document.forms;
+const { categoriesForm, productForm } = document.forms;
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -78,53 +78,8 @@ categoriesForm?.addEventListener('submit', async (e) => {
     });
     if (res.status === 200) {
       showToast('Категория добавлена', { type: 'success' });
-      window.location.href = '/';
+      window.location.href = '/admin/categories';
     }
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-searchUser?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  try {
-    const res = await fetch(`/admin/${searchUser.userName.value}`, {
-      method: 'GET',
-    });
-    const response = await res.json();
-    const ul = document.querySelector('.all-users');
-    ul.innerHTML = '';
-    response.forEach((el) => {
-      const li = document.createElement('li');
-      li.id = el.id;
-
-      const nameParagraph = document.createElement('p');
-      nameParagraph.textContent = el.name;
-      li.appendChild(nameParagraph);
-
-      const emailParagraph = document.createElement('p');
-      emailParagraph.textContent = el.email;
-      li.appendChild(emailParagraph);
-
-      const button = document.createElement('button');
-      button.dataset.id = el.id;
-      button.id = `${el.id}-undo`;
-      if (el.role === 'ADMIN') {
-        button.textContent = 'Убрать Админа';
-        button.classList.add('btnUndoAdmin');
-      } else if (el.role !== 'ADMINISTRATOR') {
-        button.textContent = 'Сделать Админом';
-        button.classList.add('btnAddAdmin');
-      } else {
-        const span = document.createElement('span');
-        span.textContent = 'Вы';
-        li.appendChild(span);
-        ul.appendChild(li);
-        return;
-      }
-      li.appendChild(button);
-      ul.appendChild(li);
-    });
   } catch (error) {
     console.log(error);
   }
@@ -140,46 +95,8 @@ productForm?.addEventListener('submit', async (e) => {
     });
     if (res.status === 200) {
       showToast('Товар добавлен', { type: 'success' });
-      window.location.href = '/';
+      window.location.href = '/admin/products';
     }
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-searchProduct?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  try {
-    const res = await fetch(`/admin/products/${searchProduct.product.value}`, {
-      method: 'GET',
-    });
-    const response = await res.json();
-    const tbody = document.querySelector('tbody');
-    tbody.innerHTML = '';
-    response.forEach((product) => {
-      const tr = document.createElement('tr');
-      tr.classList.add('all-products-li');
-      tr.innerHTML = `
-        <td>
-          <img class="product-img" src="${product.imgPath}" alt="${product.name}" />
-        </td>
-        <td class="admin-productsName">${product.name}</td>
-        <td class="admin-products-name">${product.productCode}</td>
-        <td class="admin-products-name">${product.Manufacturer.name}</td>
-        <td class="admin-products-name">${product.price}</td>
-        <td class="admin-products-name">${product.quantityInStock}</td>
-        <td class="button-div">
-          <a href="/product/${product.id}/edit">
-            <button type="button" class="edit-btn">
-              <img class="edit" src="/svg/edit.svg" alt="Изменить" />
-            </button>
-          </a>
-          <button type="button" class="trash-btn">
-            <img class="trash" src="/svg/trash.svg" alt="Удалить" />
-          </button>
-        </td>`;
-      tbody.appendChild(tr);
-    });
   } catch (error) {
     console.log(error);
   }

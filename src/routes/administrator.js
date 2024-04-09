@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Sequelize } = require('sequelize');
-const { User, Product } = require('../../db/models');
+const { User, Category, Product, Manufacturer } = require('../../db/models');
 
 router.post('/:id/add', async (req, res) => {
   try {
@@ -25,7 +25,23 @@ router.post('/:id/remove', async (req, res) => {
 });
 
 router.get('/:userName', async (req, res) => {
-  const users = await User.findAll({ where: { name: req.params.userName } });
+  const keyword = req.params.productName;
+  const users = await User.findAll({
+    where: {
+      [Sequelize.Op.or]: [
+        {
+          name: {
+            [Sequelize.Op.iLike]: `%${keyword}%`,
+          },
+        },
+        {
+          email: {
+            [Sequelize.Op.iLike]: `%${keyword}%`,
+          },
+        },
+      ],
+    },
+  });
   res.json(users);
 });
 
@@ -36,18 +52,31 @@ router.get('/products/:productName', async (req, res) => {
       [Sequelize.Op.or]: [
         {
           name: {
-            [Sequelize.Op.like]: `%${keyword}%`,
+            [Sequelize.Op.iLike]: `%${keyword}%`,
           },
         },
         {
           productCode: {
-            [Sequelize.Op.like]: `%${keyword}%`,
+            [Sequelize.Op.iLike]: `%${keyword}%`,
           },
         },
       ],
     },
+    include: [{ model: Manufacturer }],
   });
   res.json(products);
+});
+
+router.get('/categories/:categoryName', async (req, res) => {
+  const keyword = req.params.categoryName;
+  const categories = await Category.findAll({
+    where: {
+      name: {
+        [Sequelize.Op.iLike]: `%${keyword}%`,
+      },
+    },
+  });
+  res.json(categories);
 });
 
 module.exports = router;
