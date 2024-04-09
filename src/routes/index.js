@@ -76,15 +76,32 @@ router.get('/auth/reg', isLogin, (req, res) => {
 
 router.get('/admin', isMainAdmin, async (req, res) => {
   try {
-    const { page } = req.query;
-    const allUser = await User.findAll();
+    const { page, search } = req.query;
+    const where = search
+      ? {
+        [Sequelize.Op.or]: [
+          {
+            name: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            email: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+        ],
+      }
+      : {};
+    const allUser = await User.findAll({ where });
     const limit = Math.ceil(allUser.length / 10);
     const allUsers = await User.findAll({
       limit: 10,
       offset: +page ? (+page - 1) * 10 : 0,
       order: [['name', 'ASC']],
+      where,
     });
-    res.render(AdminPage, { allUsers, page: page || 1, limit });
+    res.render(AdminPage, { allUsers, page: page || 1, limit, search });
   } catch (error) {
     console.error(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
@@ -93,17 +110,33 @@ router.get('/admin', isMainAdmin, async (req, res) => {
 
 router.get('/admin/products', isAdmin, async (req, res) => {
   try {
-    const { page } = req.query;
-    const products = await Product.findAll();
+    const { page, search } = req.query;
+    const where = search
+      ? {
+        [Sequelize.Op.or]: [
+          {
+            name: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            productCode: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+        ],
+      }
+      : {};
+    const products = await Product.findAll({ where });
     const limit = Math.ceil(products.length / 10);
     const allProducts = await Product.findAll({
       limit: 10,
       offset: +page ? (+page - 1) * 10 : 0,
       order: [['name', 'ASC']],
       include: [{ model: Manufacturer }],
+      where,
     });
-    // console.log(allProducts);
-    res.render(AdminProducts, { allProducts, page: page || 1, limit });
+    res.render(AdminProducts, { allProducts, page: page || 1, limit, search });
   } catch (error) {
     console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
@@ -112,15 +145,23 @@ router.get('/admin/products', isAdmin, async (req, res) => {
 
 router.get('/admin/categories', isAdmin, async (req, res) => {
   try {
-    const { page } = req.query;
-    const categories = await Category.findAll();
+    const { page, search } = req.query;
+    const where = search
+      ? {
+        name: {
+          [Sequelize.Op.iLike]: `%${search}%`,
+        },
+      }
+      : {};
+    const categories = await Category.findAll({ where });
     const limit = Math.ceil(categories.length / 10);
     const allCategories = await Category.findAll({
       limit: 10,
       offset: +page ? (+page - 1) * 10 : 0,
       order: [['name', 'ASC']],
+      where,
     });
-    res.render(AdminCategories, { allCategories, page: page || 1, limit });
+    res.render(AdminCategories, { allCategories, page: page || 1, limit, search });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }

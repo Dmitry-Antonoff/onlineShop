@@ -3,16 +3,16 @@ const Layout = require('../Layout');
 const SideBar = require('./SideBar');
 
 module.exports = function AdminProducts(props) {
-  const { allProducts, page, limit } = props;
+  const { allProducts, page, limit, search } = props;
   return (
     <Layout {...props}>
       <main className="admin-main">
         <SideBar {...props} />
         <div className="administrator">
           <div className="search-div">
-            <form className="search-user" name="searchProduct">
+            <form className="search-user" name="searchProduct" method="GET">
               <img src="/svg/search.svg" alt="search" style={{ height: '25px' }} />
-              <input type="text" placeholder="Поиск Товара" name="product" />
+              <input type="text" placeholder="Поиск Товара" name="search" value={search} />
               <button type="submit">Найти</button>
             </form>
             <a href="/product/new">
@@ -34,30 +34,6 @@ module.exports = function AdminProducts(props) {
               </tr>
             </thead>
             <tbody>
-              {/* <tr className="all-products-li">
-                <td className="img-td">
-                  <img
-                    className="product-img"
-                    src="https://cdn.etm.ru/ipro/814/small_vvg_3_ploskij_nezalit.jpg"
-                    alt="{product.name}"
-                  />
-                </td>
-                <td className="admin-productsName">asdfasdf</td>
-                <td className="admin-products-name">adsfadsf</td>
-                <td className="admin-products-stock">adsf</td>
-                <td className="admin-products-name">ass</td>
-                <td className="admin-products-name">dfdf</td>
-                <td className="button-div">
-                  <a href={`/product/edit`}>
-                    <button type="button" className="edit-btn">
-                      <img className="edit" src="/svg/edit.svg" alt="Изменить" />
-                    </button>
-                  </a>
-                  <button type="button" className="trash-btn">
-                    <img className="trash" src="/svg/trash.svg" alt="Удалить" />
-                  </button>
-                </td>
-              </tr> */}
               {allProducts.map((product) => (
                 <tr className="all-products-li" id={product.id}>
                   <td>
@@ -88,15 +64,39 @@ module.exports = function AdminProducts(props) {
             </tbody>
           </table>
           <div className="back-next">
-            <a href={`/admin?page=${+page > 1 ? +page - 1 : +page}`}>
+            <a
+              href={`/admin/products?${search ? `search=${search}&` : ''}page=${
+                +page > 1 ? +page - 1 : +page
+              }`}
+            >
               <img src="/svg/left.svg" alt="back" />
             </a>
-            {+page >= 3 && <a href={`/admin?page=${+page - 2}`}>{+page - 2}</a>}
-            {+page >= 2 && <a href={`/admin?page=${+page - 1}`}>{+page - 1}</a>}
+            {+page >= 3 && (
+              <a href={`/admin/products?${search ? `search=${search}&` : ''}page=${+page - 2}`}>
+                {+page - 2}
+              </a>
+            )}
+            {+page >= 2 && (
+              <a href={`/admin/products?${search ? `search=${search}&` : ''}page=${+page - 1}`}>
+                {+page - 1}
+              </a>
+            )}
             <span>...</span>
-            {+page === limit || <a href={`/admin?page=${+page + 1}`}>{+page + 1}</a>}
-            {+page + 1 >= limit || <a href={`/admin?page=${+page + 2}`}>{+page + 2}</a>}
-            <a href={`/admin?page=${+page < limit ? +page + 1 : +page}`}>
+            {+page === limit || (
+              <a href={`/admin/products?${search ? `search=${search}&` : ''}page=${+page + 1}`}>
+                {+page + 1}
+              </a>
+            )}
+            {+page + 1 >= limit || (
+              <a href={`/admin/products?${search ? `search=${search}&` : ''}page=${+page + 2}`}>
+                {+page + 2}
+              </a>
+            )}
+            <a
+              href={`/admin/products?${search ? `search=${search}&` : ''}page=${
+                +page < limit ? +page + 1 : +page
+              }`}
+            >
               <img src="/svg/right.svg" alt="next" />
             </a>
           </div>
