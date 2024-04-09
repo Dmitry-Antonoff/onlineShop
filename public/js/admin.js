@@ -1,4 +1,4 @@
-const { categoriesForm, searchUser } = document.forms;
+const { categoriesForm, searchUser, productForm, searchProduct } = document.forms;
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -7,8 +7,8 @@ function showToast(message, { type = 'error' } = {}) {
   toast.style.top = '20px';
   toast.style.left = '50%';
   toast.style.transform = 'translateX(-50%)';
-  toast.style.backgroundColor = type === 'error' ? '#ff000091' : '#00800075';
-  toast.style.color = 'white';
+  toast.style.backgroundColor = type === 'error' ? '#ff000091' : '#fff';
+  toast.style.color = 'black';
   toast.style.padding = '10px 20px';
   toast.style.borderRadius = '5px';
   toast.style.zIndex = '1000';
@@ -124,6 +124,61 @@ searchUser?.addEventListener('submit', async (e) => {
       }
       li.appendChild(button);
       ul.appendChild(li);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+productForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const data = new FormData(productForm);
+    const res = await fetch('/products', {
+      method: 'POST',
+      body: data,
+    });
+    if (res.status === 200) {
+      showToast('Товар добавлен', { type: 'success' });
+      window.location.href = '/';
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+searchProduct?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const res = await fetch(`/admin/products/${searchProduct.product.value}`, {
+      method: 'GET',
+    });
+    const response = await res.json();
+    const tbody = document.querySelector('tbody');
+    tbody.innerHTML = '';
+    response.forEach((product) => {
+      const tr = document.createElement('tr');
+      tr.classList.add('all-products-li');
+      tr.innerHTML = `
+        <td>
+          <img class="product-img" src="${product.imgPath}" alt="${product.name}" />
+        </td>
+        <td class="admin-productsName">${product.name}</td>
+        <td class="admin-products-name">${product.productCode}</td>
+        <td class="admin-products-name">${product.Manufacturer.name}</td>
+        <td class="admin-products-name">${product.price}</td>
+        <td class="admin-products-name">${product.quantityInStock}</td>
+        <td class="button-div">
+          <a href="/product/${product.id}/edit">
+            <button type="button" class="edit-btn">
+              <img class="edit" src="/svg/edit.svg" alt="Изменить" />
+            </button>
+          </a>
+          <button type="button" class="trash-btn">
+            <img class="trash" src="/svg/trash.svg" alt="Удалить" />
+          </button>
+        </td>`;
+      tbody.appendChild(tr);
     });
   } catch (error) {
     console.log(error);

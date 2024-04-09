@@ -1,7 +1,40 @@
 .admin-main {
+  display: flex;
+}
+
+.side-bar {
+  list-style: none;
+  padding-right: 20px;
+  background-color: #fff;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  padding-inline-start: 0px;
+  padding: 20px;
+  margin: 30px;
+  height: 100%;
+}
+
+.side-bar li {
+  margin-bottom: 7px;
+}
+
+.side-bar li.active  {
+  background-color: #f0f0f0; 
+  font-weight: bold; 
+}
+
+.side-bar a {
+  text-decoration: none;
+  color: #373737;
+  font-size: 18px;
+}
+
+.administrator {
+  display: flex;
+  flex-direction: column;
 }
 .search-div {
-  margin: 40px 60px;
+  margin: 40px 30px;
   width: 400px;
   background-color: white;
   height: 50px;
@@ -36,7 +69,7 @@
 }
 
 .all-users {
-  padding-inline-start: 70px;
+  padding-inline-start: 60px;
 }
 .all-users li {
   margin: 35px 0px;
@@ -101,14 +134,13 @@
 }
 
 .add-categories-main {
-  margin-top: 20px;
-  background-color: white;
   display: flex;
+}
+
+.add-categories-div {
+  background-color: white;
   box-sizing: border-box;
-  align-items: center;
-  flex-direction: column;
-  margin: 20px auto;
-  max-width: 50%;
+  margin: 30px;
   box-shadow: 0px 0px 40px #a9a9a9;
   padding: 20px;
 }
@@ -139,7 +171,7 @@
   padding-left: 15px;
 }
 
-.img-add::file-selector-button  {
+.img-add::file-selector-button {
   margin-right: 20px;
   border: none;
   background: #efefef;
@@ -152,6 +184,72 @@
 }
 
 .add-categories-form button {
+  margin: 15px;
+  width: 317px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background-color: #1d76cc;
+  box-shadow: 0px 0px 10px #6f6f6f7d;
+  color: white;
+}
+
+.add-product-main {
+  display: flex;
+}
+
+.add-product-div {
+  margin-top: 20px;
+  background-color: white;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px auto;
+  max-width: 50%;
+  box-shadow: 0px 0px 40px #a9a9a9;
+  padding: 20px;
+}
+
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.add-product-form select {
+  width: 317px;
+  height: 40px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px #8b8b8b7d;
+  border: none;
+  margin: 15px;
+  padding-left: 15px;
+}
+
+.product-name-form {
+  width: 300px;
+  height: 40px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px #8b8b8b7d;
+  border: none;
+  margin: 15px;
+  padding-left: 15px;
+}
+
+.img-add::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #efefef;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #8d8d8d;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  margin-left: 15px;
+}
+
+.add-product-form button {
   margin: 15px;
   width: 317px;
   height: 40px;
