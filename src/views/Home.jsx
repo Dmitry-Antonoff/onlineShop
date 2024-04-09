@@ -8,7 +8,7 @@ module.exports = function Home(props) {
       <main className="home-main">
         <h2>Категории</h2>
         <button type="button" className="prev" onClick="prevSlide()">
-          Назад
+          <img alt="arror-left" src="svg/left.svg" />
         </button>
         <ul className="categories">
           {categories.map((category) => (
@@ -21,7 +21,7 @@ module.exports = function Home(props) {
           ))}
         </ul>
         <button type="button" className="next" onClick="nextSlide()">
-          Вперед
+          <img alt="arror-right" src="svg/right.svg" />
         </button>
         <h2>Хиты продаж</h2>
         <div className="≈">

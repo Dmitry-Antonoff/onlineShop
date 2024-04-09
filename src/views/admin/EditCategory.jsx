@@ -18,7 +18,7 @@ module.exports = function EditCategory(props) {
             </select> */}
             <input name="name" className="category-name" type="text" value={category.name} />
             <input name="img" className="img-add" type="file" />
-            <button type="submit">Добавить</button>
+            <button type="submit">Изменить</button>
           </form>
         </div>
       </main>

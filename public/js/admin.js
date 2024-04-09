@@ -1,6 +1,8 @@
 const { categoriesForm, productForm, productEditForm, categoryEditForm } = document.forms;
 const btndeleteProduct = document.querySelectorAll('.btn-product-delete');
 const btndeleteCategory = document.querySelectorAll('.btn-delete-category');
+const characteristicsAdd = document.querySelector('.add-value-characteristics');
+const characteristicsAddInput = document.querySelector('.characteristics-add');
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -200,5 +202,39 @@ btndeleteCategory.forEach((btn) => {
     } catch (error) {
       console.error(error);
     }
+  });
+});
+
+characteristicsAdd?.addEventListener('click', async () => {
+  const keyValuePair = document.createElement('div');
+  keyValuePair.className = 'key-value';
+
+  const keyInput = document.createElement('input');
+  keyInput.type = 'text';
+  keyInput.placeholder = 'Ключ';
+
+  const valueInput = document.createElement('input');
+  valueInput.type = 'text';
+  valueInput.placeholder = 'Значение';
+
+  const deleteButton = document.createElement('button');
+  deleteButton.type = 'button';
+  deleteButton.className = 'key-value-delete';
+
+  const trashImage = document.createElement('img');
+  trashImage.className = 'key-value-trash';
+  trashImage.src = '/svg/trash.svg';
+  trashImage.alt = 'Удалить';
+
+  deleteButton.appendChild(trashImage);
+
+  keyValuePair.appendChild(keyInput);
+  keyValuePair.appendChild(valueInput);
+  keyValuePair.appendChild(deleteButton);
+
+  characteristicsAddInput.appendChild(keyValuePair);
+
+  deleteButton.addEventListener('click', () => {
+    keyValuePair.remove();
   });
 });

@@ -15,28 +15,48 @@ module.exports = function EditProduct(props) {
                 <option>{category.name}</option>
               ))}
             </select> */}
-            <input name="name" className="product-name-form" type="text" value={product.name} />
-            <input name="img" className="img-add" type="file" />
-            <input
-              name="code"
-              className="product-name-form"
-              type="text"
-              value={product.productCode}
-            />
-            <input
-              name="manufacturer"
-              className="product-name-form"
-              type="text"
-              value={product.Manufacturer.name}
-            />
-            <input name="price" className="product-name-form" type="text" value={product.price} />
-            <input
-              name="inStock"
-              className="product-name-form"
-              type="text"
-              value={product.quantityInStock}
-            />
-            <button type="submit">Изменить</button>
+            <div className="product-value-div">
+              <input name="name" className="product-name-form" type="text" value={product.name} />
+              <input name="img" className="img-add" type="file" />
+              <input
+                name="code"
+                className="product-name-form"
+                type="text"
+                value={product.productCode}
+              />
+              <input
+                name="manufacturer"
+                className="product-name-form"
+                type="text"
+                value={product.Manufacturer.name}
+              />
+              <input name="price" className="product-name-form" type="text" value={product.price} />
+              <input
+                name="inStock"
+                className="product-name-form"
+                type="text"
+                value={product.quantityInStock}
+              />
+              <button className="add-product-form-button" type="submit">
+                Изменить
+              </button>
+            </div>
+            <div className="characteristics-add">
+              <h2>Характеристики</h2>
+              <button type="button" className="edit-btn add-value-characteristics">
+                <img className="edit" src="/svg/add.svg" alt="Добавить" />
+              </button>
+              {/* {product.characteristics.map((characteristic) => (
+                <div className="key-value">
+                  <input type="text" placeholder="Ключ" />
+                  <input type="text" placeholder="Значение" />
+                </div>
+              ))} */}
+            </div>
+            <div className="description">
+              <h2>Описание</h2>
+              <textarea value={product.description} name="description" cols="30" rows="10" />
+            </div>
           </form>
         </div>
       </main>

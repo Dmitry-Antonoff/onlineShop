@@ -17,8 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post('/', upload.single('img'), async (req, res) => {
-  const { parentproductName, name, code, manufacturer, price, inStock } = req.body;
-  console.log(parentproductName);
+  const { parentproductName, name, code, manufacturer, price, inStock, description } = req.body;
   try {
     let manufactur = await Manufacturer.findOne({ where: { name: manufacturer } });
     if (!manufactur) {
@@ -32,6 +31,7 @@ router.post('/', upload.single('img'), async (req, res) => {
       manufacturerId: manufactur.id,
       price,
       quantityInStock: inStock,
+      description,
       imgPath: `/photos/${req.file?.filename}`,
     });
     res.sendStatus(200);

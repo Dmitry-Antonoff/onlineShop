@@ -83,10 +83,7 @@ router.put('/category/:id', async (req, res) => {
   try {
     const { name } = req.body;
     console.log(name);
-    await Category.update(
-      { name },
-      { where: { id: req.params.id } },
-    );
+    await Category.update({ name }, { where: { id: req.params.id } });
     res.sendStatus(200);
   } catch (error) {
     console.error(error);
@@ -96,14 +93,21 @@ router.put('/category/:id', async (req, res) => {
 
 router.put('/products/:id', async (req, res) => {
   try {
-    const { name, code, manufacturer, price, inStock } = req.body;
+    const { name, code, manufacturer, price, inStock, description } = req.body;
     let manufactur = await Manufacturer.findOne({ where: { name: manufacturer } });
     if (!manufactur) {
       manufactur = await Manufacturer.create({ name: manufacturer });
     }
 
     await Product.update(
-      { name, productCode: code, manufacturerId: manufactur.id, price, quantityInStock: inStock },
+      {
+        name,
+        productCode: code,
+        manufacturerId: manufactur.id,
+        price,
+        quantityInStock: inStock,
+        description,
+      },
       { where: { id: req.params.id } },
     );
     res.sendStatus(200);

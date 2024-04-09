@@ -18,7 +18,9 @@ module.exports = function AddCategories(props) {
             </select>
             <input name="name" className="category-name" type="text" placeholder="Название" />
             <input name="img" className="img-add" type="file" />
-            <button type="submit">Добавить</button>
+            <button className="add-product-form-button" type="submit">
+              Добавить
+            </button>
           </form>
         </div>
       </main>
