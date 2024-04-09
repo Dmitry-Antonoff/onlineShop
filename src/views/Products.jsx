@@ -61,7 +61,7 @@ module.exports = function Products(props) {
                 <div className="price">
                   <p className="first-price">цена</p>
                 </div>
-                <div className="into">
+                <div className="into-div">
                   <input type="number" name="" id="" />
                   <p>шт</p>
                   <button type="button">В корзину</button>
