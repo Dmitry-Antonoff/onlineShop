@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { Sequelize } = require('sequelize');
 const Home = require('../views/Home');
 const Login = require('../views/auth/login');
 const Reg = require('../views/auth/reg');
@@ -7,7 +8,7 @@ const Error = require('../views/Error');
 const isLogin = require('../middleware/isLogin');
 const isMainAdmin = require('../middleware/isMainAdmin');
 const isAdmin = require('../middleware/isAdmin');
-const { User, Category, Product } = require('../../db/models');
+const { User, Category, Product, Manufacturer } = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
 const Products = require('../views/Products');
@@ -34,9 +35,15 @@ router.get('/basket', async (req, res) => {
   }
 });
 
-router.get('/category', (req, res) => {
+router.get('/category', async (req, res) => {
   try {
-    res.render(Catalog);
+    const category = await Category.findOne({
+      where: { name: req.params.categoryName },
+      include: [
+        { model: Category, as: 'children', include: [{ model: Category, as: 'children' }] },
+      ],
+    });
+    res.render(Catalog, { category });
   } catch (error) {
     console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
@@ -83,26 +90,17 @@ router.get('/admin', isMainAdmin, async (req, res) => {
   }
 });
 
-router.get('/admin', isMainAdmin, async (req, res) => {
+router.get('/admin/products', isAdmin, async (req, res) => {
   try {
     const { page } = req.query;
-    const allUser = await User.findAll();
-    const limit = Math.ceil(allUser.length / 10);
-    const allUsers = await User.findAll({
+    const products = await Product.findAll({ include: { model: Manufacturer } });
+    const limit = Math.ceil(products.length / 10);
+    const allProducts = await Product.findAll({
       limit: 10,
       offset: +page ? (+page - 1) * 10 : 0,
       order: [['name', 'ASC']],
     });
-    res.render(AdminPage, { allUsers, page: page || 1, limit });
-  } catch (error) {
-    console.error(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
-  }
-});
-
-router.get('/admin/products', isAdmin, async (req, res) => {
-  try {
-    res.render(AdminProducts, {});
+    res.render(AdminProducts, { allProducts, page: page || 1, limit });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
@@ -110,7 +108,15 @@ router.get('/admin/products', isAdmin, async (req, res) => {
 
 router.get('/admin/categories', isAdmin, async (req, res) => {
   try {
-    res.render(AdminCategories, {});
+    const { page } = req.query;
+    const categories = await Category.findAll();
+    const limit = Math.ceil(categories.length / 10);
+    const allCategories = await Category.findAll({
+      limit: 10,
+      offset: +page ? (+page - 1) * 10 : 0,
+      order: [['name', 'ASC']],
+    });
+    res.render(AdminCategories, { allCategories, page: page || 1, limit });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
@@ -127,8 +133,26 @@ router.get('/categories/new', isAdmin, async (req, res) => {
 
 router.get('/product/new', isAdmin, async (req, res) => {
   try {
-    res.render(AddProduct, {});
+    const allCategories = await Category.findAll({
+      where: {
+        parentCategoryId: {
+          [Sequelize.Op.not]: null,
+        },
+      },
+    });
+    res.render(AddProduct, { allCategories });
   } catch (error) {
+    console.log(error);
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/product/:id/new', isAdmin, async (req, res) => {
+  try {
+    const product = await Product.findOne({ where: { id: req.params.id } });
+    res.render(EditProduct, { product });
+  } catch (error) {
+    console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });

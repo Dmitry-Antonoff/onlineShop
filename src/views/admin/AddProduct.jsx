@@ -11,9 +11,9 @@ module.exports = function AddProduct(props) {
         <div className="add-product-div">
           <form className="add-product-form" name="productForm">
             <select name="parentproductName">
-              {/* {allCategories.map((category) => (
+              {allCategories.map((category) => (
                 <option>{category.name}</option>
-              ))} */}
+              ))}
             </select>
             <input name="name" className="product-name-form" type="text" placeholder="Название" />
             <input name="img" className="img-add" type="file" />

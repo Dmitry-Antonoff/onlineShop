@@ -1,4 +1,4 @@
-const { categoriesForm, searchUser, productForm } = document.forms;
+const { categoriesForm, searchUser, productForm, searchProduct } = document.forms;
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -133,8 +133,8 @@ searchUser?.addEventListener('submit', async (e) => {
 productForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
-    const data = new FormData(categoriesForm);
-    const res = await fetch('/product', {
+    const data = new FormData(productForm);
+    const res = await fetch('/products', {
       method: 'POST',
       body: data,
     });
@@ -147,18 +147,39 @@ productForm?.addEventListener('submit', async (e) => {
   }
 });
 
-productForm?.addEventListener('click', async (e) => {
+searchProduct?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
-    const data = new FormData(categoriesForm);
-    const res = await fetch('/product', {
-      method: 'POST',
-      body: data,
+    const res = await fetch(`/admin/products/${searchProduct.product.value}`, {
+      method: 'GET',
     });
-    if (res.status === 200) {
-      showToast('Товар добавлен', { type: 'success' });
-      window.location.href = '/';
-    }
+    const response = await res.json();
+    const tbody = document.querySelector('tbody');
+    tbody.innerHTML = '';
+    response.forEach((product) => {
+      const tr = document.createElement('tr');
+      tr.classList.add('all-products-li');
+      tr.innerHTML = `
+        <td>
+          <img class="product-img" src="${product.imgPath}" alt="${product.name}" />
+        </td>
+        <td class="admin-productsName">${product.name}</td>
+        <td class="admin-products-name">${product.productCode}</td>
+        <td class="admin-products-name">${product.Manufacturer.name}</td>
+        <td class="admin-products-name">${product.price}</td>
+        <td class="admin-products-name">${product.quantityInStock}</td>
+        <td class="button-div">
+          <a href="/product/${product.id}/edit">
+            <button type="button" class="edit-btn">
+              <img class="edit" src="/svg/edit.svg" alt="Изменить" />
+            </button>
+          </a>
+          <button type="button" class="trash-btn">
+            <img class="trash" src="/svg/trash.svg" alt="Удалить" />
+          </button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
   } catch (error) {
     console.log(error);
   }

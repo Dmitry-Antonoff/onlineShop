@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const { User } = require('../../db/models');
+const { Sequelize } = require('sequelize');
+const { User, Product } = require('../../db/models');
 
 router.post('/:id/add', async (req, res) => {
   try {
@@ -26,6 +27,27 @@ router.post('/:id/remove', async (req, res) => {
 router.get('/:userName', async (req, res) => {
   const users = await User.findAll({ where: { name: req.params.userName } });
   res.json(users);
+});
+
+router.get('/products/:productName', async (req, res) => {
+  const keyword = req.params.productName;
+  const products = await Product.findAll({
+    where: {
+      [Sequelize.Op.or]: [
+        {
+          name: {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          },
+        },
+        {
+          productCode: {
+            [Sequelize.Op.like]: `%${keyword}%`,
+          },
+        },
+      ],
+    },
+  });
+  res.json(products);
 });
 
 module.exports = router;
