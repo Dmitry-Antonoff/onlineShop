@@ -12,7 +12,7 @@ module.exports = function Home(props) {
         </button>
         <ul className="categories">
           {categories.map((category) => (
-            <a className="category-link" href="/category">
+            <a className="category-link" href={`/category/${category.name}`}>
               <li>
                 <img className="category-img" src={`${category.photoPath}`} alt="" />
                 <p>{category.name}</p>

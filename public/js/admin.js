@@ -1,4 +1,7 @@
-const { categoriesForm, searchUser, productForm, searchProduct } = document.forms;
+const { categoriesForm, searchUser, productForm, searchProduct, productEditForm, categoryEditForm } =
+  document.forms;
+const btndeleteProduct = document.querySelectorAll('.btn-product-delete');
+const btndeleteCategory = document.querySelectorAll('.btn-delete-category');
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -78,7 +81,7 @@ categoriesForm?.addEventListener('submit', async (e) => {
     });
     if (res.status === 200) {
       showToast('Категория добавлена', { type: 'success' });
-      window.location.href = '/';
+      window.location.href = '/admin/categories';
     }
   } catch (error) {
     console.log(error);
@@ -140,7 +143,7 @@ productForm?.addEventListener('submit', async (e) => {
     });
     if (res.status === 200) {
       showToast('Товар добавлен', { type: 'success' });
-      window.location.href = '/';
+      window.location.href = '/admin/products';
     }
   } catch (error) {
     console.log(error);
@@ -183,4 +186,103 @@ searchProduct?.addEventListener('submit', async (e) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+productEditForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const data = new FormData(productEditForm);
+    const { id } = e.target.dataset;
+    const res = await fetch(`/admin/products/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(Object.fromEntries(data)),
+    });
+    // console.log(res);
+    if (res.status === 200) {
+      showToast('Товар изменён', { type: 'success' });
+      window.location.href = '/admin/products';
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+categoryEditForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const data = new FormData(categoryEditForm);
+    const { id } = e.target.dataset;
+    console.log(id);
+    const res = await fetch(`/admin/category/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(Object.fromEntries(data)),
+    });
+    // console.log(res);
+    if (res.status === 200) {
+      showToast('Категория изменена', { type: 'success' });
+      window.location.href = '/admin/categories';
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+btndeleteProduct.forEach((btn) => {
+  btn.addEventListener('click', async (e) => {
+    // e.preventDefault();
+    try {
+      const { id } = e.target.dataset;
+
+      if (!confirm('Вы точно хотите удалить?')) {
+        return;
+      }
+
+      const res = await fetch(`/admin/products/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (res.status === 200) {
+        document.getElementById(`${id}`).remove();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
+
+btndeleteCategory.forEach((btn) => {
+  btn.addEventListener('click', async (e) => {
+    // e.preventDefault();
+    try {
+      const { id } = e.target.dataset;
+
+      if (!confirm('Вы точно хотите удалить?')) {
+        return;
+      }
+
+      const res = await fetch(`/admin/category/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (res.status === 200) {
+        document.getElementById(`${id}`).remove();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
 });

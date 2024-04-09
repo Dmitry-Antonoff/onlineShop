@@ -3,7 +3,7 @@ const Layout = require('../Layout');
 const SideBar = require('./SideBar');
 
 module.exports = function AdminCategories(props) {
-  const { allUsers, page, limit } = props;
+  const { allCategories, page, limit } = props;
   return (
     <Layout {...props}>
       <main className="admin-main">
@@ -29,21 +29,30 @@ module.exports = function AdminCategories(props) {
               </tr>
             </thead>
             <tbody>
-              {/* {allProducts.map((product) => (
-                <tr className="all-products-li">
-                  <td className="admin-products-name">выфафвыа фвыафыва</td>
+              {allCategories.map((category) => (
+                <tr className="all-products-li" id={category.id}>
+                  <td className="admin-products-name">{category.name}</td>
                   <td className="button-div">
-                    <a href={`/product/edit`}>
+                    <a href={`/category/${category.id}/edit`}>
                       <button type="button" className="edit-btn">
                         <img className="edit" src="/svg/edit.svg" alt="Изменить" />
                       </button>
                     </a>
-                    <button type="button" className="trash-btn">
-                      <img className="trash" src="/svg/trash.svg" alt="Удалить" />
+                    <button
+                      type="button"
+                      className="trash-btn btn-delete-category"
+                      data-id={category.id}
+                    >
+                      <img
+                        data-id={category.id}
+                        className="trash"
+                        src="/svg/trash.svg"
+                        alt="Удалить"
+                      />
                     </button>
                   </td>
                 </tr>
-              ))} */}
+              ))}
             </tbody>
           </table>
           <div className="back-next">
