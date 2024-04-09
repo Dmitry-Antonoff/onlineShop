@@ -101,7 +101,7 @@ router.get('/admin', isMainAdmin, async (req, res) => {
       order: [['name', 'ASC']],
       where,
     });
-    res.render(AdminPage, { allUsers, page: page || 1, limit, search });
+    res.render(AdminPage, { allUsers, page: page || 1, limit, search, all: allUser });
   } catch (error) {
     console.error(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
@@ -136,7 +136,7 @@ router.get('/admin/products', isAdmin, async (req, res) => {
       include: [{ model: Manufacturer }],
       where,
     });
-    res.render(AdminProducts, { allProducts, page: page || 1, limit, search });
+    res.render(AdminProducts, { allProducts, page: page || 1, limit, search, all: products });
   } catch (error) {
     console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
@@ -161,7 +161,7 @@ router.get('/admin/categories', isAdmin, async (req, res) => {
       order: [['name', 'ASC']],
       where,
     });
-    res.render(AdminCategories, { allCategories, page: page || 1, limit, search });
+    res.render(AdminCategories, { allCategories, page: page || 1, limit, search, all: categories });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
