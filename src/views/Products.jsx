@@ -6,7 +6,7 @@ module.exports = function Products(props) {
   return (
     <Layout {...props}>
       <main className="products-main">
-        <h1>category name</h1>
+        <h1>{category.name}</h1>
         <div className="products-div">
           <div className="products-filter">
             <h2>Фильтр</h2>
@@ -66,7 +66,7 @@ module.exports = function Products(props) {
                   Упаковка: <span>zzz</span>
                 </p>
                 <p className="product-kod">
-                  Производитель: <span>Oreal</span>
+                  Производитель: <span>{product.Manufacturer.name}</span>
                 </p>
                 <p className="product-kod">
                   В наличие: <span>{product.quantityInStock} шт</span>

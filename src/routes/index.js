@@ -98,7 +98,7 @@ router.get('/products/:catId', async (req, res) => {
 
     const products = await Product.findAll({
       where: { categoryId: { [Sequelize.Op.in]: categoryIds } },
-      include: [Category],
+      include: [Category, Manufacturer],
     });
     res.render(Products, { category, parentCategories, products });
   } catch (error) {
