@@ -42,7 +42,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/admin', administratorRouter);
 app.use('/categories', categoriesRouter);
-app.use('/product', productRouter);
+app.use('/products', productRouter);
 
 app.listen(PORT, () => {
   console.log(`server started PORT: ${PORT}`);

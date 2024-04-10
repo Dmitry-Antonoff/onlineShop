@@ -1,26 +1,42 @@
 const router = require('express').Router();
+const path = require('path');
+const multer = require('multer');
 const { Product, Manufacturer, Category } = require('../../db/models');
 
-router.post('/', async (req, res) => {
-  const { parentproductName, name, code, manufacturer, price, inStock } = req.body;
-  try {
-    const category = await Category.findOne({ where: { name: parentproductName } });
-    let company = await Manufacturer.findOne({ where: { name: manufacturer } });
-    if (!company) {
-      company = await Manufacturer.create({ name: manufacturer });
-    }
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, path.join(__dirname, '..', '..', 'public/photos'));
+  },
+  filename(req, file, cb) {
+    const photoName = req.body.name.replace(/\s/g, '-');
+    const filename = photoName + path.extname(file.originalname);
+    cb(null, filename);
+  },
+});
 
+const upload = multer({ storage });
+
+router.post('/', upload.single('img'), async (req, res) => {
+  const { parentproductName, name, code, manufacturer, price, inStock, description } = req.body;
+  try {
+    let manufactur = await Manufacturer.findOne({ where: { name: manufacturer } });
+    if (!manufactur) {
+      manufactur = await Manufacturer.create({ name: manufacturer });
+    }
+    const category = await Category.findOne({ where: { name: parentproductName } });
     await Product.create({
       categoryId: category.id,
       name,
       productCode: code,
-      manufacturerId: company.id,
+      manufacturerId: manufactur.id,
       price,
       quantityInStock: inStock,
+      description,
+      imgPath: `/photos/${req.file?.filename}`,
     });
+    res.sendStatus(200);
   } catch (error) {
-    console.error(error);
-    res.json({ message: 'Something went wrong...', error: { error } }, 500);
+    console.log(error);
   }
 });
 

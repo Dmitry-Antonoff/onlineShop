@@ -8,7 +8,6 @@
 }
 
 .slide {
- 
 }
 
 .slide img {
@@ -19,15 +18,25 @@
 .prev,
 .next {
   position: absolute;
-  top: 50%;
+  top: 35%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+  background-color: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
+  box-shadow: 0px 0px 10px #0003;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.prev img,
+.next img {
+  filter: invert(60%);
+}
 .prev {
   left: 10px;
 }

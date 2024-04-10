@@ -1,0 +1,58 @@
+.trash-main {
+  margin-left: 40px;
+  margin-right: 20px;
+}
+
+.btn-trashEmpty {
+  margin-bottom: 20px;
+}
+
+.btn-trashEmpty button {
+  background-color: #e3e7f0;
+  border: none;
+  transition: all 0.5s;
+  height: 35px;
+  display: flex;
+  align-items: center;
+}
+
+.btn-trashEmpty button:hover {
+  background-color: #c2c7d2;
+}
+
+.btn-trashEmpty img {
+  width: 20px;
+  margin-right: 7px;
+}
+
+.all-products td,
+.all-products th {
+  border: 1px solid slategrey;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.all-products-li-name {
+  background-color: white;
+  height: 50px;
+  padding: 0px 30px;
+}
+
+.admin-products-into {
+  width: 150px;
+}
+
+.into {
+  width: 100px;
+  height: 40px;
+  margin-right: 30px;
+  border: 1px solid #d8dee9;
+  max-width: 132px;
+  max-height: 40px;
+  margin: 0px auto;
+}
+
+.thing {
+  position: absolute;
+  margin: -32px 95px;
+}

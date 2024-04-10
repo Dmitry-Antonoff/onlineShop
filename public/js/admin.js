@@ -1,4 +1,8 @@
-const { categoriesForm, searchUser, productForm } = document.forms;
+const { categoriesForm, productForm, productEditForm, categoryEditForm } = document.forms;
+const btndeleteProduct = document.querySelectorAll('.btn-product-delete');
+const btndeleteCategory = document.querySelectorAll('.btn-delete-category');
+const characteristicsAdd = document.querySelector('.add-value-characteristics');
+const characteristicsAddInput = document.querySelector('.characteristics-add');
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -78,53 +82,8 @@ categoriesForm?.addEventListener('submit', async (e) => {
     });
     if (res.status === 200) {
       showToast('Категория добавлена', { type: 'success' });
-      window.location.href = '/';
+      window.location.href = '/admin/categories';
     }
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-searchUser?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  try {
-    const res = await fetch(`/admin/${searchUser.userName.value}`, {
-      method: 'GET',
-    });
-    const response = await res.json();
-    const ul = document.querySelector('.all-users');
-    ul.innerHTML = '';
-    response.forEach((el) => {
-      const li = document.createElement('li');
-      li.id = el.id;
-
-      const nameParagraph = document.createElement('p');
-      nameParagraph.textContent = el.name;
-      li.appendChild(nameParagraph);
-
-      const emailParagraph = document.createElement('p');
-      emailParagraph.textContent = el.email;
-      li.appendChild(emailParagraph);
-
-      const button = document.createElement('button');
-      button.dataset.id = el.id;
-      button.id = `${el.id}-undo`;
-      if (el.role === 'ADMIN') {
-        button.textContent = 'Убрать Админа';
-        button.classList.add('btnUndoAdmin');
-      } else if (el.role !== 'ADMINISTRATOR') {
-        button.textContent = 'Сделать Админом';
-        button.classList.add('btnAddAdmin');
-      } else {
-        const span = document.createElement('span');
-        span.textContent = 'Вы';
-        li.appendChild(span);
-        ul.appendChild(li);
-        return;
-      }
-      li.appendChild(button);
-      ul.appendChild(li);
-    });
   } catch (error) {
     console.log(error);
   }
@@ -133,33 +92,149 @@ searchUser?.addEventListener('submit', async (e) => {
 productForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
-    const data = new FormData(categoriesForm);
-    const res = await fetch('/product', {
+    const data = new FormData(productForm);
+    const res = await fetch('/products', {
       method: 'POST',
       body: data,
     });
     if (res.status === 200) {
       showToast('Товар добавлен', { type: 'success' });
-      window.location.href = '/';
+      window.location.href = '/admin/products';
     }
   } catch (error) {
     console.log(error);
   }
 });
 
-productForm?.addEventListener('click', async (e) => {
+productEditForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
-    const data = new FormData(categoriesForm);
-    const res = await fetch('/product', {
-      method: 'POST',
-      body: data,
+    const data = new FormData(productEditForm);
+    const { id } = e.target.dataset;
+    const res = await fetch(`/admin/products/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(Object.fromEntries(data)),
     });
+    // console.log(res);
     if (res.status === 200) {
-      showToast('Товар добавлен', { type: 'success' });
-      window.location.href = '/';
+      showToast('Товар изменён', { type: 'success' });
+      window.location.href = '/admin/products';
     }
   } catch (error) {
     console.log(error);
   }
+});
+
+categoryEditForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const data = new FormData(categoryEditForm);
+    const { id } = e.target.dataset;
+    console.log(id);
+    const res = await fetch(`/admin/category/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(Object.fromEntries(data)),
+    });
+    // console.log(res);
+    if (res.status === 200) {
+      showToast('Категория изменена', { type: 'success' });
+      window.location.href = '/admin/categories';
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+btndeleteProduct.forEach((btn) => {
+  btn.addEventListener('click', async (e) => {
+    // e.preventDefault();
+    try {
+      const { id } = e.target.dataset;
+
+      if (!confirm('Вы точно хотите удалить?')) {
+        return;
+      }
+
+      const res = await fetch(`/admin/products/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (res.status === 200) {
+        document.getElementById(`${id}`).remove();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
+
+btndeleteCategory.forEach((btn) => {
+  btn.addEventListener('click', async (e) => {
+    // e.preventDefault();
+    try {
+      const { id } = e.target.dataset;
+
+      if (!confirm('Вы точно хотите удалить?')) {
+        return;
+      }
+
+      const res = await fetch(`/admin/category/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (res.status === 200) {
+        document.getElementById(`${id}`).remove();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
+
+characteristicsAdd?.addEventListener('click', async () => {
+  const keyValuePair = document.createElement('div');
+  keyValuePair.className = 'key-value';
+
+  const keyInput = document.createElement('input');
+  keyInput.type = 'text';
+  keyInput.placeholder = 'Ключ';
+
+  const valueInput = document.createElement('input');
+  valueInput.type = 'text';
+  valueInput.placeholder = 'Значение';
+
+  const deleteButton = document.createElement('button');
+  deleteButton.type = 'button';
+  deleteButton.className = 'key-value-delete';
+
+  const trashImage = document.createElement('img');
+  trashImage.className = 'key-value-trash';
+  trashImage.src = '/svg/trash.svg';
+  trashImage.alt = 'Удалить';
+
+  deleteButton.appendChild(trashImage);
+
+  keyValuePair.appendChild(keyInput);
+  keyValuePair.appendChild(valueInput);
+  keyValuePair.appendChild(deleteButton);
+
+  characteristicsAddInput.appendChild(keyValuePair);
+
+  deleteButton.addEventListener('click', () => {
+    keyValuePair.remove();
+  });
 });

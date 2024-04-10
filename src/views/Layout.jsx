@@ -28,8 +28,9 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/slick/slick-theme.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/catalog.css" />
-        <link rel="stylesheet" type="text/css" href="/stylesheets/styleAdmin/admin.css" />
+        <link rel="stylesheet" type="text/css" href="/stylesheets/adminStyle/admin.css" />
         <link rel="stylesheet" type="text/css" href="/stylesheets/products.css" />
+        <link rel="stylesheet" type="text/css" href="/stylesheets/basket.css" />
         <script defer src="/js/burger.js" />
         <script defer src="/js/auth.js" />
         <script defer src="/js/slider.js" />
@@ -66,7 +67,7 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
                       </li>
                       {user?.role === 'ADMINISTRATOR' || user?.role === 'ADMIN' ? (
                         <li>
-                          <a href="/admin">Админка</a>
+                          <a href="/admin/categories">Админка</a>
                         </li>
                       ) : null}
                       <li>

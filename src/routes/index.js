@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { Sequelize } = require('sequelize');
 const Home = require('../views/Home');
 const Login = require('../views/auth/login');
 const Reg = require('../views/auth/reg');
@@ -7,13 +8,16 @@ const Error = require('../views/Error');
 const isLogin = require('../middleware/isLogin');
 const isMainAdmin = require('../middleware/isMainAdmin');
 const isAdmin = require('../middleware/isAdmin');
-const { User, Category } = require('../../db/models');
+const { User, Category, Product, Manufacturer } = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
 const Products = require('../views/Products');
 const AddProduct = require('../views/admin/AddProduct');
 const AdminProducts = require('../views/admin/AdminProducts');
 const AdminCategories = require('../views/admin/AdminCategories');
+const EditProduct = require('../views/admin/EditProduct');
+const Basket = require('../views/Basket');
+const EditCategory = require('../views/admin/EditCategory');
 
 router.get('/', async (req, res) => {
   try {
@@ -24,19 +28,81 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/category', (req, res) => {
+router.get('/basket', async (req, res) => {
   try {
-    res.render(Catalog);
+    res.render(Basket, {});
+  } catch (error) {
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/category/:categoryName', async (req, res) => {
+  try {
+    const category = await Category.findOne({
+      where: { name: req.params.categoryName },
+      include: [
+        { model: Category, as: 'children', include: [{ model: Category, as: 'children' }] },
+      ],
+    });
+    res.render(Catalog, { category });
   } catch (error) {
     console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
 
-router.get('/products', (req, res) => {
+async function getParentCategories(cat, result = []) {
+  if (cat) {
+    result.push(cat);
+    if (cat.parentCategoryId) {
+      const parentCategory = await Category.findOne({ where: { id: cat.parentCategoryId } });
+      await getParentCategories(parentCategory, result);
+    }
+  }
+  return result;
+}
+async function getAllChildCategories(categoryId) {
+  const children = await Category.findAll({
+    where: { parentCategoryId: categoryId },
+  });
+
+  let allChildren = [...children];
+  for (const child of children) {
+    const childChildren = await getAllChildCategories(child.id);
+    allChildren = [...allChildren, ...childChildren];
+  }
+
+  return allChildren;
+}
+router.get('/products/:catId', async (req, res) => {
   try {
-    res.render(Products);
+    const category = await Category.findOne({
+      where: { id: req.params.catId },
+      include: [
+        {
+          model: Category,
+          as: 'parent',
+        },
+        {
+          model: Category,
+          as: 'children',
+        },
+      ],
+    });
+
+    const childCategories = await getAllChildCategories(req.params.catId);
+    const categoryIds = [req.params.catId, ...childCategories.map((cat) => cat.id)];
+
+    const parentCategories = await getParentCategories(category.parent);
+    parentCategories.pop();
+
+    const products = await Product.findAll({
+      where: { categoryId: { [Sequelize.Op.in]: categoryIds } },
+      include: [Category],
+    });
+    res.render(Products, { category, parentCategories, products });
   } catch (error) {
+    console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
@@ -58,32 +124,32 @@ router.get('/auth/reg', isLogin, (req, res) => {
 
 router.get('/admin', isMainAdmin, async (req, res) => {
   try {
-    const { page } = req.query;
-    const allUser = await User.findAll();
+    const { page, search } = req.query;
+    const where = search
+      ? {
+        [Sequelize.Op.or]: [
+          {
+            name: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            email: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+        ],
+      }
+      : {};
+    const allUser = await User.findAll({ where });
     const limit = Math.ceil(allUser.length / 10);
     const allUsers = await User.findAll({
       limit: 10,
       offset: +page ? (+page - 1) * 10 : 0,
       order: [['name', 'ASC']],
+      where,
     });
-    res.render(AdminPage, { allUsers, page: page || 1, limit });
-  } catch (error) {
-    console.error(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
-  }
-});
-
-router.get('/admin', isMainAdmin, async (req, res) => {
-  try {
-    const { page } = req.query;
-    const allUser = await User.findAll();
-    const limit = Math.ceil(allUser.length / 10);
-    const allUsers = await User.findAll({
-      limit: 10,
-      offset: +page ? (+page - 1) * 10 : 0,
-      order: [['name', 'ASC']],
-    });
-    res.render(AdminPage, { allUsers, page: page || 1, limit });
+    res.render(AdminPage, { allUsers, page: page || 1, limit, search, all: allUser });
   } catch (error) {
     console.error(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
@@ -92,15 +158,58 @@ router.get('/admin', isMainAdmin, async (req, res) => {
 
 router.get('/admin/products', isAdmin, async (req, res) => {
   try {
-    res.render(AdminProducts, {});
+    const { page, search } = req.query;
+    const where = search
+      ? {
+        [Sequelize.Op.or]: [
+          {
+            name: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            productCode: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+        ],
+      }
+      : {};
+    const products = await Product.findAll({ where });
+    const limit = Math.ceil(products.length / 10);
+    const allProducts = await Product.findAll({
+      limit: 10,
+      offset: +page ? (+page - 1) * 10 : 0,
+      order: [['name', 'ASC']],
+      include: [{ model: Manufacturer }],
+      where,
+    });
+    res.render(AdminProducts, { allProducts, page: page || 1, limit, search, all: products });
   } catch (error) {
+    console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
 });
 
 router.get('/admin/categories', isAdmin, async (req, res) => {
   try {
-    res.render(AdminCategories, {});
+    const { page, search } = req.query;
+    const where = search
+      ? {
+        name: {
+          [Sequelize.Op.iLike]: `%${search}%`,
+        },
+      }
+      : {};
+    const categories = await Category.findAll({ where });
+    const limit = Math.ceil(categories.length / 10);
+    const allCategories = await Category.findAll({
+      limit: 10,
+      offset: +page ? (+page - 1) * 10 : 0,
+      order: [['name', 'ASC']],
+      where,
+    });
+    res.render(AdminCategories, { allCategories, page: page || 1, limit, search, all: categories });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
@@ -117,7 +226,38 @@ router.get('/categories/new', isAdmin, async (req, res) => {
 
 router.get('/product/new', isAdmin, async (req, res) => {
   try {
-    res.render(AddProduct, {});
+    const allCategories = await Category.findAll({
+      where: {
+        parentCategoryId: {
+          [Sequelize.Op.not]: null,
+        },
+      },
+    });
+    res.render(AddProduct, { allCategories });
+  } catch (error) {
+    console.log(error);
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/product/:id/edit', isAdmin, async (req, res) => {
+  try {
+    const product = await Product.findOne({
+      where: { id: req.params.id },
+      include: [{ model: Manufacturer }],
+    });
+    res.render(EditProduct, { product });
+  } catch (error) {
+    console.log(error);
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/category/:id/edit', isAdmin, async (req, res) => {
+  try {
+    const category = await Category.findOne({ where: { id: req.params.id } });
+    console.log(category);
+    res.render(EditCategory, { category });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
