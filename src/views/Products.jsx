@@ -57,7 +57,10 @@ module.exports = function Products(props) {
             {products.map((product) => (
               <div className="product">
                 <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
-                <a className="product-name" href={`/products/${product.categoryId}/${product.id}`}>
+                <a
+                  className="product-name"
+                  href={`/products/${product.categoryId}/${product.productCode}`}
+                >
                   {product.name}
                 </a>
                 <p className="product-kod">
@@ -77,9 +80,11 @@ module.exports = function Products(props) {
                     <p className="first-price">{product.price}</p>
                   </div>
                   <div className="into add-cart">
-                    <input type="number" name="" id="" />
-                    <p>шт</p>
-                    <button type="button">В корзину</button>
+                    <form name="addBasket" className="into add-cart addBasket" data-productid={product.id}>
+                      <input type="number" name="quantity" id="" />
+                      <p>шт</p>
+                      <button type="submit">В корзину</button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -89,37 +94,53 @@ module.exports = function Products(props) {
         {all.length > 12 && (
           <div className="back-next-product">
             <a
-              href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${
-                +page > 1 ? +page - 1 : +page
-              }`}
+              href={`/products/${category ? category.id : ''}?${
+                search ? `search=${search}&` : ''
+              }page=${+page > 1 ? +page - 1 : +page}`}
             >
               <img src="/svg/left.svg" alt="back" />
             </a>
             {+page >= 3 && (
-              <a href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${+page - 2}`}>
+              <a
+                href={`/products/${category ? category.id : ''}?${
+                  search ? `search=${search}&` : ''
+                }page=${+page - 2}`}
+              >
                 {+page - 2}
               </a>
             )}
             {+page >= 2 && (
-              <a href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${+page - 1}`}>
+              <a
+                href={`/products/${category ? category.id : ''}?${
+                  search ? `search=${search}&` : ''
+                }page=${+page - 1}`}
+              >
                 {+page - 1}
               </a>
             )}
             <span>...</span>
             {+page === limit || (
-              <a href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${+page + 1}`}>
+              <a
+                href={`/products/${category ? category.id : ''}?${
+                  search ? `search=${search}&` : ''
+                }page=${+page + 1}`}
+              >
                 {+page + 1}
               </a>
             )}
             {+page + 1 >= limit || (
-              <a href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${+page + 2}`}>
+              <a
+                href={`/products/${category ? category.id : ''}?${
+                  search ? `search=${search}&` : ''
+                }page=${+page + 2}`}
+              >
                 {+page + 2}
               </a>
             )}
             <a
-              href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${
-                +page < limit ? +page + 1 : +page
-              }`}
+              href={`/products/${category ? category.id : ''}?${
+                search ? `search=${search}&` : ''
+              }page=${+page < limit ? +page + 1 : +page}`}
             >
               <img src="/svg/right.svg" alt="next" />
             </a>

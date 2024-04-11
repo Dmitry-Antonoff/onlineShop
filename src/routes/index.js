@@ -8,7 +8,7 @@ const Error = require('../views/Error');
 const isLogin = require('../middleware/isLogin');
 const isMainAdmin = require('../middleware/isMainAdmin');
 const isAdmin = require('../middleware/isAdmin');
-const { User, Category, Product, Manufacturer } = require('../../db/models');
+const { User, Category, Product, Manufacturer, BasketList } = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
 const Products = require('../views/Products');
@@ -32,7 +32,11 @@ router.get('/', async (req, res) => {
 
 router.get('/basket', async (req, res) => {
   try {
-    res.render(Basket, {});
+    const basList = await BasketList.findAll({
+      where: { userId: req.session.user.id },
+      include: [Product],
+    });
+    res.render(Basket, { basList });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
   }
@@ -98,14 +102,14 @@ router.get('/products/:catId', async (req, res) => {
 
     const where = search
       ? {
-        [Sequelize.Op.or]: [
-          {
-            name: {
-              [Sequelize.Op.iLike]: `%${search}%`,
+          [Sequelize.Op.or]: [
+            {
+              name: {
+                [Sequelize.Op.iLike]: `%${search}%`,
+              },
             },
-          },
-        ],
-      }
+          ],
+        }
       : { categoryId: { [Sequelize.Op.in]: categoryIds } };
 
     const parentCategories = await getParentCategories(category.parent);
@@ -142,14 +146,14 @@ router.get('/products', async (req, res) => {
 
     const where = search
       ? {
-        [Sequelize.Op.or]: [
-          {
-            name: {
-              [Sequelize.Op.iLike]: `%${search}%`,
+          [Sequelize.Op.or]: [
+            {
+              name: {
+                [Sequelize.Op.iLike]: `%${search}%`,
+              },
             },
-          },
-        ],
-      }
+          ],
+        }
       : {};
 
     const allProducts = await Product.findAll({ where });
@@ -175,9 +179,10 @@ router.get('/products', async (req, res) => {
   }
 });
 
-router.get('/product/:catId/:code', (req, res) => {
+router.get('/products/:catId/:code', async (req, res) => {
   try {
-    res.render(ProductPage, {});
+    const product = await Product.findOne({ where: { productCode: req.params.code } });
+    res.render(ProductPage, { product });
   } catch (error) {
     console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
