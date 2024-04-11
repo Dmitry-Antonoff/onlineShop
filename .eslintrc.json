@@ -21,6 +21,9 @@
     "import/no-extraneous-dependencies": "off",
     "no-undef": "off",
     "no-nested-ternary": "off",
-    "no-restricted-globals": "off"
+    "no-restricted-globals": "off",
+    "indent": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off"
   }
 }

@@ -12,6 +12,7 @@ const { User, Category, Product, Manufacturer } = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
 const Products = require('../views/Products');
+const ProductPage = require('../views/Product');
 const AddProduct = require('../views/admin/AddProduct');
 const AdminProducts = require('../views/admin/AdminProducts');
 const AdminCategories = require('../views/admin/AdminCategories');
@@ -174,6 +175,15 @@ router.get('/products', async (req, res) => {
   }
 });
 
+router.get('/product/:catId/:code', (req, res) => {
+  try {
+    res.render(ProductPage, {});
+  } catch (error) {
+    console.log(error);
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
 router.get('/auth/login', isLogin, (req, res) => {
   try {
     res.render(Login);
@@ -194,19 +204,19 @@ router.get('/admin', isMainAdmin, async (req, res) => {
     const { page, search } = req.query;
     const where = search
       ? {
-        [Sequelize.Op.or]: [
-          {
-            name: {
-              [Sequelize.Op.iLike]: `%${search}%`,
+          [Sequelize.Op.or]: [
+            {
+              name: {
+                [Sequelize.Op.iLike]: `%${search}%`,
+              },
             },
-          },
-          {
-            email: {
-              [Sequelize.Op.iLike]: `%${search}%`,
+            {
+              email: {
+                [Sequelize.Op.iLike]: `%${search}%`,
+              },
             },
-          },
-        ],
-      }
+          ],
+        }
       : {};
     const allUser = await User.findAll({ where });
     const limit = Math.ceil(allUser.length / 10);
@@ -228,19 +238,19 @@ router.get('/admin/products', isAdmin, async (req, res) => {
     const { page, search } = req.query;
     const where = search
       ? {
-        [Sequelize.Op.or]: [
-          {
-            name: {
-              [Sequelize.Op.iLike]: `%${search}%`,
+          [Sequelize.Op.or]: [
+            {
+              name: {
+                [Sequelize.Op.iLike]: `%${search}%`,
+              },
             },
-          },
-          {
-            productCode: {
-              [Sequelize.Op.iLike]: `%${search}%`,
+            {
+              productCode: {
+                [Sequelize.Op.iLike]: `%${search}%`,
+              },
             },
-          },
-        ],
-      }
+          ],
+        }
       : {};
     const products = await Product.findAll({ where });
     const limit = Math.ceil(products.length / 10);
@@ -263,10 +273,10 @@ router.get('/admin/categories', isAdmin, async (req, res) => {
     const { page, search } = req.query;
     const where = search
       ? {
-        name: {
-          [Sequelize.Op.iLike]: `%${search}%`,
-        },
-      }
+          name: {
+            [Sequelize.Op.iLike]: `%${search}%`,
+          },
+        }
       : {};
     const categories = await Category.findAll({ where });
     const limit = Math.ceil(categories.length / 10);

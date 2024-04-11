@@ -17,8 +17,9 @@
 
 .prev,
 .next {
+  z-index: 1;
   position: absolute;
-  top: 35%;
+  top: 47%;
   transform: translateY(-50%);
   background-color: white;
   width: 55px;
@@ -38,9 +39,9 @@
   filter: invert(60%);
 }
 .prev {
-  left: 10px;
+  left: 20px;
 }
 
 .next {
-  right: 10px;
+  right: -15px;
 }

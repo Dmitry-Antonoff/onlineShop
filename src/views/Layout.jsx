@@ -20,6 +20,7 @@ module.exports = function Layout({ children, user, showSearchForm = true, search
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/stylesheets/normalize.css" />
+        <link rel="stylesheet" href="/stylesheets/product.css" />
         <link rel="stylesheet" href="/stylesheets/style.css" />
         <link rel="stylesheet" href="/stylesheets/header.css" />
         <link rel="stylesheet" href="/stylesheets/slick/slide.css" />
@@ -33,7 +34,6 @@ module.exports = function Layout({ children, user, showSearchForm = true, search
         <link rel="stylesheet" type="text/css" href="/stylesheets/basket.css" />
         <script defer src="/js/burger.js" />
         <script defer src="/js/auth.js" />
-        <script defer src="/js/slider.js" />
         <script defer src="/js/admin.js" />
 
         <title>Project</title>
@@ -141,10 +141,10 @@ module.exports = function Layout({ children, user, showSearchForm = true, search
             </ul>
           </div>
         </footer>
-        {/* <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js" />
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js" />
         <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js" />
         <script type="text/javascript" src="/js/slick.min.js" />
-        <script type="text/javascript" src="/js/slider.js" /> */}
+        <script type="text/javascript" src="/js/slider.js" />
       </body>
     </html>
   );
