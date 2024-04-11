@@ -35,6 +35,7 @@ module.exports = function Layout({ children, user, showSearchForm = true, search
         <script defer src="/js/burger.js" />
         <script defer src="/js/auth.js" />
         <script defer src="/js/admin.js" />
+        <script defer src="/js/basket.js" />
 
         <title>Project</title>
       </head>

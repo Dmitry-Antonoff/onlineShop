@@ -38,9 +38,11 @@ module.exports = function Home(props) {
                 <p className="past-price">прошлая цена</p>
               </div>
               <div className="add-cart">
-                <input type="number" name="" id="" />
-                <p>шт</p>
-                <button type="button">В корзину</button>
+                <form name="addBasket" className="into add-cart addBasket">
+                  <input type="number" name="quantity" id="" />
+                  <p>шт</p>
+                  <button type="submit">В корзину</button>
+                </form>
               </div>
             </div>
           </li>

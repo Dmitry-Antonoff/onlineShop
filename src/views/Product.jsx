@@ -2,7 +2,7 @@ const React = require('react');
 const Layout = require('./Layout');
 
 module.exports = function Product(props) {
-  // const { product } = props;
+  const { product } = props;
   return (
     <Layout {...props}>
       <main className="product-main">
@@ -76,9 +76,11 @@ module.exports = function Product(props) {
               </p>
               <p>{product.price}Лари/шт</p>
               <div className="into add-cart">
-                <input type="number" name="" id="" />
-                <p>шт</p>
-                <button type="button">В корзину</button>
+                <form name="addBasket" className="into add-cart addBasket" data-productid={product.id}>
+                  <input type="number" name="quantity" id="" />
+                  <p>шт</p>
+                  <button type="submit">В корзину</button>
+                </form>
               </div>
             </div>
             <div className="methods-obtaining">
