@@ -22,6 +22,7 @@ const EditCategory = require('../views/admin/EditCategory');
 router.get('/', async (req, res) => {
   try {
     const categories = await Category.findAll({ where: { parentCategoryId: null } });
+    console.log(req.session);
     res.render(Home, { categories });
   } catch (error) {
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
