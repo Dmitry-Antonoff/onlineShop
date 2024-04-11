@@ -78,6 +78,7 @@ async function getAllChildCategories(categoryId) {
 }
 router.get('/products/:catId', async (req, res) => {
   try {
+    const { page, search } = req.query;
     const category = await Category.findOne({
       where: { id: req.params.catId },
       include: [
@@ -95,14 +96,79 @@ router.get('/products/:catId', async (req, res) => {
     const childCategories = await getAllChildCategories(req.params.catId);
     const categoryIds = [req.params.catId, ...childCategories.map((cat) => cat.id)];
 
+    const where = search
+      ? {
+        [Sequelize.Op.or]: [
+          {
+            name: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+        ],
+      }
+      : { categoryId: { [Sequelize.Op.in]: categoryIds } };
+
     const parentCategories = await getParentCategories(category.parent);
     parentCategories.pop();
 
+    const allProducts = await Product.findAll({ where });
+    const limit = Math.ceil(allProducts.length / 12);
+
     const products = await Product.findAll({
-      where: { categoryId: { [Sequelize.Op.in]: categoryIds } },
       include: [Category, Manufacturer],
+      limit: 12,
+      offset: +page ? (+page - 1) * 12 : 0,
+      order: [['name', 'ASC']],
+      where,
     });
-    res.render(Products, { category, parentCategories, products });
+    res.render(Products, {
+      category,
+      parentCategories,
+      products,
+      page: page || 1,
+      limit,
+      search,
+      all: allProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+  }
+});
+
+router.get('/products', async (req, res) => {
+  try {
+    const { page, search } = req.query;
+
+    const where = search
+      ? {
+        [Sequelize.Op.or]: [
+          {
+            name: {
+              [Sequelize.Op.iLike]: `%${search}%`,
+            },
+          },
+        ],
+      }
+      : {};
+
+    const allProducts = await Product.findAll({ where });
+    const limit = Math.ceil(allProducts.length / 12);
+
+    const products = await Product.findAll({
+      include: [Manufacturer],
+      limit: 12,
+      offset: +page ? (+page - 1) * 12 : 0,
+      order: [['name', 'ASC']],
+      where,
+    });
+    res.render(Products, {
+      products,
+      page: page || 1,
+      limit,
+      search,
+      all: allProducts,
+    });
   } catch (error) {
     console.log(error);
     res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });

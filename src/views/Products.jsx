@@ -2,23 +2,23 @@ const React = require('react');
 const Layout = require('./Layout');
 
 module.exports = function Products(props) {
-  const { category, parentCategories, page, limit, products } = props;
+  const { category, parentCategories, page, limit, products, search, all } = props;
   return (
     <Layout {...props}>
       <main className="products-main">
-        <h1>{category.name}</h1>
+        <h1>{category?.name}</h1>
         <div className="products-div">
           <div className="products-filter">
             <h2>Фильтр</h2>
             <ul className="product-ul-filter">
               <h3>Категории</h3>
-              {parentCategories.reverse().map((cat) => (
+              {parentCategories?.reverse().map((cat) => (
                 <li className="product-parent" key={cat.id}>
                   <a href={`/products/${cat.id}`}>&lt; {cat.name}</a>
                 </li>
               ))}
-              <li>{category.name}</li>
-              {category.children.map((cat) => (
+              <li>{category?.name}</li>
+              {category?.children.map((cat) => (
                 <li className="product-children" key={cat.id}>
                   <a href={`/products/${cat.id}`}>{cat.name}</a>
                 </li>
@@ -57,7 +57,7 @@ module.exports = function Products(props) {
             {products.map((product) => (
               <div className="product">
                 <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
-                <a className="product-name" href="/s">
+                <a className="product-name" href={`/products/${product.categoryId}/${product.id}`}>
                   {product.name}
                 </a>
                 <p className="product-kod">
@@ -86,19 +86,45 @@ module.exports = function Products(props) {
             ))}
           </div>
         </div>
-        <div className="back-next-product">
-          <a href={`/admin?page=${+page > 1 ? +page - 1 : +page}`}>
-            <img src="/svg/left.svg" alt="back" />
-          </a>
-          {+page >= 3 && <a href={`/admin?page=${+page - 2}`}>{+page - 2}</a>}
-          {+page >= 2 && <a href={`/admin?page=${+page - 1}`}>{+page - 1}</a>}
-          <span>...</span>
-          {+page === limit || <a href={`/admin?page=${+page + 1}`}>{+page + 1}</a>}
-          {+page + 1 >= limit || <a href={`/admin?page=${+page + 2}`}>{+page + 2}</a>}
-          <a href={`/admin?page=${+page < limit ? +page + 1 : +page}`}>
-            <img src="/svg/right.svg" alt="next" />
-          </a>
-        </div>
+        {all.length > 12 && (
+          <div className="back-next-product">
+            <a
+              href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${
+                +page > 1 ? +page - 1 : +page
+              }`}
+            >
+              <img src="/svg/left.svg" alt="back" />
+            </a>
+            {+page >= 3 && (
+              <a href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${+page - 2}`}>
+                {+page - 2}
+              </a>
+            )}
+            {+page >= 2 && (
+              <a href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${+page - 1}`}>
+                {+page - 1}
+              </a>
+            )}
+            <span>...</span>
+            {+page === limit || (
+              <a href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${+page + 1}`}>
+                {+page + 1}
+              </a>
+            )}
+            {+page + 1 >= limit || (
+              <a href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${+page + 2}`}>
+                {+page + 2}
+              </a>
+            )}
+            <a
+              href={`/products/${category ? category.id : ''}?${search ? `search=${search}&` : ''}page=${
+                +page < limit ? +page + 1 : +page
+              }`}
+            >
+              <img src="/svg/right.svg" alt="next" />
+            </a>
+          </div>
+        )}
       </main>
     </Layout>
   );

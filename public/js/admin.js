@@ -2,7 +2,7 @@ const { categoriesForm, productForm, productEditForm, categoryEditForm } = docum
 const btndeleteProduct = document.querySelectorAll('.btn-product-delete');
 const btndeleteCategory = document.querySelectorAll('.btn-delete-category');
 const characteristicsAdd = document.querySelector('.add-value-characteristics');
-const characteristicsAddInput = document.querySelector('.characteristics-add');
+const characteristicsAddInput = document.querySelector('.characteristics-list');
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -92,10 +92,34 @@ categoriesForm?.addEventListener('submit', async (e) => {
 productForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
-    const data = new FormData(productForm);
+    const formDataObject = {};
+    const keyValuesObject = {};
+
+    const keyValues = document.querySelectorAll('.key-value');
+    keyValues.forEach((keyValue, index) => {
+      const keyInput = keyValue.querySelector(`input[name="key${index + 1}"]`);
+      const valueInput = keyValue.querySelector(`input[name="value${index + 1}"]`);
+
+      if (keyInput.value.trim() !== '') {
+        keyValuesObject[keyInput.value] = valueInput.value;
+      }
+    });
+
+    formDataObject.keyValues = keyValuesObject;
+
+    const otherInputs = productForm.querySelectorAll(
+      'input:not([name^="key"]):not([name^="value"]), select:not([name^="key"]):not([name^="value"]),textarea:not([name^="key"]):not([name^="value"])',
+    );
+    otherInputs.forEach((input) => {
+      formDataObject[input.name] = input.value;
+    });
+
     const res = await fetch('/products', {
       method: 'POST',
-      body: data,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formDataObject),
     });
     if (res.status === 200) {
       showToast('Товар добавлен', { type: 'success' });
@@ -205,36 +229,61 @@ btndeleteCategory.forEach((btn) => {
   });
 });
 
-characteristicsAdd?.addEventListener('click', async () => {
-  const keyValuePair = document.createElement('div');
-  keyValuePair.className = 'key-value';
+// characteristicsAdd?.addEventListener('click', async () => {
+//   const keyValuePair = document.createElement('div');
+//   keyValuePair.className = 'key-value';
 
-  const keyInput = document.createElement('input');
-  keyInput.type = 'text';
-  keyInput.placeholder = 'Ключ';
+//   const keyInput = document.createElement('input');
+//   keyInput.type = 'text';
+//   keyInput.placeholder = 'Ключ';
+//   keyInput.name = 'key';
 
-  const valueInput = document.createElement('input');
-  valueInput.type = 'text';
-  valueInput.placeholder = 'Значение';
+//   const valueInput = document.createElement('input');
+//   valueInput.type = 'text';
+//   valueInput.placeholder = 'Значение';
+//   valueInput.name = 'value';
 
-  const deleteButton = document.createElement('button');
-  deleteButton.type = 'button';
-  deleteButton.className = 'key-value-delete';
+//   const deleteButton = document.createElement('button');
+//   deleteButton.type = 'button';
+//   deleteButton.className = 'key-value-delete';
 
-  const trashImage = document.createElement('img');
-  trashImage.className = 'key-value-trash';
-  trashImage.src = '/svg/trash.svg';
-  trashImage.alt = 'Удалить';
+//   const trashImage = document.createElement('img');
+//   trashImage.className = 'key-value-trash';
+//   trashImage.src = '/svg/trash.svg';
+//   trashImage.alt = 'Удалить';
 
-  deleteButton.appendChild(trashImage);
+//   deleteButton.appendChild(trashImage);
 
-  keyValuePair.appendChild(keyInput);
-  keyValuePair.appendChild(valueInput);
-  keyValuePair.appendChild(deleteButton);
+//   keyValuePair.appendChild(keyInput);
+//   keyValuePair.appendChild(valueInput);
+//   keyValuePair.appendChild(deleteButton);
 
-  characteristicsAddInput.appendChild(keyValuePair);
+//   characteristicsAddInput.appendChild(keyValuePair);
 
-  deleteButton.addEventListener('click', () => {
-    keyValuePair.remove();
+//   deleteButton.addEventListener('click', () => {
+//     keyValuePair.remove();
+//   });
+// });
+
+characteristicsAdd?.addEventListener('click', () => {
+  const count = characteristicsAddInput.children.length + 1;
+
+  const keyValuePairHTML = `
+    <div class="key-value">
+      <input type="text" placeholder="Ключ" name="key${count}">
+      <input type="text" placeholder="Значение" name="value${count}">
+      <button type="button" class="key-value-delete">
+        <img class="key-value-trash" src="/svg/trash.svg" alt="Удалить">
+      </button>
+    </div>
+  `;
+
+  characteristicsAddInput.innerHTML += keyValuePairHTML;
+
+  const deleteButtons = document.querySelectorAll('.key-value-delete');
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      button.parentElement.remove();
+    });
   });
 });

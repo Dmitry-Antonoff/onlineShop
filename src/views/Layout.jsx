@@ -1,6 +1,6 @@
 const React = require('react');
 
-module.exports = function Layout({ children, user, showSearchForm = true }) {
+module.exports = function Layout({ children, user, showSearchForm = true, search }) {
   const services = [
     { name: 'Способы Оплаты', href: '/' },
     { name: 'Доставка', href: '/' },
@@ -88,10 +88,10 @@ module.exports = function Layout({ children, user, showSearchForm = true }) {
           </header>
           {showSearchForm && (
             <div className="header-2">
-              <form className="search">
+              <form className="search" name="searchProduct" method="GET" action="/products">
                 <img src="/svg/search.svg" alt="search" style={{ height: '25px' }} />
-                <input type="text" placeholder="Поиск" />
-                <button type="button">Найти</button>
+                <input type="text" placeholder="Поиск" name="search" value={search} />
+                <button type="submit">Найти</button>
               </form>
             </div>
           )}

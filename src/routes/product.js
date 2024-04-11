@@ -17,10 +17,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post('/', upload.single('img'), async (req, res) => {
-  const { parentproductName, name, code, manufacturer, price, inStock, description } = req.body;
+  const { parentproductName, name, code, manufacturer, price, inStock, description, keyValues } =
+    req.body;
+  console.log(req.body);
   try {
     let manufactur = await Manufacturer.findOne({ where: { name: manufacturer } });
     if (!manufactur) {
+      console.log(manufactur);
       manufactur = await Manufacturer.create({ name: manufacturer });
     }
     const category = await Category.findOne({ where: { name: parentproductName } });
@@ -33,6 +36,7 @@ router.post('/', upload.single('img'), async (req, res) => {
       quantityInStock: inStock,
       description,
       imgPath: `/photos/${req.file?.filename}`,
+      characteristics: keyValues,
     });
     res.sendStatus(200);
   } catch (error) {

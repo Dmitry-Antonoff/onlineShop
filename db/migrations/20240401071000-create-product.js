@@ -10,6 +10,7 @@ module.exports = {
       },
       categoryId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         onDelete: 'CASCADE',
         references: {
           model: {
@@ -20,9 +21,13 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
       },
       productCode: {
         type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
       },
       manufacturerId: {
         type: Sequelize.INTEGER,
@@ -36,6 +41,7 @@ module.exports = {
       },
       price: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       quantityInStock: {
         type: Sequelize.INTEGER,

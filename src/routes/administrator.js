@@ -25,7 +25,7 @@ router.post('/:id/remove', async (req, res) => {
 });
 
 router.get('/:userName', async (req, res) => {
-  const keyword = req.params.productName;
+  const keyword = req.params.userName;
   const users = await User.findAll({
     where: {
       [Sequelize.Op.or]: [
