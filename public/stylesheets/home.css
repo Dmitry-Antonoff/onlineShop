@@ -93,6 +93,7 @@
 .add-cart {
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 .add-cart input {
@@ -108,7 +109,7 @@
 .add-cart p {
   position: absolute;
   margin-left: 72px;
-  bottom: 12px;
+  bottom: -3px;
 }
 
 .add-cart button {
