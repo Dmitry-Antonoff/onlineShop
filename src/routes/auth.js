@@ -88,7 +88,7 @@ router.get('/redirect/google', async (req, res) => {
     req.session.user = user[0];
     res.redirect('/');
   } catch (error) {
-    console.error('Error:', error.response.data.error);
+    // console.error('Error:', error.response.data.error);
     res.redirect('/auth/login');
   }
 });

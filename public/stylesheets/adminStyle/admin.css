@@ -242,6 +242,7 @@
 
 .characteristics-add {
   margin-right: 10px;
+  width: 382px;
 }
 
 .key-value {
@@ -276,7 +277,11 @@
   padding-left: 15px;
 }
 
-.description textarea{
+.description h2 {
+  margin-block-start: 1.3rem;
+}
+
+.description textarea {
   resize: none;
 }
 

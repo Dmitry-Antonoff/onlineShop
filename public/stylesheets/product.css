@@ -1,0 +1,155 @@
+.product-main {
+  margin: 0px 30px;
+  margin-bottom: 20px;
+}
+
+.product-div {
+  display: flex;
+}
+
+.product-view {
+  background-color: white;
+  width: 80%;
+  margin-right: 10px;
+  padding: 16px;
+}
+
+.product-view h2 {
+  color: #778296;
+  font-size: 16px;
+  font-weight: 500;
+}
+.product-view h2 span {
+  color: black;
+}
+
+.product-payment h3 {
+  font-weight: 500;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
+.product-view-img {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+}
+
+.product-block-links {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  /* margin-bottom: 20px; */
+}
+
+.product-block-links a {
+  text-decoration: none;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  color: #778296;
+  transition: all 0.5s;
+}
+
+.product-block-links a:hover {
+  color: #3585d5;
+}
+
+.product-сharacteristics {
+  margin-bottom: 100px;
+}
+
+.product-сharacteristics h2 {
+  color: black;
+  font-size: 20px;
+}
+
+.product-сharacteristics ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.product-сharacteristics li {
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+.product-сharacteristics p {
+  color: #778296;
+  margin-right: 30px;
+  overflow-wrap: anywhere;
+  width: 180px;
+}
+
+.product-сharacteristics span {
+  overflow-wrap: anywhere;
+  width: 180px;
+}
+
+.product-description {
+  width: 70%;
+  margin-bottom: 150px;
+}
+
+.product-description h2 {
+  color: black;
+  font-size: 20px;
+}
+
+.analogues-replacements thead {
+  height: 30px;
+}
+.analogues-replacements thead th {
+  text-align: start;
+  color: #8994a9;
+  font-weight: 500;
+}
+.adanaloguesmin-productName {
+  width: 537px;
+  overflow-wrap: anywhere;
+  padding: 10px;
+  padding-right: 30px;
+}
+
+.analogues-products-tr {
+  border-bottom: 1px solid #e2e6f1;
+  border-top: 1px solid #e2e6f1;
+}
+
+.analogues-products-tr img {
+  padding: 10px;
+}
+
+.analogues-products-tr td a {
+  color: #3585d5;
+  text-decoration: none;
+}
+
+.analogues-products-tr td a:hover {
+  text-decoration: underline;
+}
+
+.payment-tresh,
+.methods-obtaining,
+.pay-info {
+  background-color: white;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.methods-obtaining ul {
+  padding-inline-start: 20px;
+}
+
+.methods-obtaining li {
+  margin: 5px 0px;
+}
+.methods-obtaining li::marker {
+  color: #09529b;
+}
+.methods-obtaining {
+}
+
+.pay-info {
+}
