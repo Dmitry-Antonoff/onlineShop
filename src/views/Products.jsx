@@ -10,15 +10,16 @@ module.exports = function Products(props) {
         <div className="products-div">
           <div className="products-filter">
             <h2>Фильтр</h2>
-            <ul>
+            <ul className="product-ul-filter">
+              <h3>Категории</h3>
               {parentCategories.reverse().map((cat) => (
-                <li>
-                  <a href={`/products/${cat.id}`}>{cat.name}</a>
+                <li className="product-parent" key={cat.id}>
+                  <a href={`/products/${cat.id}`}>&lt; {cat.name}</a>
                 </li>
               ))}
               <li>{category.name}</li>
               {category.children.map((cat) => (
-                <li>
+                <li className="product-children" key={cat.id}>
                   <a href={`/products/${cat.id}`}>{cat.name}</a>
                 </li>
               ))}
@@ -75,7 +76,7 @@ module.exports = function Products(props) {
                   <div className="price">
                     <p className="first-price">{product.price}</p>
                   </div>
-                  <div className="into">
+                  <div className="into add-cart">
                     <input type="number" name="" id="" />
                     <p>шт</p>
                     <button type="button">В корзину</button>
