@@ -7,10 +7,7 @@ module.exports = function Home(props) {
     <Layout {...props}>
       <main className="home-main">
         <h2>Категории</h2>
-        <button type="button" className="prev" onClick="prevSlide()">
-          <img alt="arror-left" src="svg/left.svg" />
-        </button>
-        <ul className="categories">
+        <ul className="categories categories-slider">
           {categories.map((category) => (
             <a className="category-link" href={`/category/${category.name}`}>
               <li>
@@ -20,20 +17,17 @@ module.exports = function Home(props) {
             </a>
           ))}
         </ul>
-        <button type="button" className="next" onClick="nextSlide()">
-          <img alt="arror-right" src="svg/right.svg" />
-        </button>
         <h2>Хиты продаж</h2>
-        <div className="≈">
-          <div className="left">
+        <ul className="categories categories-slider">
+          {/* <div className="left">
             <button
               type="button"
               className="button circle-btn first-circle portfolio-prev left-right"
             >
               <img alt="arror-left" src="svg/left.svg" />
             </button>
-          </div>
-          <div className="hit">
+          </div> */}
+          <li className="hit">
             <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
@@ -49,8 +43,8 @@ module.exports = function Home(props) {
                 <button type="button">В корзину</button>
               </div>
             </div>
-          </div>
-          <div className="hit">
+          </li>
+          <li className="hit">
             <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
@@ -66,8 +60,8 @@ module.exports = function Home(props) {
                 <button type="button">В корзину</button>
               </div>
             </div>
-          </div>
-          <div className="hit">
+          </li>
+          <li className="hit">
             <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
@@ -83,8 +77,8 @@ module.exports = function Home(props) {
                 <button type="button">В корзину</button>
               </div>
             </div>
-          </div>
-          <div className="hit">
+          </li>
+          <li className="hit">
             <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
@@ -100,8 +94,8 @@ module.exports = function Home(props) {
                 <button type="button">В корзину</button>
               </div>
             </div>
-          </div>
-          <div className="hit">
+          </li>
+          <li className="hit">
             <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
@@ -117,8 +111,8 @@ module.exports = function Home(props) {
                 <button type="button">В корзину</button>
               </div>
             </div>
-          </div>
-          <div className="hit">
+          </li>
+          <li className="hit">
             <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
@@ -134,16 +128,16 @@ module.exports = function Home(props) {
                 <button type="button">В корзину</button>
               </div>
             </div>
-          </div>
-          <div className="right">
+          </li>
+          {/* <div className="right">
             <button
               type="button"
               className="button circle-btn last-circle portfolio-next left-right"
             >
               <img alt="arror-right" src="svg/right.svg" />
             </button>
-          </div>
-        </div>
+          </div> */}
+        </ul>
 
         <div>
           <h2>Преимущества работы снами</h2>

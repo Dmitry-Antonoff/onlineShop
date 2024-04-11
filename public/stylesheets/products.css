@@ -36,23 +36,24 @@
   margin: 7px;
 }
 
-.product-parent a{
+.product-parent a {
   padding: 5px;
   color: #778296;
   text-decoration: none;
 }
 
-.product-parent:hover a{
+.product-parent:hover a {
   text-decoration-color: #778296;
+  text-decoration: underline;
 }
 
 .product-children {
   margin: 10px;
 }
 
-.product-children a{
+.product-children a {
   color: #111418;
-  text-decoration: none
+  text-decoration: none;
 }
 
 .product-children a:hover {
@@ -174,7 +175,7 @@
   border: 1px solid #d8dee9;
   display: flex;
   padding: 12px;
-  min-width: 355px;
+  width: 355px;
   background: #ffffff;
   min-height: 530px;
   transition: all 0.5s;
@@ -191,6 +192,10 @@
   display: flex;
   justify-content: center;
   padding: 0px 70px;
+}
+
+.product-name {
+  overflow-wrap: anywhere;
 }
 
 .product-kod {

@@ -15,6 +15,10 @@ module.exports = function Login(props) {
           <a className="link-reg" href="/auth/reg">
             Регистрация
           </a>
+          <p className="or">Или</p>
+          <a className="src-google" href="/auth/google">
+            <img src="/svg/google.svg" alt="google" /> Продолжить с Google
+          </a>
         </form>
       </main>
     </Layout>
