@@ -9,19 +9,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Order, { foreignKey: 'orderId', onDelete: 'CASCADE' });
-      this.belongsTo(models.Product, { foreignKey: 'productId', onDelete: 'CASCADE' });
+      this.belongsTo(models.Order, {
+        foreignKey: 'orderId',
+        onDelete: 'CASCADE',
+      });
+      this.belongsTo(models.Product, {
+        foreignKey: 'productId',
+        onDelete: 'CASCADE',
+      });
     }
   }
   OrderProduct.init(
     {
       orderId: DataTypes.INTEGER,
       productId: DataTypes.INTEGER,
+      quantity: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: 'OrderProduct',
-    },
+    }
   );
   return OrderProduct;
 };

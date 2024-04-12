@@ -8,7 +8,13 @@ const Error = require('../views/Error');
 const isLogin = require('../middleware/isLogin');
 const isMainAdmin = require('../middleware/isMainAdmin');
 const isAdmin = require('../middleware/isAdmin');
-const { User, Category, Product, Manufacturer, BasketList } = require('../../db/models');
+const {
+  User,
+  Category,
+  Product,
+  Manufacturer,
+  BasketList,
+} = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
 const Products = require('../views/Products');
@@ -18,15 +24,21 @@ const AdminProducts = require('../views/admin/AdminProducts');
 const AdminCategories = require('../views/admin/AdminCategories');
 const EditProduct = require('../views/admin/EditProduct');
 const Basket = require('../views/Basket');
+const BasketDone = require('../views/BasketDone');
 const EditCategory = require('../views/admin/EditCategory');
 
 router.get('/', async (req, res) => {
   try {
-    const categories = await Category.findAll({ where: { parentCategoryId: null } });
+    const categories = await Category.findAll({
+      where: { parentCategoryId: null },
+    });
     console.log(req.session);
     res.render(Home, { categories });
   } catch (error) {
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -38,7 +50,23 @@ router.get('/basket', async (req, res) => {
     });
     res.render(Basket, { basList });
   } catch (error) {
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    console.log(error);
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
+  }
+});
+
+router.get('/basket/done', async (req, res) => {
+  try {
+    res.render(BasketDone);
+  } catch (error) {
+    console.log(error);
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -47,13 +75,20 @@ router.get('/category/:categoryName', async (req, res) => {
     const category = await Category.findOne({
       where: { name: req.params.categoryName },
       include: [
-        { model: Category, as: 'children', include: [{ model: Category, as: 'children' }] },
+        {
+          model: Category,
+          as: 'children',
+          include: [{ model: Category, as: 'children' }],
+        },
       ],
     });
     res.render(Catalog, { category });
   } catch (error) {
     console.log(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -61,7 +96,9 @@ async function getParentCategories(cat, result = []) {
   if (cat) {
     result.push(cat);
     if (cat.parentCategoryId) {
-      const parentCategory = await Category.findOne({ where: { id: cat.parentCategoryId } });
+      const parentCategory = await Category.findOne({
+        where: { id: cat.parentCategoryId },
+      });
       await getParentCategories(parentCategory, result);
     }
   }
@@ -98,7 +135,10 @@ router.get('/products/:catId', async (req, res) => {
     });
 
     const childCategories = await getAllChildCategories(req.params.catId);
-    const categoryIds = [req.params.catId, ...childCategories.map((cat) => cat.id)];
+    const categoryIds = [
+      req.params.catId,
+      ...childCategories.map((cat) => cat.id),
+    ];
 
     const where = search
       ? {
@@ -126,7 +166,9 @@ router.get('/products/:catId', async (req, res) => {
       where,
     });
 
-    const basket = await BasketList.findAll({ where: { userId: req.session.user.id } });
+    const basket = await BasketList.findAll({
+      where: { userId: req.session.user.id },
+    });
 
     res.render(Products, {
       category,
@@ -140,7 +182,10 @@ router.get('/products/:catId', async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -171,7 +216,9 @@ router.get('/products', async (req, res) => {
       where,
     });
 
-    const basket = await BasketList.findAll({ where: { userId: req.session.user.id } });
+    const basket = await BasketList.findAll({
+      where: { userId: req.session.user.id },
+    });
 
     res.render(Products, {
       products,
@@ -183,13 +230,18 @@ router.get('/products', async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
 router.get('/products/:catId/:code', async (req, res) => {
   try {
-    const product = await Product.findOne({ where: { productCode: req.params.code } });
+    const product = await Product.findOne({
+      where: { productCode: req.params.code },
+    });
 
     const basket = await BasketList.findOne({
       where: { userId: req.session.user.id, productId: product.id },
@@ -197,7 +249,10 @@ router.get('/products/:catId/:code', async (req, res) => {
     res.render(ProductPage, { product, basket });
   } catch (error) {
     console.log(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -205,14 +260,20 @@ router.get('/auth/login', isLogin, (req, res) => {
   try {
     res.render(Login);
   } catch (error) {
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 router.get('/auth/reg', isLogin, (req, res) => {
   try {
     res.render(Reg);
   } catch (error) {
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -243,10 +304,19 @@ router.get('/admin', isMainAdmin, async (req, res) => {
       order: [['name', 'ASC']],
       where,
     });
-    res.render(AdminPage, { allUsers, page: page || 1, limit, search, all: allUser });
+    res.render(AdminPage, {
+      allUsers,
+      page: page || 1,
+      limit,
+      search,
+      all: allUser,
+    });
   } catch (error) {
     console.error(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -278,10 +348,19 @@ router.get('/admin/products', isAdmin, async (req, res) => {
       include: [{ model: Manufacturer }],
       where,
     });
-    res.render(AdminProducts, { allProducts, page: page || 1, limit, search, all: products });
+    res.render(AdminProducts, {
+      allProducts,
+      page: page || 1,
+      limit,
+      search,
+      all: products,
+    });
   } catch (error) {
     console.log(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -303,9 +382,18 @@ router.get('/admin/categories', isAdmin, async (req, res) => {
       order: [['name', 'ASC']],
       where,
     });
-    res.render(AdminCategories, { allCategories, page: page || 1, limit, search, all: categories });
+    res.render(AdminCategories, {
+      allCategories,
+      page: page || 1,
+      limit,
+      search,
+      all: categories,
+    });
   } catch (error) {
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -314,7 +402,10 @@ router.get('/categories/new', isAdmin, async (req, res) => {
     const allCategories = await Category.findAll();
     res.render(AddCategories, { allCategories });
   } catch (error) {
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -330,7 +421,10 @@ router.get('/product/new', isAdmin, async (req, res) => {
     res.render(AddProduct, { allCategories });
   } catch (error) {
     console.log(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -343,7 +437,10 @@ router.get('/product/:id/edit', isAdmin, async (req, res) => {
     res.render(EditProduct, { product });
   } catch (error) {
     console.log(error);
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
@@ -353,7 +450,10 @@ router.get('/category/:id/edit', isAdmin, async (req, res) => {
     console.log(category);
     res.render(EditCategory, { category });
   } catch (error) {
-    res.render(Error, { message: 'Не удалось получить записи из базы данных.', error: {} });
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
   }
 });
 
