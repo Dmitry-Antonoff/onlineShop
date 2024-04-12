@@ -172,19 +172,23 @@
 }
 
 .product {
-  border: 1px solid #d8dee9;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #d8dee9;
   padding: 12px;
   width: 355px;
   background: #ffffff;
-  min-height: 530px;
+  max-height: 520px;
   transition: all 0.5s;
   padding-top: 8px;
-  flex-direction: column;
 }
 
 .product:hover {
   box-shadow: 0px 0px 10px #0003;
+}
+
+.product-info-asn {
 }
 
 .product img {
@@ -213,10 +217,11 @@
   border: none;
   border-radius: 5px;
   font-size: 15px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.into-div button:hover {
+  background-color: #d5a30c;
 } */
 
 .into-basket {

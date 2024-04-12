@@ -32,7 +32,8 @@ module.exports = function Home(props) {
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
             </a>
-            <div className="buy">
+
+            <div className="buy-hit">
               <div className="price">
                 <p className="first-price">цена</p>
                 <p className="past-price">прошлая цена</p>
@@ -51,7 +52,7 @@ module.exports = function Home(props) {
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
             </a>
-            <div className="buy">
+            <div className="buy-hit">
               <div className="price">
                 <p className="first-price">цена</p>
                 <p className="past-price">прошлая цена</p>
@@ -68,7 +69,7 @@ module.exports = function Home(props) {
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
             </a>
-            <div className="buy">
+            <div className="buy-hit">
               <div className="price">
                 <p className="first-price">цена</p>
                 <p className="past-price">прошлая цена</p>
@@ -85,7 +86,7 @@ module.exports = function Home(props) {
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
             </a>
-            <div className="buy">
+            <div className="buy-hit">
               <div className="price">
                 <p className="first-price">цена</p>
                 <p className="past-price">прошлая цена</p>
@@ -102,7 +103,7 @@ module.exports = function Home(props) {
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
             </a>
-            <div className="buy">
+            <div className="buy-hit">
               <div className="price">
                 <p className="first-price">цена</p>
                 <p className="past-price">прошлая цена</p>
@@ -119,7 +120,7 @@ module.exports = function Home(props) {
             <a className="hit-info" href="/s">
               Lorem animi aliquam voluptate facilis quaerat odit dolores neque. Saepe, illo.
             </a>
-            <div className="buy">
+            <div className="buy-hit">
               <div className="price">
                 <p className="first-price">цена</p>
                 <p className="past-price">прошлая цена</p>

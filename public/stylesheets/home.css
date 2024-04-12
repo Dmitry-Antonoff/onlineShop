@@ -85,8 +85,12 @@
   margin-top: 15px;
 }
 
-.buy {
+.buy-hit {
   margin-top: 10rem;
+}
+
+.buy {
+  /* margin-top: 2rem; */
 }
 
 .price {
