@@ -4,6 +4,12 @@ const SideBar = require('./SideBar');
 
 module.exports = function EditProduct(props) {
   const { product } = props;
+  const characteristic = product.characteristics;
+  console.log(characteristic);
+  const allcharacteristic = [];
+  for (const key in characteristic) {
+    allcharacteristic.push({ key, value: characteristic[key] });
+  }
   return (
     <Layout {...props}>
       <main className="add-product-main">
@@ -46,12 +52,24 @@ module.exports = function EditProduct(props) {
               <button type="button" className="edit-btn add-value-characteristics">
                 <img className="edit" src="/svg/add.svg" alt="Добавить" />
               </button>
-              {/* {product.characteristics.map((characteristic) => (
-                <div className="key-value">
-                  <input type="text" placeholder="Ключ" />
-                  <input type="text" placeholder="Значение" />
-                </div>
-              ))} */}
+              <div>
+                {allcharacteristic.map((character) => (
+                  <div className="key-value">
+                    <input
+                      type="text"
+                      placeholder="Ключ"
+                      defaultValue={character.key}
+                      key={product.id}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Значение"
+                      defaultValue={character.value}
+                      key={product.id}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="description">
               <h2>Описание</h2>

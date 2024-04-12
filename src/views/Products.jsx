@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-expressions */
 const React = require('react');
 const Layout = require('./Layout');
 
 module.exports = function Products(props) {
-  const { category, parentCategories, page, limit, products, search, all } = props;
+  const { category, parentCategories, page, limit, products, search, all, basket } = props;
   return (
     <Layout {...props}>
       <main className="products-main">
@@ -54,41 +55,60 @@ module.exports = function Products(props) {
             </form>
           </div>
           <div className="products">
-            {products.map((product) => (
-              <div className="product">
-                <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
-                <a
-                  className="product-name"
-                  href={`/products/${product.categoryId}/${product.productCode}`}
-                >
-                  {product.name}
-                </a>
-                <p className="product-kod">
-                  Код товара: <span>{product.productCode}</span>
-                </p>
-                <p className="product-kod">
-                  Упаковка: <span>zzz</span>
-                </p>
-                <p className="product-kod">
-                  Производитель: <span>{product.Manufacturer.name}</span>
-                </p>
-                <p className="product-kod">
-                  В наличие: <span>{product.quantityInStock} шт</span>
-                </p>
-                <div className="buy">
-                  <div className="price">
-                    <p className="first-price">{product.price}</p>
-                  </div>
-                  <div className="into add-cart">
-                    <form name="addBasket" className="into add-cart addBasket" data-productid={product.id}>
-                      <input type="number" name="quantity" id="" />
-                      <p>шт</p>
-                      <button type="submit">В корзину</button>
-                    </form>
+            {products.map((product) => {
+              const productIdsInBasket = basket.map((basketP) => basketP.productId);
+              const isInBasket = productIdsInBasket.includes(product.id);
+
+              return (
+                <div className="product" key={product.id}>
+                  <img src={product.imgPath} alt={product.name} />
+                  <a
+                    className="product-name"
+                    href={`/products/${product.categoryId}/${product.productCode}`}
+                  >
+                    {product.name}
+                  </a>
+                  <p className="product-kod">
+                    Код товара: <span>{product.productCode}</span>
+                  </p>
+                  <p className="product-kod">
+                    Упаковка: <span>zzz</span>
+                  </p>
+                  <p className="product-kod">
+                    Производитель: <span>{product.Manufacturer.name}</span>
+                  </p>
+                  <p className="product-kod">
+                    В наличие: <span>{product.quantityInStock} шт</span>
+                  </p>
+                  <div className="buy">
+                    <div className="price">
+                      <p className="first-price">{product.price}</p>
+                    </div>
+                    <div className="into add-cart">
+                      <form
+                        name="addBasket"
+                        className="into add-cart addBasket"
+                        data-productid={product.id}
+                      >
+                        <input type="number" name="quantity" id="" />
+                        <p>шт</p>
+                        {!isInBasket ? (
+                          <button type="submit">В корзину</button>
+                        ) : (
+                          <button
+                            disabled
+                            type="button"
+                            style={{ backgroundColor: '#0876cc', color: 'white' }}
+                          >
+                            Уже в корзине
+                          </button>
+                        )}
+                      </form>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
         {all.length > 12 && (

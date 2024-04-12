@@ -16,6 +16,7 @@ addBasket?.forEach((basket) => {
       });
       if (res.status === 200) {
         showToast('Товар добавлен в корзину', { type: 'success' });
+        basket.quantity.value = '';
       }
     } catch (error) {
       console.log(error);

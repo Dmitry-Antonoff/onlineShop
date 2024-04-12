@@ -2,7 +2,7 @@ const React = require('react');
 const Layout = require('./Layout');
 
 module.exports = function Product(props) {
-  const { product } = props;
+  const { product, basket } = props;
   return (
     <Layout {...props}>
       <main className="product-main">
@@ -76,10 +76,24 @@ module.exports = function Product(props) {
               </p>
               <p>{product.price}Лари/шт</p>
               <div className="into add-cart">
-                <form name="addBasket" className="into add-cart addBasket" data-productid={product.id}>
+                <form
+                  name="addBasket"
+                  className="into add-cart addBasket"
+                  data-productid={product.id}
+                >
                   <input type="number" name="quantity" id="" />
                   <p>шт</p>
-                  <button type="submit">В корзину</button>
+                  {!basket ? (
+                    <button type="submit">В корзину</button>
+                  ) : (
+                    <button
+                      disabled
+                      type="button"
+                      style={{ backgroundColor: '#0876cc', color: 'white' }}
+                    >
+                      Уже в корзине
+                    </button>
+                  )}
                 </form>
               </div>
             </div>
