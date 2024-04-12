@@ -92,34 +92,23 @@ categoriesForm?.addEventListener('submit', async (e) => {
 productForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
-    const formDataObject = {};
-    const keyValuesObject = {};
+    const formData = new FormData(productForm);
 
-    const keyValues = document.querySelectorAll('.key-value');
-    keyValues.forEach((keyValue, index) => {
-      const keyInput = keyValue.querySelector(`input[name="key${index + 1}"]`);
-      const valueInput = keyValue.querySelector(`input[name="value${index + 1}"]`);
-
-      if (keyInput.value.trim() !== '') {
-        keyValuesObject[keyInput.value] = valueInput.value;
+    const keyValues = {};
+    const keyInputs = document.querySelectorAll('.key-value input[name^="key"]');
+    const valueInputs = document.querySelectorAll('.key-value input[name^="value"]');
+    keyInputs.forEach((keyInput, index) => {
+      const key = keyInput.value.trim();
+      const { value } = valueInputs[index];
+      if (key !== '') {
+        keyValues[key] = value;
       }
     });
-
-    formDataObject.keyValues = keyValuesObject;
-
-    const otherInputs = productForm.querySelectorAll(
-      'input:not([name^="key"]):not([name^="value"]), select:not([name^="key"]):not([name^="value"]),textarea:not([name^="key"]):not([name^="value"])',
-    );
-    otherInputs.forEach((input) => {
-      formDataObject[input.name] = input.value;
-    });
+    formData.append('keyValues', JSON.stringify(keyValues));
 
     const res = await fetch('/products', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formDataObject),
+      body: formData,
     });
     if (res.status === 200) {
       showToast('Товар добавлен', { type: 'success' });

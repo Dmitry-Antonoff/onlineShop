@@ -209,30 +209,11 @@
 .product-kod span {
   color: #111418;
 }
-/* 
-.into-div {
-  display: flex;
-  justify-content: space-between;
-}
 
-.into-div input {
-  width: 100px;
-  height: 40px;
-  margin-right: 30px;
-  border: 1px solid #d8dee9;
-  max-width: 132px;
-  max-height: 40px;
-  padding-right: 0;
-}
-
-.into-div p {
-  position: absolute;
-  margin: 12px 74px;
-}
-
-.into-div button {
+/* .into-p {
   width: 150px;
-  background-color: #ffc107;
+  height: 44px;
+  background-color: #0876cc;
   border: none;
   border-radius: 5px;
   font-size: 15px;

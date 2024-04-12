@@ -9,6 +9,7 @@ const storage = multer.diskStorage({
   },
   filename(req, file, cb) {
     const photoName = req.body.name.replace(/\s/g, '-');
+    console.log(photoName);
     const filename = photoName + path.extname(file.originalname);
     cb(null, filename);
   },
@@ -19,11 +20,9 @@ const upload = multer({ storage });
 router.post('/', upload.single('img'), async (req, res) => {
   const { parentproductName, name, code, manufacturer, price, inStock, description, keyValues } =
     req.body;
-  console.log(req.body);
   try {
     let manufactur = await Manufacturer.findOne({ where: { name: manufacturer } });
     if (!manufactur) {
-      console.log(manufactur);
       manufactur = await Manufacturer.create({ name: manufacturer });
     }
     const category = await Category.findOne({ where: { name: parentproductName } });

@@ -89,7 +89,17 @@ module.exports = function Product(props) {
                 >
                   <input type="number" name="quantity" id="" />
                   <p>шт</p>
-                  <button type="submit">В корзину</button>
+                  {!basket ? (
+                    <button type="submit">В корзину</button>
+                  ) : (
+                    <button
+                      disabled
+                      type="button"
+                      style={{ backgroundColor: '#0876cc', color: 'white' }}
+                    >
+                      Уже в корзине
+                    </button>
+                  )}
                 </form>
               </div>
             </div>
