@@ -36,7 +36,7 @@ module.exports = function AdminProducts(props) {
             <tbody>
               {allProducts.map((product) => (
                 <tr className="all-products-li" id={product.id}>
-                  <td>
+                  <td className='product-img-td'>
                     <img className="product-img" src={product.imgPath} alt={product.name} />
                   </td>
                   <td className="admin-productsName">{product.name}</td>

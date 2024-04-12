@@ -3,6 +3,11 @@ const Layout = require('./Layout');
 
 module.exports = function Product(props) {
   const { product } = props;
+  const characteristic = product.characteristics;
+  const allcharacteristic = [];
+  for (const key in characteristic) {
+    allcharacteristic.push({ key, value: characteristic[key] });
+  }
   return (
     <Layout {...props}>
       <main className="product-main">
@@ -24,11 +29,12 @@ module.exports = function Product(props) {
             <div className="product-сharacteristics" id="product-сharacteristics">
               <h2>Характеристики</h2>
               <ul>
-                {/* ///////// */}
-                <li>
-                  <p>Производитель:</p>
-                  <span>IEK</span>
-                </li>
+                {allcharacteristic.map((characteristic) => (
+                  <li>
+                    <p>{characteristic.key}</p>
+                    <span>{characteristic.value}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -74,9 +80,13 @@ module.exports = function Product(props) {
               <p className="product-kod">
                 В наличие: <span>{product.quantityInStock} шт</span>
               </p>
-              <p>{product.price}Лари/шт</p>
+              <p>{product.price} Лари/шт</p>
               <div className="into add-cart">
-                <form name="addBasket" className="into add-cart addBasket" data-productid={product.id}>
+                <form
+                  name="addBasket"
+                  className="into add-cart addBasket"
+                  data-productid={product.id}
+                >
                   <input type="number" name="quantity" id="" />
                   <p>шт</p>
                   <button type="submit">В корзину</button>
