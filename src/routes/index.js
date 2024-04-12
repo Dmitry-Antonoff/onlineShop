@@ -14,6 +14,8 @@ const {
   Product,
   Manufacturer,
   BasketList,
+  Order,
+  OrderProduct,
 } = require('../../db/models');
 const AddCategories = require('../views/admin/AddCategories');
 const Catalog = require('../views/Catalog');
@@ -22,6 +24,8 @@ const ProductPage = require('../views/Product');
 const AddProduct = require('../views/admin/AddProduct');
 const AdminProducts = require('../views/admin/AdminProducts');
 const AdminCategories = require('../views/admin/AdminCategories');
+const AdminOrders = require('../views/admin/AdminOrders');
+const AdminOrder = require('../views/admin/AdminOrder');
 const EditProduct = require('../views/admin/EditProduct');
 const Basket = require('../views/Basket');
 const BasketDone = require('../views/BasketDone');
@@ -390,6 +394,67 @@ router.get('/admin/categories', isAdmin, async (req, res) => {
       all: categories,
     });
   } catch (error) {
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
+  }
+});
+
+router.get('/admin/orders', isAdmin, async (req, res) => {
+  try {
+    const { page, search } = req.query;
+
+    const orders = await Order.findAll();
+    const limit = Math.ceil(orders.length / 10);
+    const allOrders = await Order.findAll({
+      limit: 10,
+      offset: +page ? (+page - 1) * 10 : 0,
+      order: [['id', 'DESC']],
+    });
+    res.render(AdminOrders, {
+      allOrders,
+      page: page || 1,
+      limit,
+      search,
+      all: orders,
+    });
+  } catch (error) {
+    console.log(error);
+    res.render(Error, {
+      message: 'Не удалось получить записи из базы данных.',
+      error: {},
+    });
+  }
+});
+router.get('/admin/orders/:orderId', async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.findOne({
+      where: {
+        id: orderId,
+      },
+      include: [
+        {
+          model: OrderProduct,
+          include: [
+            {
+              model: Product,
+              include: [
+                {
+                  model: Manufacturer,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    res.render(AdminOrder, {
+      order,
+    });
+  } catch (error) {
+    console.error(error);
     res.render(Error, {
       message: 'Не удалось получить записи из базы данных.',
       error: {},

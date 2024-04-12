@@ -14,6 +14,9 @@ module.exports = function SideBar(props) {
       <li>
         <a href="/admin/products">Товары</a>
       </li>
+      <li>
+        <a href="/admin/orders">Заказы</a>
+      </li>
       {user?.role === 'ADMINISTRATOR' && (
         <li>
           <a href="/admin">Пользователи</a>
