@@ -53,11 +53,8 @@ module.exports = function Layout({ children, user, showSearchForm = true, search
                     </div>
                   </div>
                   <a href="/" className="logo">
-                    <img
-                      src="https://yastatic.net/naydex/yandex-search/T1fp6r297/af453b9dpD/r6ET8Ft_tzl0TmqEDIBBX31pfAhmiysIeF_EbZfXWDBPbZo-bTx9sk6Yzj65wkcGDY4chri53vqI8Jw8wb-XQL-iA7wYPKxgKAt0z0CHSFtiImFAZsw3WnNI32-enlNmRj_PUlEbBMYotagVn7w-HlnVGtSir5m57ps"
-                      alt=""
-                      style={{ height: '50px' }}
-                    />
+                    {/* <img src="/img/logo.png" alt="" /> */}
+                    <img src="/img/logoText.png" alt="" />
                   </a>
                   {user?.name ? (
                     <ul className="menu" id="menu">
@@ -99,12 +96,7 @@ module.exports = function Layout({ children, user, showSearchForm = true, search
         </div>
         {children}
         <footer>
-          <img
-            src="https://yastatic.net/naydex/yandex-search/T1fp6r297/af453b9dpD/r6ET8Ft_tzl0TmqEDIBBX31pfAhmiysIeF_EbZfXWDBPbZo-bTx9sk6Yzj65wkcGDY4chri53vqI8Jw8wb-XQL-iA7wYPKxgKAt0z0CHSFtiImFAZsw3WnNI32-enlNmRj_PUlEbBMYotagVn7w-HlnVGtSir5m57ps"
-            alt="logo"
-            className="footer-log"
-            style={{ height: '50px' }}
-          />
+          <img src="/img/logoText.png" alt="logo" className="footer-log" style={{ height: '50px' }} />
 
           <div className="social">
             <p>Социальные сети</p>

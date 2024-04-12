@@ -73,6 +73,7 @@
   display: flex;
   align-items: center;
   width: 50%;
+  border-bottom: 1px dashed;
 }
 .product-сharacteristics p {
   color: #778296;

@@ -60,6 +60,16 @@ main {
 .logo {
   display: flex;
   align-items: center;
+  margin: 5px;
+}
+
+.logo img:first-child {
+  height: 50px;
+  padding-right: 5px;
+}
+
+.logo img:last-child {
+  height: 32px;
 }
 
 .menu > li > a {

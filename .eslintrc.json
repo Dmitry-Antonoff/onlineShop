@@ -24,6 +24,8 @@
     "no-restricted-globals": "off",
     "indent": "off",
     "no-restricted-syntax": "off",
-    "no-await-in-loop": "off"
+    "no-await-in-loop": "off",
+    "no-shadow": "off",
+    "guard-for-in": "off"
   }
 }

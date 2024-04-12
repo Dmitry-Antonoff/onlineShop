@@ -3,6 +3,14 @@ const Layout = require('./Layout');
 
 module.exports = function Basket(props) {
   const { basList } = props;
+
+  const getTotalPrice = (product) => product.quantity * product.Product.price;
+
+  let totalSum = 0;
+  basList.forEach((product) => {
+    totalSum += getTotalPrice(product);
+  });
+
   return (
     <Layout {...props}>
       <main className="trash-main">
@@ -21,32 +29,11 @@ module.exports = function Basket(props) {
               <th>В наличии</th>
               <th>Кол-во</th>
               <th>Цена</th>
+              <th>Сумма</th>
               <th className="action">Действие</th>
             </tr>
           </thead>
           <tbody>
-            {/* <tr className="all-products-li">
-              <td className="img-td">
-                <img
-                  className="product-img"
-                  src="https://cdn.etm.ru/ipro/814/small_vvg_3_ploskij_nezalit.jpg"
-                  alt=""
-                />
-              </td>
-              <td className="admin-productsName">Название</td>
-              <td className="admin-products-name">Код</td>
-              <td className="admin-products-stock">В наличии</td>
-              <td className="admin-products-into">
-                <input className="into" type="number" name="" id="" />
-                <p className="thing">шт</p>
-              </td>
-              <td className="admin-products-name">Цена</td>
-              <td className="button-div">
-                <button type="button" className="trash-btn trash-button">
-                  <img className="trash" src="/svg/trash.svg" alt="Удалить" />
-                </button>
-              </td>
-            </tr> */}
             {basList.map((product) => (
               <tr className="all-products-li" id={`tr-${product.Product.id}`}>
                 <td className="img-td">
@@ -60,19 +47,42 @@ module.exports = function Basket(props) {
                 <td className="admin-products-name">{product.Product.productCode}</td>
                 <td className="admin-products-stock">{product.Product.quantityInStock}</td>
                 <td className="admin-products-into">
-                  <input className="into" type="number" name="" id="" value={product.quantity} />
+                  <input
+                    className="into-basket-products"
+                    type="number"
+                    name=""
+                    id={product.Product.id}
+                    value={product.quantity}
+                  />
                   <p className="thing">шт</p>
                 </td>
-                <td className="admin-products-name">{product.Product.price}</td>
+                <td className="admin-products-name" id={`price-${product.Product.id}`}>
+                  {product.Product.price}
+                </td>
+                <td className="admin-products-name" id={`sum-${product.Product.id}`}>
+                  {getTotalPrice(product)}
+                </td>
                 <td className="button-div">
                   <button type="button" id={product.Product.id} className="trash-btn trash-button">
-                    <img className="trash" id={product.Product.id} src="/svg/trash.svg" alt="Удалить" />
+                    <img
+                      className="trash"
+                      id={product.Product.id}
+                      src="/svg/trash.svg"
+                      alt="Удалить"
+                    />
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <div className="clearance-goods">
+          <div>
+            <span>Сумма для оплаты:</span>
+            <span id="totalSum">{totalSum}</span>
+          </div>
+          <button type="button">Перейти к оформлению</button>
+        </div>
       </main>
     </Layout>
   );
