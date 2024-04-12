@@ -14,6 +14,7 @@ const administratorRouter = require('./src/routes/administrator');
 const categoriesRouter = require('./src/routes/categories');
 const productRouter = require('./src/routes/product');
 const basketRouter = require('./src/routes/basket');
+const ordersRouter = require('./src/routes/orders');
 
 const addRender = require('./src/middleware/addRender');
 
@@ -45,6 +46,7 @@ app.use('/admin', administratorRouter);
 app.use('/categories', categoriesRouter);
 app.use('/products', productRouter);
 app.use('/basket', basketRouter);
+app.use('/orders', ordersRouter);
 
 app.listen(PORT, () => {
   console.log(`server started PORT: ${PORT}`);
