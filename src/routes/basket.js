@@ -13,6 +13,16 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put('/', async (req, res) => {
+  const { quantity, productId } = req.body;
+  try {
+    await BasketList.update({ quantity }, { where: { productId } });
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.delete('/all', async (req, res) => {
   await BasketList.destroy({ where: { userId: req.session.user.id } });
   res.sendStatus(200);
