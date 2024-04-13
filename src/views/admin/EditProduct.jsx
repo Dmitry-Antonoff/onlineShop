@@ -51,21 +51,26 @@ module.exports = function EditProduct(props) {
               <button type="button" className="edit-btn add-value-characteristics">
                 <img className="edit" src="/svg/add.svg" alt="Добавить" />
               </button>
-              <div>
+              <div className="characteristics-list">
                 {allcharacteristic.map((character) => (
                   <div className="key-value">
                     <input
+                      name="key"
                       type="text"
                       placeholder="Ключ"
                       defaultValue={character.key}
                       key={product.id}
                     />
                     <input
+                      name="value"
                       type="text"
                       placeholder="Значение"
                       defaultValue={character.value}
                       key={product.id}
                     />
+                    <button type="button" className="key-value-delete key-value-edit">
+                      <img src="/svg/trash.svg" alt="Удалить" className="key-value-trash" />
+                    </button>
                   </div>
                 ))}
               </div>
