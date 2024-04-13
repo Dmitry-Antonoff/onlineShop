@@ -5,6 +5,14 @@ const delAllBasket = document.querySelector('.delAllBasket');
 const trashBtn = document.querySelectorAll('.trash-btn');
 const intoAll = document.querySelectorAll('.into-basket-products');
 
+function updateTotalSum() {
+  const sumElements = document.querySelectorAll('.sum');
+  let updatedTotalSum = 0;
+  sumElements.forEach((elem) => {
+    updatedTotalSum += parseFloat(elem.textContent);
+  });
+  document.getElementById('totalSum').textContent = updatedTotalSum;
+}
 intoAll.forEach((into) => {
   into.addEventListener('input', async (e) => {
     try {
@@ -13,6 +21,10 @@ intoAll.forEach((into) => {
       const inputValue = e.target.value;
       const result = +price * +inputValue;
       sum.innerText = result;
+
+      // Обновляем значение totalSum
+      updateTotalSum();
+
       fetch('/basket', {
         method: 'PUT',
         headers: {
@@ -25,7 +37,6 @@ intoAll.forEach((into) => {
     }
   });
 });
-
 addBasket?.forEach((basket) => {
   basket.addEventListener('submit', async (e) => {
     e.preventDefault();
