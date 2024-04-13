@@ -59,7 +59,7 @@ module.exports = function Basket(props) {
                 <td className="admin-products-name" id={`price-${product.Product.id}`}>
                   {product.Product.price}
                 </td>
-                <td className="admin-products-name" id={`sum-${product.Product.id}`}>
+                <td className="admin-products-name sum" id={`sum-${product.Product.id}`}>
                   {getTotalPrice(product)}
                 </td>
                 <td className="button-div">
