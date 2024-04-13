@@ -58,9 +58,9 @@ module.exports = function AdminProducts(props) {
                   <td className="admin-products-stock">
                     {product.Manufacturer.name}
                   </td>
-                  <td className="admin-products-name">{product.price}</td>
+                  <td className="admin-products-name">{product.price} Лари</td>
                   <td className="admin-products-name">
-                    {product.quantityInStock}
+                    {product.quantityInStock} шт
                   </td>
                   <td className="button-div">
                     <a href={`/product/${product.id}/edit`}>

@@ -4,10 +4,26 @@ const Layout = require('./Layout');
 module.exports = function Home(props) {
   const { categories } = props;
   const advantages = [
-    { href: '/svg/inventory.svg', name: 'Единый комплексный поставщик инженерных систем' },
-    { href: '/svg/calendar.svg', name: 'Прозрачные сроки поставки' },
-    { href: '/svg/discount.svg', name: 'Скидки, баллы, акции для вашей выгоды' },
-    { href: '/svg/box.svg', name: 'Экспресс-доставка на объект за 2 часа' },
+    {
+      href: 'https://ipro.etm.ru/upload/document2/1704877672474.png',
+      name: 'Единый комплексный поставщик инженерных систем',
+    },
+    {
+      href: 'https://ipro.etm.ru/upload/document2/1704873456631.png',
+      name: 'Прозрачные сроки поставки',
+    },
+    {
+      href: 'https://ipro.etm.ru/upload/document2/1704875978892.png',
+      name: 'Скидки, баллы, акции для вашей выгоды',
+    },
+    {
+      href: 'https://ipro.etm.ru/upload/document2/1704876154771.png',
+      name: 'Экспресс-доставка на объект за 2 часа',
+    },
+    {
+      href: 'https://ipro.etm.ru/upload/document2/1704879127872.png',
+      name: 'Поддержка 24/7',
+    },
   ];
   return (
     <Layout {...props}>
