@@ -3,6 +3,12 @@ const Layout = require('./Layout');
 
 module.exports = function Home(props) {
   const { categories } = props;
+  const advantages = [
+    { href: '/svg/inventory.svg', name: 'Единый комплексный поставщик инженерных систем' },
+    { href: '/svg/calendar.svg', name: 'Прозрачные сроки поставки' },
+    { href: '/svg/discount.svg', name: 'Скидки, баллы, акции для вашей выгоды' },
+    { href: '/svg/box.svg', name: 'Экспресс-доставка на объект за 2 часа' },
+  ];
   return (
     <Layout {...props}>
       <main className="home-main">
@@ -19,14 +25,6 @@ module.exports = function Home(props) {
         </ul>
         <h2>Хиты продаж</h2>
         <ul className="categories categories-slider">
-          {/* <div className="left">
-            <button
-              type="button"
-              className="button circle-btn first-circle portfolio-prev left-right"
-            >
-              <img alt="arror-left" src="svg/left.svg" />
-            </button>
-          </div> */}
           <li className="hit">
             <img src="https://cdn.etm.ru/ipro/164/small_c9f34116_images_926827.jpg" alt="" />
             <a className="hit-info" href="/s">
@@ -132,22 +130,17 @@ module.exports = function Home(props) {
               </div>
             </div>
           </li>
-          {/* <div className="right">
-            <button
-              type="button"
-              className="button circle-btn last-circle portfolio-next left-right"
-            >
-              <img alt="arror-right" src="svg/right.svg" />
-            </button>
-          </div> */}
         </ul>
-
-        <div>
+        <div className="advantages">
           <h2>Преимущества работы снами</h2>
-          <div className="benefit" />
-          <div className="benefit" />
-          <div className="benefit" />
-          <div className="benefit" />
+          <ul>
+            {advantages.map((advantage) => (
+              <li>
+                <img src={advantage.href} alt="" />
+                <p>{advantage.name}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </main>
     </Layout>
