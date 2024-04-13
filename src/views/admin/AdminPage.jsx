@@ -11,11 +11,21 @@ module.exports = function AdminPage(props) {
         <div className="administrator">
           <div className="search-user-div">
             <form className="search-user" name="searchUser" method="GET">
-              <img src="/svg/search.svg" alt="search" style={{ height: '25px' }} />
-              <input type="text" placeholder="Поиск Пользователей" name="search" value={search} />
+              <img
+                src="/svg/search.svg"
+                alt="search"
+                style={{ height: '25px' }}
+              />
+              <input
+                type="text"
+                placeholder="Поиск Пользователей"
+                name="search"
+                value={search}
+              />
               <button type="submit">Найти</button>
             </form>
           </div>
+          <h2>Пользователи</h2>
           <ul className="all-users">
             {allUsers.map((user) => (
               <li id={user.id}>
@@ -54,23 +64,39 @@ module.exports = function AdminPage(props) {
                 <img src="/svg/left.svg" alt="back" />
               </a>
               {+page >= 3 && (
-                <a href={`/admin?${search ? `search=${search}&` : ''}page=${+page - 2}`}>
+                <a
+                  href={`/admin?${search ? `search=${search}&` : ''}page=${
+                    +page - 2
+                  }`}
+                >
                   {+page - 2}
                 </a>
               )}
               {+page >= 2 && (
-                <a href={`/admin?${search ? `search=${search}&` : ''}page=${+page - 1}`}>
+                <a
+                  href={`/admin?${search ? `search=${search}&` : ''}page=${
+                    +page - 1
+                  }`}
+                >
                   {+page - 1}
                 </a>
               )}
               <span>...</span>
               {+page === limit || (
-                <a href={`/admin?${search ? `search=${search}&` : ''}page=${+page + 1}`}>
+                <a
+                  href={`/admin?${search ? `search=${search}&` : ''}page=${
+                    +page + 1
+                  }`}
+                >
                   {+page + 1}
                 </a>
               )}
               {+page + 1 >= limit || (
-                <a href={`/admin?${search ? `search=${search}&` : ''}page=${+page + 2}`}>
+                <a
+                  href={`/admin?${search ? `search=${search}&` : ''}page=${
+                    +page + 2
+                  }`}
+                >
                   {+page + 2}
                 </a>
               )}
