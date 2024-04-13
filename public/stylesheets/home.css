@@ -124,7 +124,7 @@
   border: 1px solid #d8dee9;
   max-width: 132px;
   max-height: 40px;
-  padding-right: 0;
+  padding-left: 5px;
 }
 
 .add-cart p {

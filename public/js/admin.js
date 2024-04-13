@@ -110,9 +110,25 @@ productForm?.addEventListener('submit', async (e) => {
       method: 'POST',
       body: formData,
     });
+
     if (res.status === 200) {
       showToast('Товар добавлен', { type: 'success' });
       window.location.href = '/admin/products';
+    } else if (res.status === 400) {
+      const resData = await res.json();
+      if (resData.error === 'DuplicateNameOrCode') {
+        displayErrorMessage(
+          'Такое имя или код уже существует!',
+          document.querySelector('.product-value-div'),
+        );
+      } else if (resData.error === 'IncompleteFields') {
+        displayErrorMessage('Заполните все поля!', document.querySelector('.product-value-div'));
+      } else {
+        displayErrorMessage(
+          'Произошла ошибка при добавлении товара.',
+          document.querySelector('.product-value-div'),
+        );
+      }
     }
   } catch (error) {
     console.log(error);
@@ -160,7 +176,6 @@ categoryEditForm?.addEventListener('submit', async (e) => {
   try {
     const data = new FormData(categoryEditForm);
     const { id } = e.target.dataset;
-    console.log(id);
     const res = await fetch(`/admin/category/${id}`, {
       method: 'PUT',
       headers: {
@@ -168,7 +183,6 @@ categoryEditForm?.addEventListener('submit', async (e) => {
       },
       body: JSON.stringify(Object.fromEntries(data)),
     });
-    // console.log(res);
     if (res.status === 200) {
       showToast('Категория изменена', { type: 'success' });
       window.location.href = '/admin/categories';
@@ -180,7 +194,6 @@ categoryEditForm?.addEventListener('submit', async (e) => {
 
 btndeleteProduct.forEach((btn) => {
   btn.addEventListener('click', async (e) => {
-    // e.preventDefault();
     try {
       const { id } = e.target.dataset;
 
@@ -207,7 +220,6 @@ btndeleteProduct.forEach((btn) => {
 
 btndeleteCategory.forEach((btn) => {
   btn.addEventListener('click', async (e) => {
-    // e.preventDefault();
     try {
       const { id } = e.target.dataset;
 
@@ -231,30 +243,6 @@ btndeleteCategory.forEach((btn) => {
     }
   });
 });
-
-// characteristicsAdd?.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   const count = characteristicsAddInput.children.length + 1;
-
-//   const keyValuePairHTML = `
-//     <div class="key-value">
-//       <input type="text" placeholder="Ключ" name="key${count}">
-//       <input type="text" placeholder="Значение" name="value${count}">
-//       <button type="button" class="key-value-delete">
-//         <img class="key-value-trash" src="/svg/trash.svg" alt="Удалить">
-//       </button>
-//     </div>
-//   `;
-
-//   characteristicsAddInput.innerHTML += keyValuePairHTML;
-
-//   const deleteButtons = document.querySelectorAll('.key-value-delete');
-//   deleteButtons.forEach((button) => {
-//     button.addEventListener('click', () => {
-//       button.parentElement.remove();
-//     });
-//   });
-// });
 
 characteristicsAdd?.addEventListener('click', (event) => {
   event.preventDefault();

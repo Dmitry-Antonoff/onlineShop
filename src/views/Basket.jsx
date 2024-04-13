@@ -7,7 +7,7 @@ module.exports = function Basket(props) {
   const getTotalPrice = (product) => product.quantity * product.Product.price;
 
   let totalSum = 0;
-  basList.forEach((product) => {
+  basList?.forEach((product) => {
     totalSum += getTotalPrice(product);
   });
 
@@ -76,13 +76,36 @@ module.exports = function Basket(props) {
             ))}
           </tbody>
         </table>
-        <div className="clearance-goods">
-          <div>
-            <span>Сумма для оплаты:</span>
-            <span id="totalSum">{totalSum}</span>
+
+        <form method="post" name="getOrder">
+          <div className="clearance">
+            <div className="clearance-dilivery form-container">
+              <h2>Адрес доставки</h2>
+              <label htmlFor="name">Имя:</label>
+              <input type="text" id="name" name="name" required />
+
+              <label htmlFor="address">Адрес:</label>
+              <input type="text" id="address" name="address" required />
+
+              <label htmlFor="city">Город:</label>
+              <input type="text" id="city" name="city" required />
+
+              <label htmlFor="zip">Почтовый индекс:</label>
+              <input type="text" id="zip" name="zip" required />
+
+              <label htmlFor="country">Страна:</label>
+              <input type="text" id="country" name="country" required />
+            </div>
+            <div className="clearance-goods">
+              <div>
+                <span>Сумма для оплаты:</span>
+                <span id="totalSum">{totalSum}</span>
+                <input type="hidden" name="total" value={totalSum} />
+              </div>
+              <button type="submit">Перейти к оформлению</button>
+            </div>
           </div>
-          <button type="button">Перейти к оформлению</button>
-        </div>
+        </form>
       </main>
     </Layout>
   );

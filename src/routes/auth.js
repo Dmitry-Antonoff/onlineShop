@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const axios = require('axios');
@@ -88,7 +90,7 @@ router.get('/redirect/google', async (req, res) => {
     req.session.user = user[0];
     res.redirect('/');
   } catch (error) {
-    // console.error('Error:', error.response.data.error);
+    console.error('Error:', error);
     res.redirect('/auth/login');
   }
 });
@@ -96,7 +98,6 @@ router.get('/redirect/google', async (req, res) => {
 router.get('/logout', (req, res) => {
   req.session.destroy((e) => {
     if (e) {
-      console.log(e);
       return;
     }
     res.clearCookie('UserAuth');

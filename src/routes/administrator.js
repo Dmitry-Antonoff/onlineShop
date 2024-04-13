@@ -85,7 +85,6 @@ router.get('/categories/:categoryName', async (req, res) => {
 router.put('/category/:id', async (req, res) => {
   try {
     const { name } = req.body;
-    console.log(name);
     await Category.update({ name }, { where: { id: req.params.id } });
     res.sendStatus(200);
   } catch (error) {

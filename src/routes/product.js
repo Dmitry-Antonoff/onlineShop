@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const path = require('path');
 const multer = require('multer');
+const { Sequelize } = require('sequelize');
 const { Product, Manufacturer, Category } = require('../../db/models');
 
 const storage = multer.diskStorage({
@@ -9,7 +10,6 @@ const storage = multer.diskStorage({
   },
   filename(req, file, cb) {
     const photoName = req.body.name.replace(/\s/g, '-');
-    console.log(photoName);
     const filename = photoName + path.extname(file.originalname);
     cb(null, filename);
   },
@@ -25,6 +25,19 @@ router.post('/', upload.single('img'), async (req, res) => {
     if (!manufactur) {
       manufactur = await Manufacturer.create({ name: manufacturer });
     }
+    const existingProduct = await Product.findOne({
+      where: {
+        [Sequelize.Op.or]: [{ name }, { productCode: code }],
+      },
+    });
+
+    if (existingProduct) {
+      return res.status(400).json({ error: 'DuplicateNameOrCode' });
+    }
+
+    if (!name || !code || !manufacturer || !price || !inStock) {
+      return res.status(400).json({ error: 'IncompleteFields' });
+    }
     const category = await Category.findOne({ where: { name: parentproductName } });
     await Product.create({
       categoryId: category.id,
@@ -39,6 +52,7 @@ router.post('/', upload.single('img'), async (req, res) => {
     });
     res.sendStatus(200);
   } catch (error) {
+    res.sendStatus(400);
     console.log(error);
   }
 });

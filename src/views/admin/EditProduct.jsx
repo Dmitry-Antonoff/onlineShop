@@ -5,7 +5,6 @@ const SideBar = require('./SideBar');
 module.exports = function EditProduct(props) {
   const { product } = props;
   const characteristic = product.characteristics;
-  console.log(characteristic);
   const allcharacteristic = [];
   for (const key in characteristic) {
     allcharacteristic.push({ key, value: characteristic[key] });

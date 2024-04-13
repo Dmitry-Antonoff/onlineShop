@@ -30,6 +30,7 @@
 }
 
 .administrator {
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -37,7 +38,7 @@
 }
 
 .search-user-div {
-  margin: 40px 0px;
+  margin-bottom: 30px;
   width: 410px;
   background-color: white;
   height: 50px;
@@ -45,14 +46,8 @@
   justify-content: space-between;
 }
 
-/* .search-user-form {
-  width: 400px;
-  padding-left: 10px;
-} */
-
 .search-div {
-  margin: 40px 0px;
-  /* width: 410px; */
+  margin-bottom: 30px;
   background-color: white;
   height: 50px;
   display: flex;
@@ -416,5 +411,5 @@
 
 .product-img {
   width: 90px;
-  margin: 5px
+  margin: 5px;
 }

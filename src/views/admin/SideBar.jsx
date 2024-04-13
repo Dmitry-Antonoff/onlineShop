@@ -1,11 +1,11 @@
 const React = require('react');
 
 module.exports = function SideBar(props) {
-  const { allCategories, user } = props;
+  const { user } = props;
 
-  function isActive(path) {
-    return window.location.pathname === path ? 'active' : '';
-  }
+  // function isActive(path) {
+  //   return window.location.pathname === path ? 'active' : '';
+  // }
   return (
     <ul className="side-bar">
       <li>
@@ -13,6 +13,9 @@ module.exports = function SideBar(props) {
       </li>
       <li>
         <a href="/admin/products">Товары</a>
+      </li>
+      <li>
+        <a href="/admin/orders">Заказы</a>
       </li>
       {user?.role === 'ADMINISTRATOR' && (
         <li>

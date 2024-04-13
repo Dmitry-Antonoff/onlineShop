@@ -1,3 +1,5 @@
+const { getOrder } = document.forms;
+
 const addBasket = document.querySelectorAll('.addBasket');
 const delAllBasket = document.querySelector('.delAllBasket');
 const trashBtn = document.querySelectorAll('.trash-btn');
@@ -11,7 +13,13 @@ intoAll.forEach((into) => {
       const inputValue = e.target.value;
       const result = +price * +inputValue;
       sum.innerText = result;
-      fetch('', {})
+      fetch('/basket', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ quantity: inputValue, productId: e.target.id }),
+      });
     } catch (error) {
       console.log(error);
     }
@@ -28,11 +36,27 @@ addBasket?.forEach((basket) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ quantity: basket.quantity.value, productId: productid }),
+        body: JSON.stringify({
+          quantity: basket.quantity.value,
+          productId: productid,
+        }),
       });
       if (res.status === 200) {
         showToast('Товар добавлен в корзину', { type: 'success' });
-        basket.quantity.value = '';
+
+        const btn = document.getElementById(`btn-${productid}`);
+        // Создадим новую кнопку "Уже в корзине" с нужными атрибутами и стилями
+        const addedButton = document.createElement('button');
+        addedButton.disabled = true;
+        addedButton.type = 'button';
+        addedButton.textContent = 'Добавлен в корзину';
+        addedButton.style.backgroundColor = '#0876cc';
+        addedButton.style.color = 'white';
+
+        // Заменим кнопку "Добавить в корзину" на новую кнопку "Уже в корзине"
+        basket.replaceChild(addedButton, btn);
+
+        basket.quantity.value = 1;
       }
     } catch (error) {
       console.log(error);
@@ -64,4 +88,22 @@ trashBtn?.forEach((btn) => {
     localStorage.removeItem(`sum-${e.target.id}`);
     localStorage.removeItem(`input-${e.target.id}`);
   });
+});
+
+getOrder?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(getOrder);
+
+  const res = await fetch('/orders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(Object.fromEntries(formData)),
+  });
+  if (res.status === 200) {
+    showToast('Заказ успешно создан!', { type: 'success' });
+    window.location.href = '/basket/done';
+  }
 });
