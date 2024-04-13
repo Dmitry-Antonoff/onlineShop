@@ -16,21 +16,35 @@ module.exports = function AddProduct(props) {
                   <option>{category.name}</option>
                 ))}
               </select>
-              <input name="name" className="product-name-form" type="text" placeholder="Название" />
-              <input name="img" className="img-add" type="file" />
+              <input
+                name="name"
+                className="product-name-form"
+                type="text"
+                placeholder="Название"
+                required
+              />
+              <input name="img" className="img-add" type="file" required />
               <input
                 name="code"
                 className="product-name-form"
                 type="text"
                 placeholder="Код товара"
+                required
               />
               <input
                 name="manufacturer"
                 className="product-name-form"
                 type="text"
                 placeholder="Производитель"
+                required
               />
-              <input name="price" className="product-name-form" type="text" placeholder="Цена" />
+              <input
+                name="price"
+                className="product-name-form"
+                type="text"
+                placeholder="Цена"
+                required
+              />
               <input
                 name="inStock"
                 className="product-name-form"
@@ -43,7 +57,10 @@ module.exports = function AddProduct(props) {
             </div>
             <div className="characteristics-add">
               <h2>Характеристики</h2>
-              <button type="button" className="edit-btn add-value-characteristics">
+              <button
+                type="button"
+                className="edit-btn add-value-characteristics"
+              >
                 <img className="edit" src="/svg/add.svg" alt="Добавить" />
               </button>
               <div className="characteristics-list" />
