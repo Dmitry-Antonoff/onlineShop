@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const e = require('express');
-const { BasketList, OrderProduct, Order } = require('../../db/models');
+const { BasketList, OrderProduct, Order, Product } = require('../../db/models');
 
 function sendTelegramMessage(botToken, chatId, message) {
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -44,6 +44,7 @@ router.post('/', async (req, res) => {
       where: {
         userId,
       },
+      include: [{ model: Product }],
     });
     currentBasket.forEach((element) => {
       OrderProduct.create({
@@ -51,6 +52,9 @@ router.post('/', async (req, res) => {
         productId: element.productId,
         quantity: element.quantity,
       });
+      console.log(element.Product);
+      element.Product.quantityInStock -= element.quantity;
+      element.Product.save();
       element.destroy();
     });
     const botToken = '6456254161:AAGLQrEzVUwkkugsRBeUbZvfME0Mw1xETeg'; // Замените на ваш токен
