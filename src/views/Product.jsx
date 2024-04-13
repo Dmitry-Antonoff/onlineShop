@@ -2,7 +2,7 @@ const React = require('react');
 const Layout = require('./Layout');
 
 module.exports = function Product(props) {
-  const { product } = props;
+  const { product, basket } = props;
   const characteristic = product.characteristics;
   const allcharacteristic = [];
   for (const key in characteristic) {

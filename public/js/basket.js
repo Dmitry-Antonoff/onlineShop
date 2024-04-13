@@ -60,7 +60,7 @@ trashBtn?.forEach((btn) => {
     });
 
     const tr = document.getElementById(`tr-${e.target.id}`);
-    tr.remove();
+    tr?.remove();
     localStorage.removeItem(`sum-${e.target.id}`);
     localStorage.removeItem(`input-${e.target.id}`);
   });

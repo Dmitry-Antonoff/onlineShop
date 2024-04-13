@@ -3,6 +3,7 @@ const btndeleteProduct = document.querySelectorAll('.btn-product-delete');
 const btndeleteCategory = document.querySelectorAll('.btn-delete-category');
 const characteristicsAdd = document.querySelector('.add-value-characteristics');
 const characteristicsAddInput = document.querySelector('.characteristics-list');
+const keyValueEdit = document.querySelectorAll('.key-value-edit');
 
 function showToast(message, { type = 'error' } = {}) {
   const toast = document.createElement('div');
@@ -93,7 +94,6 @@ productForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
     const formData = new FormData(productForm);
-
     const keyValues = {};
     const keyInputs = document.querySelectorAll('.key-value input[name^="key"]');
     const valueInputs = document.querySelectorAll('.key-value input[name^="value"]');
@@ -122,16 +122,30 @@ productForm?.addEventListener('submit', async (e) => {
 productEditForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
-    const data = new FormData(productEditForm);
+    const formData = new FormData(productEditForm);
     const { id } = e.target.dataset;
+    const keyValues = {};
+    const keyInputs = document.querySelectorAll('.key-value input[name^="key"]');
+    const valueInputs = document.querySelectorAll('.key-value input[name^="value"]');
+    keyInputs.forEach((keyInput, index) => {
+      const key = keyInput.value.trim();
+      const { value } = valueInputs[index];
+      if (key !== '') {
+        keyValues[key] = value;
+      }
+    });
+    formData.append('keyValues', JSON.stringify(keyValues));
+    // const res = await fetch(`/admin/products/${id}`, {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(Object.fromEntries(formData)),
+    // });
     const res = await fetch(`/admin/products/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(Object.fromEntries(data)),
+      body: formData,
     });
-    // console.log(res);
     if (res.status === 200) {
       showToast('Товар изменён', { type: 'success' });
       window.location.href = '/admin/products';
@@ -243,7 +257,7 @@ btndeleteCategory.forEach((btn) => {
 // });
 
 characteristicsAdd?.addEventListener('click', (event) => {
-  event.preventDefault(); 
+  event.preventDefault();
 
   const count = characteristicsAddInput.children.length + 1;
 
@@ -280,4 +294,10 @@ characteristicsAdd?.addEventListener('click', (event) => {
   keyValuePairDiv.appendChild(deleteButton);
 
   characteristicsAddInput.appendChild(keyValuePairDiv);
+});
+
+keyValueEdit?.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    btn.parentNode.remove();
+  });
 });

@@ -35,7 +35,7 @@ router.post('/', upload.single('img'), async (req, res) => {
       quantityInStock: inStock,
       description,
       imgPath: `/photos/${req.file?.filename}`,
-      characteristics: keyValues,
+      characteristics: JSON.parse(keyValues),
     });
     res.sendStatus(200);
   } catch (error) {
