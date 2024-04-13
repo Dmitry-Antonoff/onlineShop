@@ -1,13 +1,6 @@
 const router = require('express').Router();
 const { Sequelize } = require('sequelize');
-const {
-  User,
-  Product,
-  Manufacturer,
-  Category,
-  Order,
-  OrderProduct,
-} = require('../../db/models');
+const { User, Product, Manufacturer, Category } = require('../../db/models');
 
 router.post('/:id/add', async (req, res) => {
   try {
@@ -89,7 +82,6 @@ router.get('/categories/:categoryName', async (req, res) => {
 router.put('/category/:id', async (req, res) => {
   try {
     const { name } = req.body;
-    console.log(name);
     await Category.update({ name }, { where: { id: req.params.id } });
     res.sendStatus(200);
   } catch (error) {
@@ -117,7 +109,7 @@ router.put('/products/:id', async (req, res) => {
         quantityInStock: inStock,
         description,
       },
-      { where: { id: req.params.id } }
+      { where: { id: req.params.id } },
     );
     res.sendStatus(200);
   } catch (error) {

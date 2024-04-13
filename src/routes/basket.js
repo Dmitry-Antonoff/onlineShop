@@ -4,7 +4,7 @@ const { BasketList } = require('../../db/models');
 router.post('/', async (req, res) => {
   const userId = req.session.user.id;
   const { quantity, productId } = req.body;
-  console.log(req.body.quantity);
+
   try {
     await BasketList.create({ productId, userId, quantity });
     res.sendStatus(200);

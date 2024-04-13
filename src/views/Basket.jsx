@@ -7,7 +7,7 @@ module.exports = function Basket(props) {
   const getTotalPrice = (product) => product.quantity * product.Product.price;
 
   let totalSum = 0;
-  basList.forEach((product) => {
+  basList?.forEach((product) => {
     totalSum += getTotalPrice(product);
   });
 
@@ -44,12 +44,8 @@ module.exports = function Basket(props) {
                   />
                 </td>
                 <td className="admin-productsName">{product.Product.name}</td>
-                <td className="admin-products-name">
-                  {product.Product.productCode}
-                </td>
-                <td className="admin-products-stock">
-                  {product.Product.quantityInStock}
-                </td>
+                <td className="admin-products-name">{product.Product.productCode}</td>
+                <td className="admin-products-stock">{product.Product.quantityInStock}</td>
                 <td className="admin-products-into">
                   <input
                     className="into-basket-products"
@@ -60,24 +56,14 @@ module.exports = function Basket(props) {
                   />
                   <p className="thing">шт</p>
                 </td>
-                <td
-                  className="admin-products-name"
-                  id={`price-${product.Product.id}`}
-                >
+                <td className="admin-products-name" id={`price-${product.Product.id}`}>
                   {product.Product.price}
                 </td>
-                <td
-                  className="admin-products-name"
-                  id={`sum-${product.Product.id}`}
-                >
+                <td className="admin-products-name" id={`sum-${product.Product.id}`}>
                   {getTotalPrice(product)}
                 </td>
                 <td className="button-div">
-                  <button
-                    type="button"
-                    id={product.Product.id}
-                    className="trash-btn trash-button"
-                  >
+                  <button type="button" id={product.Product.id} className="trash-btn trash-button">
                     <img
                       className="trash"
                       id={product.Product.id}

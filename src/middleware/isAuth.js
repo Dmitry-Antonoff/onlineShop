@@ -1,12 +1,12 @@
 const Error = require('../views/Error');
 
-module.exports = function isLogin(req, res, next) {
+module.exports = function isAuth(req, res, next) {
   const user = req.session?.user?.name;
-  if (!user) {
+  if (user) {
     next();
   } else {
     res.render(Error, {
-      message: 'Вы уже авторизованы!',
+      message: 'Вы не вошли в аккаунт!',
       error: {},
     });
   }

@@ -1,7 +1,6 @@
 const router = require('express').Router();
 
-const e = require('express');
-const { BasketList, OrderProduct, Order, Product } = require('../../db/models');
+const { BasketList, OrderProduct, Order } = require('../../db/models');
 
 function sendTelegramMessage(botToken, chatId, message) {
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;

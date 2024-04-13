@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-expressions */
 const React = require('react');
 const Layout = require('./Layout');
 
 module.exports = function Products(props) {
-  const { category, parentCategories, page, limit, products, search, all, basket } = props;
+  const { category, parentCategories, page, limit, products, search, all, basket, user } = props;
   return (
     <Layout {...props}>
       <main className="products-main">
@@ -56,55 +55,63 @@ module.exports = function Products(props) {
           </div>
           <div className="products">
             {products.map((product) => {
-              const productIdsInBasket = basket.map((basketP) => basketP.productId);
+              const productIdsInBasket = basket?.map((basketP) => basketP.productId);
               const isInBasket = productIdsInBasket.includes(product.id);
 
               return (
                 <div className="product" key={product.id}>
-                  <img src={product.imgPath} alt={product.name} />
-                  <a
-                    className="product-name"
-                    href={`/products/${product.categoryId}/${product.productCode}`}
-                  >
-                    {product.name}
-                  </a>
-                  <p className="product-kod">
-                    Код товара: <span>{product.productCode}</span>
-                  </p>
-                  <p className="product-kod">
-                    Упаковка: <span>zzz</span>
-                  </p>
-                  <p className="product-kod">
-                    Производитель: <span>{product.Manufacturer.name}</span>
-                  </p>
-                  <p className="product-kod">
-                    В наличие: <span>{product.quantityInStock} шт</span>
-                  </p>
+                  <div>
+                    <img src={product.imgPath} alt={product.name} />
+                    <a
+                      className="product-name"
+                      href={`/products/${product.categoryId}/${product.productCode}`}
+                    >
+                      {product.name}
+                    </a>
+                    <p className="product-kod">
+                      Код товара: <span>{product.productCode}</span>
+                    </p>
+                    <p className="product-kod">
+                      Упаковка: <span>zzz</span>
+                    </p>
+                    <p className="product-kod">
+                      Производитель: <span>{product.Manufacturer.name}</span>
+                    </p>
+                    <p className="product-kod">
+                      В наличие: <span>{product.quantityInStock} шт</span>
+                    </p>
+                  </div>
                   <div className="buy">
                     <div className="price">
                       <p className="first-price">{product.price}</p>
                     </div>
-                    <div className="into add-cart">
-                      <form
-                        name="addBasket"
-                        className="into add-cart addBasket"
-                        data-productid={product.id}
-                      >
-                        <input type="number" name="quantity" id="" />
-                        <p>шт</p>
-                        {!isInBasket ? (
-                          <button type="submit">В корзину</button>
-                        ) : (
-                          <button
-                            disabled
-                            type="button"
-                            style={{ backgroundColor: '#0876cc', color: 'white' }}
-                          >
-                            Уже в корзине
-                          </button>
-                        )}
-                      </form>
-                    </div>
+                    {user ? (
+                      <div className="into add-cart">
+                        <form
+                          name="addBasket"
+                          className="into add-cart addBasket"
+                          data-productid={product.id}
+                        >
+                          <input type="number" name="quantity" id="" value={1} />
+                          <p>шт</p>
+                          {!isInBasket ? (
+                            <button type="submit" id={`btn-${product.id}`}>
+                              В корзину
+                            </button>
+                          ) : (
+                            <button
+                              disabled
+                              type="button"
+                              style={{ backgroundColor: '#0876cc', color: 'white' }}
+                            >
+                              Уже в корзине
+                            </button>
+                          )}
+                        </form>
+                      </div>
+                    ) : (
+                      <h3 style={{ color: '#41444c' }}>Чтобы сделать заказ зарегистрируйтесь</h3>
+                    )}
                   </div>
                 </div>
               );

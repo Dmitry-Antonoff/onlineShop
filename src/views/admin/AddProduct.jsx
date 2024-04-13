@@ -46,7 +46,7 @@ module.exports = function AddProduct(props) {
               <button type="button" className="edit-btn add-value-characteristics">
                 <img className="edit" src="/svg/add.svg" alt="Добавить" />
               </button>
-              <div className="characteristics-list"></div>
+              <div className="characteristics-list" />
             </div>
             <div className="description">
               <h2>Описание</h2>

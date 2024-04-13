@@ -8,6 +8,7 @@ const Error = require('../views/Error');
 const isLogin = require('../middleware/isLogin');
 const isMainAdmin = require('../middleware/isMainAdmin');
 const isAdmin = require('../middleware/isAdmin');
+const isAuth = require('../middleware/isAuth');
 const {
   User,
   Category,
@@ -36,7 +37,6 @@ router.get('/', async (req, res) => {
     const categories = await Category.findAll({
       where: { parentCategoryId: null },
     });
-    console.log(req.session);
     res.render(Home, { categories });
   } catch (error) {
     res.render(Error, {
@@ -46,10 +46,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/basket', async (req, res) => {
+router.get('/basket', isAuth, async (req, res) => {
   try {
+    const userId = req.session.user?.id ?? 0;
     const basList = await BasketList.findAll({
-      where: { userId: req.session.user.id },
+      where: { userId },
       include: [Product],
     });
     res.render(Basket, { basList });
@@ -139,10 +140,7 @@ router.get('/products/:catId', async (req, res) => {
     });
 
     const childCategories = await getAllChildCategories(req.params.catId);
-    const categoryIds = [
-      req.params.catId,
-      ...childCategories.map((cat) => cat.id),
-    ];
+    const categoryIds = [req.params.catId, ...childCategories.map((cat) => cat.id)];
 
     const where = search
       ? {
@@ -169,9 +167,10 @@ router.get('/products/:catId', async (req, res) => {
       order: [['name', 'ASC']],
       where,
     });
+    const userId = req.session.user?.id ?? 0;
 
     const basket = await BasketList.findAll({
-      where: { userId: req.session.user.id },
+      where: { userId },
     });
 
     res.render(Products, {
@@ -246,9 +245,9 @@ router.get('/products/:catId/:code', async (req, res) => {
     const product = await Product.findOne({
       where: { productCode: req.params.code },
     });
-
+    const userId = req.session.user?.id ?? 0;
     const basket = await BasketList.findOne({
-      where: { userId: req.session.user.id, productId: product.id },
+      where: { userId, productId: product.id },
     });
     res.render(ProductPage, { product, basket });
   } catch (error) {
@@ -427,7 +426,7 @@ router.get('/admin/orders', isAdmin, async (req, res) => {
     });
   }
 });
-router.get('/admin/orders/:orderId', async (req, res) => {
+router.get('/admin/orders/:orderId', isAdmin, async (req, res) => {
   try {
     const { orderId } = req.params;
     const order = await Order.findOne({
@@ -512,7 +511,6 @@ router.get('/product/:id/edit', isAdmin, async (req, res) => {
 router.get('/category/:id/edit', isAdmin, async (req, res) => {
   try {
     const category = await Category.findOne({ where: { id: req.params.id } });
-    console.log(category);
     res.render(EditCategory, { category });
   } catch (error) {
     res.render(Error, {
