@@ -42,6 +42,7 @@ router.post('/', async (req, res) => {
       where: {
         userId,
       },
+      include: [{ model: Product }],
     });
     currentBasket.forEach((element) => {
       OrderProduct.create({
@@ -49,6 +50,9 @@ router.post('/', async (req, res) => {
         productId: element.productId,
         quantity: element.quantity,
       });
+
+      element.Product.quantityInStock -= element.quantity;
+      element.Product.save();
       element.destroy();
     });
     const botToken = '6456254161:AAGLQrEzVUwkkugsRBeUbZvfME0Mw1xETeg'; // Замените на ваш токен
