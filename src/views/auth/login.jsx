@@ -7,8 +7,14 @@ module.exports = function Login(props) {
       <main className="reg-main">
         <h1 className="form-h1">Login</h1>
         <form className="form" name="login">
-          <input className="form-input" type="text" placeholder="email" name="email" />
-          <input className="form-input" type="password" placeholder="password" name="password" />
+          <input className="form-input" type="text" placeholder="email" name="email" required />
+          <input
+            className="form-input"
+            type="password"
+            placeholder="password"
+            name="password"
+            required
+          />
           <button className="button form-submit-btn" type="submit">
             Login
           </button>

@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const axios = require('axios');
@@ -40,8 +42,7 @@ router.post('/login', async (req, res) => {
 
 function generatePassword(length) {
   let password = '';
-  const charset =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
   for (let i = 0; i < length; i++) {
     const randomIndex = Math.floor(Math.random() * charset.length);
@@ -60,27 +61,19 @@ router.get('/redirect/google', async (req, res) => {
   const { code } = req.query;
 
   try {
-    const { data } = await axios
-      .post('https://oauth2.googleapis.com/token', {
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-        code,
-        redirect_uri: REDIRECT_URI,
-        grant_type: 'authorization_code',
-      })
-      .error((err) => {
-        console.error(err);
-      });
+    const { data } = await axios.post('https://oauth2.googleapis.com/token', {
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+      code,
+      redirect_uri: REDIRECT_URI,
+      grant_type: 'authorization_code',
+    });
 
     const { access_token, id_token } = data;
 
-    const { data: profile } = await axios
-      .get('https://www.googleapis.com/oauth2/v1/userinfo', {
-        headers: { Authorization: `Bearer ${access_token}` },
-      })
-      .error((err) => {
-        console.error(err);
-      });
+    const { data: profile } = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
+      headers: { Authorization: `Bearer ${access_token}` },
+    });
 
     const password = generatePassword(8);
     const hashPass = await bcrypt.hash(password, 10);
@@ -105,7 +98,6 @@ router.get('/redirect/google', async (req, res) => {
 router.get('/logout', (req, res) => {
   req.session.destroy((e) => {
     if (e) {
-      console.log(e);
       return;
     }
     res.clearCookie('UserAuth');

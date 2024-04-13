@@ -1,11 +1,11 @@
 const React = require('react');
 
 module.exports = function SideBar(props) {
-  const { allCategories, user } = props;
+  const { user } = props;
 
-  function isActive(path) {
-    return window.location.pathname === path ? 'active' : '';
-  }
+  // function isActive(path) {
+  //   return window.location.pathname === path ? 'active' : '';
+  // }
   return (
     <ul className="side-bar">
       <li>

@@ -1,6 +1,5 @@
 const router = require('express').Router();
 
-const e = require('express');
 const { BasketList, OrderProduct, Order } = require('../../db/models');
 
 function sendTelegramMessage(botToken, chatId, message) {
@@ -31,7 +30,6 @@ router.post('/', async (req, res) => {
   try {
     const userId = req.session.user.id;
     const { total, ...diliveryAddres } = req.body;
-    console.log(diliveryAddres);
 
     const order = await Order.create({
       userId,

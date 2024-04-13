@@ -2,7 +2,7 @@ const React = require('react');
 const Layout = require('./Layout');
 
 module.exports = function Product(props) {
-  const { product } = props;
+  const { product, basket, user } = props;
   const characteristic = product.characteristics;
   const allcharacteristic = [];
   for (const key in characteristic) {
@@ -81,27 +81,33 @@ module.exports = function Product(props) {
                 В наличие: <span>{product.quantityInStock} шт</span>
               </p>
               <p>{product.price} Лари/шт</p>
-              <div className="into add-cart">
-                <form
-                  name="addBasket"
-                  className="into add-cart addBasket"
-                  data-productid={product.id}
-                >
-                  <input type="number" name="quantity" id="" />
-                  <p>шт</p>
-                  {!basket ? (
-                    <button type="submit">В корзину</button>
-                  ) : (
-                    <button
-                      disabled
-                      type="button"
-                      style={{ backgroundColor: '#0876cc', color: 'white' }}
-                    >
-                      Уже в корзине
-                    </button>
-                  )}
-                </form>
-              </div>
+              {user ? (
+                <div className="into add-cart">
+                  <form
+                    name="addBasket"
+                    className="into add-cart addBasket"
+                    data-productid={product.id}
+                  >
+                    <input type="number" name="quantity" id="" value={1} />
+                    <p>шт</p>
+                    {!basket ? (
+                      <button type="submit" id={`btn-${product.id}`}>
+                        В корзину
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        type="button"
+                        style={{ backgroundColor: '#0876cc', color: 'white' }}
+                      >
+                        Уже в корзине
+                      </button>
+                    )}
+                  </form>
+                </div>
+              ) : (
+                <h3 style={{ color: '#41444c' }}>Чтобы сделать заказ зарегистрируйтесь</h3>
+              )}
             </div>
             <div className="methods-obtaining">
               <h3>Способы получения</h3>

@@ -26,6 +26,11 @@
     "no-restricted-syntax": "off",
     "no-await-in-loop": "off",
     "no-shadow": "off",
-    "guard-for-in": "off"
+    "guard-for-in": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "operator-linebreak": "off",
+    "consistent-return": "off",
+    "no-plusplus": "off",
+    "prefer-destructuring": "off"
   }
 }

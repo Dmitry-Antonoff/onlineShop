@@ -36,10 +36,10 @@ registration?.addEventListener('submit', async (e) => {
     if (response.status === 200) {
       window.location.href = '/auth/login';
     } else if (response.status === 401) {
-      displayErrorMessage('The email address is busy', registration);
+      displayErrorMessage('Адрес почты занят', registration);
     }
   } else {
-    displayErrorMessage('The email format is incorrect', registration);
+    displayErrorMessage('Формат электронной почты неправильный', registration);
   }
 });
 
@@ -50,9 +50,9 @@ login?.addEventListener('submit', async (e) => {
     if (response.status === 200) {
       window.location.href = '/';
     } else {
-      displayErrorMessage('Incorrect email address or password', login);
+      displayErrorMessage('Неправильный адрес почты или пароль', login);
     }
   } else {
-    displayErrorMessage('The email format is incorrect', login);
+    displayErrorMessage('Формат электронной почты неправильный', login);
   }
 });

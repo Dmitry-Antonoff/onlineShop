@@ -7,9 +7,15 @@ module.exports = function Registration(props) {
       <main className="reg-main">
         <h1 className="form-h1">Registration</h1>
         <form className="form" name="registration">
-          <input className="form-input" type="text" placeholder="name" name="name" />
-          <input className="form-input" type="text" placeholder="email" name="email" />
-          <input className="form-input" type="password" placeholder="password" name="password" />
+          <input className="form-input" type="text" placeholder="name" name="name" required />
+          <input className="form-input" type="text" placeholder="email" name="email" required />
+          <input
+            className="form-input"
+            type="password"
+            placeholder="password"
+            name="password"
+            required
+          />
           <div>
             <button className="button form-submit-btn" type="submit">
               Register
