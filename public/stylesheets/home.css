@@ -2,10 +2,15 @@
   margin: 0px 30px;
 }
 
+.home-main h2 {
+  margin-left: 37px;
+}
+
 .categories {
   display: flex;
   gap: 1rem;
   list-style: none;
+  margin-bottom: 55px;
 }
 
 .category-link {
@@ -169,4 +174,23 @@ input[type='number']::-webkit-outer-spin-button {
 
 .hits.children-slider .right {
   right: -15px;
+}
+
+.advantages h2 {
+  margin-bottom: 20px;
+}
+
+.advantages ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.advantages li {
+  text-align: center;
+  width: 300px;
+}
+
+.advantages img {
+  width: 70px;
 }

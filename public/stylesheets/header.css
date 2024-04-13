@@ -115,7 +115,7 @@ main {
 .header-2 input {
   border: none;
   outline: none;
-  width: 800px;
+  width: 300px;
   padding: 0px 10px;
 }
 
@@ -135,15 +135,15 @@ main {
 footer {
   display: flex;
   justify-content: space-around;
-  background-color: #1d76cc;
+  background-color: #034da2;
   color: #fff;
   font-size: 18px;
   margin-top: auto;
   padding-top: 10px;
 }
 
-.footer-log {
-  margin-top: 21px;
+.logo-footer {
+  margin-top: 15px;
 }
 
 footer a {

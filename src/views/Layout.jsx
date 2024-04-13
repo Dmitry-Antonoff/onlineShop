@@ -10,8 +10,8 @@ module.exports = function Layout({ children, user, showSearchForm = true, search
   ];
   const ContactUs = [
     { name: 'Контакты', href: '/' },
-    { name: 'Телефон: ...', href: '/' },
-    { name: 'Улица ...', href: '/' },
+    { name: 'Телефон: +995 574 105 775', href: '/' },
+    // { name: 'Улица ...', href: '/' },
     { name: 'E-mail', href: '/' },
   ];
   return (
@@ -53,7 +53,7 @@ module.exports = function Layout({ children, user, showSearchForm = true, search
                     </div>
                   </div>
                   <a href="/" className="logo">
-                    {/* <img src="/img/logo.png" alt="" /> */}
+                    <img src="/img/logo.png" alt="" />
                     <img src="/img/logoText.png" alt="" />
                   </a>
                   {user?.name ? (
@@ -96,8 +96,15 @@ module.exports = function Layout({ children, user, showSearchForm = true, search
         </div>
         {children}
         <footer>
-          <img src="/img/logoText.png" alt="logo" className="footer-log" style={{ height: '50px' }} />
-
+          <div className="logo-footer">
+            <img style={{ height: '50px' }} src="/img/logo.png" alt="" />
+            <img
+              src="/img/logoText.png"
+              alt="logo"
+              className="footer-log"
+              style={{ height: '50px' }}
+            />
+          </div>
           <div className="social">
             <p>Социальные сети</p>
             <ul>
