@@ -2,7 +2,7 @@ const React = require('react');
 const Layout = require('./Layout');
 
 module.exports = function Product(props) {
-  const { product, basket, user } = props;
+  const { product, basket, user, likeProducts } = props;
   const characteristic = product.characteristics;
   const allcharacteristic = [];
   for (const key in characteristic) {
@@ -26,7 +26,10 @@ module.exports = function Product(props) {
               <a href="#product-description">Описание</a>
               <a href="#analogues-replacements">Аналоги и замены</a>
             </div>
-            <div className="product-сharacteristics" id="product-сharacteristics">
+            <div
+              className="product-сharacteristics"
+              id="product-сharacteristics"
+            >
               <h2>Характеристики</h2>
               <ul>
                 {allcharacteristic.map((characteristic) => (
@@ -43,7 +46,10 @@ module.exports = function Product(props) {
               <span>{product.description}</span>
             </div>
 
-            <table className="analogues-replacements" id="analogues-replacements">
+            <table
+              className="analogues-replacements"
+              id="analogues-replacements"
+            >
               <thead>
                 <tr>
                   <th>Товар</th>
@@ -53,24 +59,30 @@ module.exports = function Product(props) {
                 </tr>
               </thead>
               <tbody>
-                {/* {allProducts.map((product) => (
-                    <tr className="analogues-products-tr">
-                  <td>
-                    <img
-                      className="product-img"
-                      src="https://cdn.etm.ru/ipro/760/small_5a72da90d8ea68e673ad1a3cf4f01029.png"
-                      alt=""
-                    />
-                  </td>
-                  <td className="admin-productsName">
-                    <a href="/">
-                      Бирка кабельная маркировочная 134 большой квадрат (100шт) EKF Арт. mt-134-bs
-                    </a>
-                  </td>
-                  <td className="admin-products-name">8288151</td>
-                  <td className="admin-products-name">273.91 ₽/упак</td>
-                </tr>
-                ))} */}
+                {likeProducts.map((product) => (
+                  <tr className="analogues-products-tr">
+                    <td>
+                      <img
+                        className="product-img"
+                        src={product.imgPath}
+                        alt=""
+                      />
+                    </td>
+                    <td className="admin-productsName">
+                      <a
+                        href={`/products/${product.categoryId}/${product.productCode}`}
+                      >
+                        {product.name}
+                      </a>
+                    </td>
+                    <td className="admin-products-name">
+                      {product.productCode}
+                    </td>
+                    <td className="admin-products-name">
+                      {product.price} Лари/шт
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -106,7 +118,9 @@ module.exports = function Product(props) {
                   </form>
                 </div>
               ) : (
-                <h3 style={{ color: '#41444c' }}>Чтобы сделать заказ зарегистрируйтесь</h3>
+                <h3 style={{ color: '#41444c' }}>
+                  Чтобы сделать заказ зарегистрируйтесь
+                </h3>
               )}
             </div>
             <div className="methods-obtaining">

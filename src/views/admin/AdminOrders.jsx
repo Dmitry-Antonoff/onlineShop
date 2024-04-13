@@ -9,6 +9,7 @@ module.exports = function AdminOrders(props) {
       <main className="admin-main">
         <SideBar {...props} />
         <div className="administrator">
+          <h2>Заказы</h2>
           <table className="all-products">
             <thead>
               <tr className="all-products-li-name">
@@ -38,15 +39,15 @@ module.exports = function AdminOrders(props) {
           {all.length > 10 && (
             <div className="back-next">
               <a
-                href={`/admin/categories?${
-                  search ? `search=${search}&` : ''
-                }page=${+page > 1 ? +page - 1 : +page}`}
+                href={`/admin/orders?${search ? `search=${search}&` : ''}page=${
+                  +page > 1 ? +page - 1 : +page
+                }`}
               >
                 <img src="/svg/left.svg" alt="back" />
               </a>
               {+page >= 3 && (
                 <a
-                  href={`/admin/categories?${
+                  href={`/admin/orders?${
                     search ? `search=${search}&` : ''
                   }page=${+page - 2}`}
                 >
@@ -55,7 +56,7 @@ module.exports = function AdminOrders(props) {
               )}
               {+page >= 2 && (
                 <a
-                  href={`/admin/categories?${
+                  href={`/admin/orders?${
                     search ? `search=${search}&` : ''
                   }page=${+page - 1}`}
                 >
@@ -65,7 +66,7 @@ module.exports = function AdminOrders(props) {
               <span>...</span>
               {+page === limit || (
                 <a
-                  href={`/admin/categories?${
+                  href={`/admin/orders?${
                     search ? `search=${search}&` : ''
                   }page=${+page + 1}`}
                 >
@@ -74,7 +75,7 @@ module.exports = function AdminOrders(props) {
               )}
               {+page + 1 >= limit || (
                 <a
-                  href={`/admin/categories?${
+                  href={`/admin/orders?${
                     search ? `search=${search}&` : ''
                   }page=${+page + 2}`}
                 >
@@ -82,9 +83,9 @@ module.exports = function AdminOrders(props) {
                 </a>
               )}
               <a
-                href={`/admin/categories?${
-                  search ? `search=${search}&` : ''
-                }page=${+page < limit ? +page + 1 : +page}`}
+                href={`/admin/orders?${search ? `search=${search}&` : ''}page=${
+                  +page < limit ? +page + 1 : +page
+                }`}
               >
                 <img src="/svg/right.svg" alt="next" />
               </a>

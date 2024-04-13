@@ -72,9 +72,6 @@ module.exports = function Products(props) {
                       Код товара: <span>{product.productCode}</span>
                     </p>
                     <p className="product-kod">
-                      Упаковка: <span>zzz</span>
-                    </p>
-                    <p className="product-kod">
                       Производитель: <span>{product.Manufacturer.name}</span>
                     </p>
                     <p className="product-kod">

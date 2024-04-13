@@ -140,7 +140,10 @@ router.get('/products/:catId', async (req, res) => {
     });
 
     const childCategories = await getAllChildCategories(req.params.catId);
-    const categoryIds = [req.params.catId, ...childCategories.map((cat) => cat.id)];
+    const categoryIds = [
+      req.params.catId,
+      ...childCategories.map((cat) => cat.id),
+    ];
 
     const where = search
       ? {
@@ -249,7 +252,16 @@ router.get('/products/:catId/:code', async (req, res) => {
     const basket = await BasketList.findOne({
       where: { userId, productId: product.id },
     });
-    res.render(ProductPage, { product, basket });
+    const likeProducts = await Product.findAll({
+      where: {
+        name: {
+          [Sequelize.Op.iLike]: `%${product.name.split(' ')[0]}%`,
+        },
+        id: { [Sequelize.Op.not]: product.id },
+      },
+    });
+
+    res.render(ProductPage, { product, basket, likeProducts });
   } catch (error) {
     console.log(error);
     res.render(Error, {

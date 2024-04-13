@@ -49,7 +49,7 @@ addBasket?.forEach((basket) => {
         const addedButton = document.createElement('button');
         addedButton.disabled = true;
         addedButton.type = 'button';
-        addedButton.textContent = 'Добавлен в корзину';
+        addedButton.textContent = 'Уже в корзине';
         addedButton.style.backgroundColor = '#0876cc';
         addedButton.style.color = 'white';
 
@@ -84,7 +84,7 @@ trashBtn?.forEach((btn) => {
     });
 
     const tr = document.getElementById(`tr-${e.target.id}`);
-    tr.remove();
+    tr?.remove();
     localStorage.removeItem(`sum-${e.target.id}`);
     localStorage.removeItem(`input-${e.target.id}`);
   });
