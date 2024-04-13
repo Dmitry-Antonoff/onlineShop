@@ -31,7 +31,6 @@ router.post('/', async (req, res) => {
   try {
     const userId = req.session.user.id;
     const { total, ...diliveryAddres } = req.body;
-    console.log(diliveryAddres);
 
     const order = await Order.create({
       userId,
@@ -52,7 +51,7 @@ router.post('/', async (req, res) => {
         productId: element.productId,
         quantity: element.quantity,
       });
-      console.log(element.Product);
+
       element.Product.quantityInStock -= element.quantity;
       element.Product.save();
       element.destroy();
