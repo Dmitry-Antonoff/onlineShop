@@ -92,7 +92,6 @@ module.exports = function Basket(props) {
 
               <label htmlFor="zip">Почтовый индекс:</label>
               <input type="text" id="zip" name="zip" required />
-
               <label htmlFor="country">Страна:</label>
               <input type="text" id="country" name="country" required />
             </div>

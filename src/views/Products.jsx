@@ -80,7 +80,7 @@ module.exports = function Products(props) {
                   </div>
                   <div className="buy">
                     <div className="price">
-                      <p className="first-price">{product.price}</p>
+                      <p className="first-price">{product.price} Лари</p>
                     </div>
                     {user ? (
                       <div className="into add-cart">
