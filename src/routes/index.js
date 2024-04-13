@@ -140,10 +140,7 @@ router.get('/products/:catId', async (req, res) => {
     });
 
     const childCategories = await getAllChildCategories(req.params.catId);
-    const categoryIds = [
-      req.params.catId,
-      ...childCategories.map((cat) => cat.id),
-    ];
+    const categoryIds = [req.params.catId, ...childCategories.map((cat) => cat.id)];
 
     const where = search
       ? {
@@ -169,7 +166,9 @@ router.get('/products/:catId', async (req, res) => {
       offset: +page ? (+page - 1) * 12 : 0,
       order: [['name', 'ASC']],
       where,
+      // raw: true,
     });
+    console.log(products);
     const userId = req.session.user?.id ?? 0;
 
     const basket = await BasketList.findAll({
