@@ -96,6 +96,7 @@ router.get('/category/:categoryName', async (req, res) => {
     });
   }
 });
+// test
 
 async function getParentCategories(cat, result = []) {
   if (cat) {
