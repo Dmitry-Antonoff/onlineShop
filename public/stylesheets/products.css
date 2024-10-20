@@ -1,0 +1,287 @@
+.products-main {
+  margin: 0px 30px;
+  margin-bottom: 20px;
+}
+
+.products-div {
+  display: flex;
+  background-color: white;
+}
+
+.products-filter {
+  max-width: 240px;
+  margin: 0px;
+}
+.products-filter h2 {
+  font-weight: 500;
+  font-size: 16px;
+  padding: 20px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  border-bottom: 0.5px solid #d6e7f6;
+}
+
+.product-ul-filter {
+  padding-inline-start: 0px;
+  list-style: none;
+  padding-left: 19px;
+}
+
+.product-ul-filter h3 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.product-parent {
+  margin: 7px;
+}
+
+.product-parent a {
+  padding: 5px;
+  color: #778296;
+  text-decoration: none;
+}
+
+.product-parent:hover a {
+  text-decoration-color: #778296;
+  text-decoration: underline;
+}
+
+.product-children {
+  margin: 10px;
+}
+
+.product-children a {
+  color: #111418;
+  text-decoration: none;
+}
+
+.product-children a:hover {
+  text-decoration: underline;
+}
+
+.products-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.with-discount {
+  background-color: white;
+  height: 100px;
+  border-bottom: 0.5px solid #d6e7f6;
+  padding-left: 15px;
+}
+
+.with-discount input {
+  margin-right: 5px;
+}
+
+.products-form span {
+  color: #585a61;
+}
+
+.fabricator {
+  padding-left: 10px;
+  background-color: white;
+  height: 260px;
+  border-bottom: 0.5px solid #d6e7f6;
+}
+
+.fabricator p {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}
+
+.fabricator-enter input {
+  border: 0.5px solid #e2e6f1;
+  border-radius: 5px;
+  padding: 7px;
+  font-size: 15px;
+  position: absolute;
+}
+
+.fabricator-enter img {
+  width: 21px;
+  margin: 6px 155px;
+  filter: invert(60%);
+}
+
+.fabricator-ul {
+  list-style-type: none;
+  padding-inline-start: 10px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  height: 174px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #aaacb2 #fff;
+}
+
+.fabricator-ul li {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+
+.fabricator-ul li > input {
+  margin-right: 5px;
+}
+
+.apply-btns {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reset {
+  height: 32px;
+  padding: 0px 16px;
+  font-size: 14px;
+  color: #09529b;
+  border: 1px solid #d6e7f6;
+  background-color: #e3f2fc;
+  width: 200px;
+  transition: all 0.5s;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.apply {
+  height: 32px;
+  padding: 0px 16px;
+  font-size: 14px;
+  color: #fff;
+  border: 1px solid #d6e7f6;
+  background-color: #0876cc;
+  width: 200px;
+  transition: all 0.5s;
+  border-radius: 5px;
+}
+
+.reset:hover {
+  background-color: #cfdbe2;
+}
+.apply:hover {
+  background-color: #0d67ac;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #d8dee9;
+  padding: 12px;
+  width: 355px;
+  background: #ffffff;
+  max-height: 520px;
+  transition: all 0.5s;
+  padding-top: 8px;
+}
+
+.product:hover {
+  box-shadow: 0px 0px 10px #0003;
+}
+
+.product-info-asn {
+}
+
+.product img {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  padding: 0px 70px;
+}
+
+.product-name {
+  overflow-wrap: anywhere;
+}
+
+.product-kod {
+  color: #8994a9;
+}
+
+.product-kod span {
+  color: #111418;
+}
+
+/* .into-p {
+  width: 150px;
+  height: 44px;
+  background-color: #0876cc;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.into-div button:hover {
+  background-color: #d5a30c;
+} */
+
+.into-basket {
+  display: flex;
+  justify-content: space-between;
+}
+
+.into-basket input {
+  width: 100px;
+  height: 40px;
+  margin-right: 30px;
+  border: 1px solid #d8dee9;
+  max-width: 132px;
+  max-height: 40px;
+  padding-right: 0;
+}
+
+.into-basket p {
+  position: absolute;
+  margin: 12px 74px;
+}
+
+.into-basket button {
+  width: 150px;
+  background-color: #ffc107;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.into-basket button:hover {
+  background-color: #d5a30c;
+}
+
+.back-next-product {
+  display: flex;
+  background-color: white;
+  padding: 15px 230px;
+}
+
+.back-next-product img {
+  filter: invert(60%);
+}
+
+.back-next-product a {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  margin-right: 10px;
+}
+
+.back-next-product span {
+  display: flex;
+  align-items: end;
+  font-size: 30px;
+  margin-left: -5px;
+  margin-right: 10px;
+}
