@@ -29,7 +29,6 @@ git clone https://github.com/David-Mikava/onlineShop.git
 ### 2. Установка зависимостей
 Перейдите в папку проекта и установите зависимости:
 ```bash
-cd romodan
 npm install
 ```
 
